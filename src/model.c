@@ -194,7 +194,6 @@ void clear_comment(char* line)
     }
 }
 
-
 void count_element_in_line(const char* line, Model* model)
 {
 	struct TokenArray token_array;
@@ -221,7 +220,7 @@ void count_element_in_line(const char* line, Model* model)
 				++model->n_quads;
 			}
             else {
-                printf("WARN: Invalid number of face elements! %d\n", token_array.n_tokens);
+                //printf("WARN: Invalid number of face elements! %d\n", token_array.n_tokens);
             }
 		}
 	}

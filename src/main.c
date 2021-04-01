@@ -133,6 +133,9 @@ void movement_of_objects() {
         move.planet1.y = sin(angle) * distance_b1;
         move.planet1.z = 0;
 
+        printf("Planet 1 adatai: %d %d %d\n",move.planet1.x, move.planet1.y,move.planet1.z);
+
+
     } else if (move.planet1.x == 0) {
         move.planet1.x = 4000;
         move.planet1.y = 0;
@@ -172,11 +175,10 @@ void movement_of_objects() {
             move.satellite.z = 400;
         }
 
-        // pont és gömb metszete
+        // Intersection of satellite pos and bounding boxes
         move.satellite.x += 20.0;
-
-
         satellite = 1;
+
     } else if (action.call_satellite == TRUE && move.satellite.x >= 6000) {
         move.satellite.x = -20000;
         action.call_satellite = FALSE;
@@ -209,11 +211,10 @@ void display() {
 
         draw_environment(world, &rotate, move);
         movement_of_objects();
-        rotation_of_objects(&rotate);
+        rotation_of_objects();
         reshape(WINDOW_WIDTH, WINDOW_HEIGHT);
 
-        print_bounding_box(&world.planet1.model);
-
+        //print_bounding_box(&world.planet1.model);
 
         glutSwapBuffers();
 
@@ -222,12 +223,10 @@ void display() {
     }
 }
 
-
 void mouse_handler(int button, int state, int x, int y) {
     mouse_x = x;
     mouse_y = y;
 }
-
 
 void motion_handler(int x, int y) {
     double horizontal, vertical;

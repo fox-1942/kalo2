@@ -10,8 +10,8 @@
 #include "model.h"
 #include <math.h>
 
-#define resolution 1   // 1: 1920*1080   0: 1366*768
-#define fullscreen 1   // 1: fullscreen  0: windowed
+#define resolution 0  // 1: 1920*1080   0: 1366*768
+#define fullscreen 0   // 1: fullscreen  0: windowed
 
 GLfloat light_position[] = {0, 0, 0, 0};
 GLfloat light_ambient[] = {0.5, 0.5, 0.5, 0};

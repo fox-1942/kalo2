@@ -21,7 +21,7 @@ struct Vertex {
     double x;
     double y;
     double z;
-} Vertex;
+};
 
 struct TextureVertex {
     double u;

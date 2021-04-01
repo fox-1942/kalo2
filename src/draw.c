@@ -42,7 +42,9 @@ void draw_quads(const struct Model *model) {
     int vertex_index, texture_index;
     double x, y, z, u, v;
 
+
     glBegin(GL_QUADS);
+
 
     for (i = 0; i < model->n_quads; ++i) {
         for (k = 0; k < 4; ++k) {
