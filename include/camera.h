@@ -2,7 +2,6 @@
 #define CAMERA_H
 
 #include "draw.h"
-#include <math.h>
 
 #define M_PI 3.14159265358979323846
 #define skybox_size 6000

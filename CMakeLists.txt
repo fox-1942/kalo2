@@ -3,13 +3,12 @@ project(kalo)
 
 set(CMAKE_CXX_STANDARD 14)
 
-add_compile_options(-std=gnu11)
-
 add_executable(${PROJECT_NAME}
         src/main.c
         src/camera.c
         src/draw.c
-        src/model.c)
+        src/model.c
+        src/vector_calc.c)
 
 target_include_directories(${PROJECT_NAME} PUBLIC include)
 

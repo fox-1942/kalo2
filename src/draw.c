@@ -211,11 +211,6 @@ void draw_skybox_top(Entity skybox) {
     glPopMatrix();
 }
 
-bool is_point_inside_sphere(Move mov, Move mov2, Model planet) {
-
-
-}
-
 
 void draw_environment(World world, Rotate *rotate, Move move) {
 
@@ -295,4 +290,11 @@ void draw_environment(World world, Rotate *rotate, Move move) {
     glRotatef(rotate->satellite_rotation, 0, 0, 1);
     draw_model(&world.satellite.model);
     glPopMatrix();
+}
+
+bool is_point_inside_sphere(Move sat, Move mov2, Model planet) {
+    /*double point_sphere_dist=vector_length(sat.satellite.x,sat.satellite.y,sat.satellite.z);
+
+    planet.box.diagonal_length< ;*/
+
 }

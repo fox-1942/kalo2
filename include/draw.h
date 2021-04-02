@@ -2,8 +2,6 @@
 #define DRAW_H
 
 #include "model.h"
-#include <math.h>
-#include <GL/glut.h>
 
 #define SKYBOX_SIZE 10000.0
 

@@ -6,8 +6,6 @@
 #define KALO_MAIN_H
 
 #include "camera.h"
-#include "model.h"
-#include <math.h>
 
 #define resolution 0  // 1: 1920*1080   0: 1366*768
 #define fullscreen 0   // 1: fullscreen  0: windowed

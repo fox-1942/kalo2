@@ -1,9 +1,10 @@
 #ifndef MODEL_H_
 #define MODEL_H_
 
+
+#include "vector_calc.h"
 #include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
+
 #include <GL/glut.h>
 #include <stdbool.h>
 #include "SOIL/SOIL.h"
