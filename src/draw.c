@@ -42,10 +42,8 @@ void draw_quads(const struct Model *model) {
     int vertex_index, texture_index;
     double x, y, z, u, v;
 
-
+    glColor4f(1, 1, 1, 1);
     glBegin(GL_QUADS);
-
-
     for (i = 0; i < model->n_quads; ++i) {
         for (k = 0; k < 4; ++k) {
 
@@ -61,7 +59,6 @@ void draw_quads(const struct Model *model) {
             glVertex3d(x, y, z);
         }
     }
-
     glEnd();
 }
 
@@ -86,9 +83,37 @@ void draw_normals(const struct Model *model, double length) {
     glEnd();
 }
 
-void draw_model(const struct Model *model) {
+void draw_bounding_box(const Model *model) {
+    glLineWidth(1);
+
+    Vertex half_diag;
+    half_diag.x = (model->box.maxVertex.x - model->box.minVertex.x) / 2;
+    half_diag.y = (model->box.maxVertex.y - model->box.minVertex.y) / 2;
+    half_diag.z = (model->box.maxVertex.z - model->box.minVertex.z) / 2;
+
+    glBegin(GL_LINES);
+    glVertex3d(model->box.minVertex.x, model->box.minVertex.y, model->box.minVertex.z);
+    glVertex3d(model->box.maxVertex.x, model->box.maxVertex.y, model->box.maxVertex.z);
+    glEnd();
+
+    /* float m[16];
+     glGetFloatv(GL_MODELVIEW_MATRIX, &m);
+
+     float proj [16];
+     glGetFloatv(GL_PROJECTION_MATRIX, &proj);
+
+     int view[4];
+     glGetIntegerv(GL_VIEWPORT, &view);*/
+
+
+}
+
+
+void draw_model(const Model *model) {
     //draw_triangles(model);
     draw_quads(model);
+    draw_bounding_box(model);
+
 }
 
 void draw_skybox_bottom(Entity skybox) {
@@ -186,9 +211,14 @@ void draw_skybox_top(Entity skybox) {
     glPopMatrix();
 }
 
-double cTime;
+bool is_point_inside_sphere(Move mov, Move mov2, Model planet) {
+
+
+}
+
 
 void draw_environment(World world, Rotate *rotate, Move move) {
+
     glEnable(GL_TEXTURE_2D);
 
     //Draw the bottom skybox.
@@ -205,7 +235,6 @@ void draw_environment(World world, Rotate *rotate, Move move) {
     glScalef(1.0f, 1.0f, 1.0f);
     glRotatef(rotate->sun_rotation, 1, 1, 1);
     draw_model(&world.sun.model);
-
     glPopMatrix();
 
     //Draw the planet1.
@@ -242,24 +271,20 @@ void draw_environment(World world, Rotate *rotate, Move move) {
     glScalef(1.0f, 1.0f, 1.0f);
     glRotatef(rotate->planet3_rotation, 0, 0, -1);
     draw_model(&world.planet3.model);
-
     glPopMatrix();
 
     //Draw the planet4.
     glPushMatrix();
-
     glTranslatef(move.planet4.x, move.planet4.y, move.planet4.z);
     glMaterialfv(GL_FRONT, GL_AMBIENT, world.planet4.material_ambient);
     glBindTexture(GL_TEXTURE_2D, world.planet4.texture);
     glScalef(1.0f, 1.0f, 1.0f);
     glRotatef(rotate->planet4_rotation, 0, 0, -1);
     draw_model(&world.planet4.model);
-
     glPopMatrix();
 
     //Draw the satellite.
     glPushMatrix();
-
     glTranslatef(move.satellite.x, move.satellite.y, move.satellite.z);
     glMaterialfv(GL_FRONT, GL_AMBIENT, world.satellite.material_ambient);
     glBindTexture(GL_TEXTURE_2D, world.satellite.texture);
@@ -269,7 +294,5 @@ void draw_environment(World world, Rotate *rotate, Move move) {
     glRotatef(270, 0, 1, 0);
     glRotatef(rotate->satellite_rotation, 0, 0, 1);
     draw_model(&world.satellite.model);
-
     glPopMatrix();
 }
-

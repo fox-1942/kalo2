@@ -6,7 +6,6 @@
 #define KALO_MAIN_H
 
 #include "camera.h"
-#include "draw.h"
 #include "model.h"
 #include <math.h>
 

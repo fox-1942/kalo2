@@ -3,6 +3,7 @@
 
 #include "model.h"
 #include <math.h>
+#include <GL/glut.h>
 
 #define SKYBOX_SIZE 10000.0
 
@@ -53,5 +54,7 @@ void draw_skybox_bottom(Entity skybox);
 
 //Draw the entitys to the world.
 void draw_environment(World world, Rotate *rotate, Move move);
+
+bool is_point_inside_sphere(Move mov, Move mov2, Model planet);
 
 #endif

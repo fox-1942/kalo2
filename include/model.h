@@ -5,6 +5,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <GL/glut.h>
+#include <stdbool.h>
 #include "SOIL/SOIL.h"
 
 #define TRUE 1
@@ -17,11 +18,11 @@ struct TokenArray {
     int n_tokens;
 };
 
-struct Vertex {
+typedef struct Vertex {
     double x;
     double y;
     double z;
-};
+} Vertex;
 
 struct TextureVertex {
     double u;
@@ -43,7 +44,9 @@ struct Quad {
 };
 
 struct BBox {
-    double minX, maxX, minY, maxY, minZ, maxZ;
+    Vertex minVertex;
+    Vertex maxVertex;
+    double diagonal_length;
 };
 
 typedef struct Model {
@@ -59,7 +62,6 @@ typedef struct Model {
     struct Quad *quads;
     struct BBox box;
 } Model;
-
 
 typedef struct Entity {
     Model model;
@@ -181,14 +183,11 @@ int is_digit(char c);
 //Check that the indices in the triangle are valid.
 int is_valid_triangle(const struct Triangle *triangle, const struct Model *model);
 
-
 //Check that the indices in the quad are valid.
 int is_valid_quad(const struct Quad *quad, const struct Model *model);
 
-
 //Print the bounding box of the model.
-void print_bounding_box(struct Model *model);
-
+void calc_bounding_box(struct Model *model);
 
 //Scale the loaded model.
 void scale_model(struct Model *model, double sx, double sy, double sz);
@@ -197,5 +196,6 @@ void scale_model(struct Model *model, double sx, double sy, double sz);
 void init_entities(World *world);
 
 GLuint load_texture(const char *filename);
+
 
 #endif

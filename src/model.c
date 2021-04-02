@@ -121,8 +121,6 @@ void free_tokens(struct TokenArray* token_array)
 	free(token_array->tokens);
 }
 
-
-
 void print_model_info(const struct Model* model)
 {
     printf("Vertices: %d\n", model->n_vertices);
@@ -131,7 +129,6 @@ void print_model_info(const struct Model* model)
     printf("Triangles: %d\n", model->n_triangles);
     printf("Quads: %d\n", model->n_quads);
 }
-
 
 void free_model(struct Model* model)
 {
@@ -465,7 +462,7 @@ int is_valid_quad(const struct Quad* quad, const struct Model* model)
 }
 
 
-void print_bounding_box(struct Model* model)
+void calc_bounding_box(struct Model* model)
 {
     int i;
     double x, y, z;
@@ -505,18 +502,19 @@ void print_bounding_box(struct Model* model)
             max_z = z;
         }
     }
-    printf("Bounding box:\n");
+    /*printf("Bounding box:\n");
     printf("x in [%lf, %lf]\n", min_x, max_x);
     printf("y in [%lf, %lf]\n", min_y, max_y);
-    printf("z in [%lf, %lf]\n", min_z, max_z);
+    printf("z in [%lf, %lf]\n", min_z, max_z);*/
 
     // setting the coordinates of the bounding box for the specific model
-    model->box.minX=min_x;
-    model->box.maxX=max_x;
-    model->box.minY=min_y;
-    model->box.minY=max_y;
-    model->box.minZ=min_z;
-    model->box.maxZ=max_z;
+    model->box.minVertex.x=min_x;
+    model->box.minVertex.y=min_y;
+    model->box.minVertex.z=min_z;
+    model->box.maxVertex.x=max_x;
+    model->box.maxVertex.y=max_y;
+    model->box.maxVertex.z=max_z;
+
 }
 
 void scale_model(struct Model* model, double sx, double sy, double sz)
@@ -584,4 +582,13 @@ void init_entities( World* world){
 	world->satellite.texture = load_texture("..\\textures\\satellite.jpg");
     world->satellite.texture2 = load_texture("..\\textures\\satellite2.jpg");
 	scale_model (&world->satellite.model, 12, 12, 12);
+
+	//Storing bounding-box coordinates in each model
+    calc_bounding_box(&world->planet1.model);
+    calc_bounding_box(&world->planet2.model);
+    calc_bounding_box(&world->planet3.model);
+    calc_bounding_box(&world->sun.model);
+    calc_bounding_box(&world->planet4.model);
+    calc_bounding_box(&world->satellite.model);
+
 }

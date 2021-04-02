@@ -3,6 +3,8 @@ project(kalo)
 
 set(CMAKE_CXX_STANDARD 14)
 
+add_compile_options(-std=gnu11)
+
 add_executable(${PROJECT_NAME}
         src/main.c
         src/camera.c
@@ -11,4 +13,4 @@ add_executable(${PROJECT_NAME}
 
 target_include_directories(${PROJECT_NAME} PUBLIC include)
 
-target_link_libraries(${PROJECT_NAME} glut32 SOIL glu32  opengl32)
+target_link_libraries(${PROJECT_NAME} glut32 SOIL glu32 opengl32)

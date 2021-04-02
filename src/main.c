@@ -126,16 +126,14 @@ void rotation_of_objects() {
 }
 
 void movement_of_objects() {
+
+    // Jupiter
     if (action.move_planet1_in_galaxy == TRUE) {
         degree1 += 0.4;
         double angle = degree_to_radian(degree1);
         move.planet1.x = cos(angle) * distance_a1;
         move.planet1.y = sin(angle) * distance_b1;
         move.planet1.z = 0;
-
-        printf("Planet 1 adatai: %d %d %d\n",move.planet1.x, move.planet1.y,move.planet1.z);
-
-
     } else if (move.planet1.x == 0) {
         move.planet1.x = 4000;
         move.planet1.y = 0;
@@ -175,7 +173,10 @@ void movement_of_objects() {
             move.satellite.z = 400;
         }
 
-        // Intersection of satellite pos and bounding boxes
+
+
+
+
         move.satellite.x += 20.0;
         satellite = 1;
 
@@ -214,7 +215,7 @@ void display() {
         rotation_of_objects();
         reshape(WINDOW_WIDTH, WINDOW_HEIGHT);
 
-        //print_bounding_box(&world.planet1.model);
+
 
         glutSwapBuffers();
 
