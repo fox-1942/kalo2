@@ -127,23 +127,23 @@ void rotation_of_objects() {
 
 void movement_of_objects() {
 
-    // dark Jupiter +its moon
+    // dark Jupiter + its moon
     if (action.move_planet1_in_galaxy == TRUE) {
         degree1 += 0.4;
         double angle = degree_to_radian(degree1);
         move.planet1.x = cos(angle) * distance_a1;
         move.planet1.y = sin(angle) * distance_b1;
         move.planet1.z = 500;
-        move.planet2.x=move.planet1.x + 1000;
-        move.planet2.y=move.planet1.y + 1000;
-        move.planet2.z=move.planet1.z - 100;
+        move.planet2.x = move.planet1.x + 1000;
+        move.planet2.y = move.planet1.y + 1000;
+        move.planet2.z = move.planet1.z - 100;
     } else if (move.planet1.x == 0) {
-        move.planet1.x = 4000;
-        move.planet1.y = 0;
+        move.planet1.x = 3768;
+        move.planet1.y = 1341;
         move.planet1.z = 500;
-        move.planet2.x=move.planet1.x + 1000;
-        move.planet2.y=move.planet1.y + 1000;
-        move.planet2.z=move.planet1.z - 100;
+        move.planet2.x = move.planet1.x + 1000;
+        move.planet2.y = move.planet1.y + 1000;
+        move.planet2.z = move.planet1.z - 100;
     }
 
     // Light jupiter
@@ -182,10 +182,23 @@ void movement_of_objects() {
         }
 
         bool inside = is_point_inside_spheres(move.satellite.x, move.satellite.y, move.satellite.z,
-                                              move.planet2.x, move.planet2.y, move.planet2.z,
-                                              world.planet2.model.box.diagonal_length);
+                                              move.planet1.x, move.planet1.y, move.planet1.z,
+                                              world.planet1.model.box.diagonal_length+100);
+
         if (inside) {
-            move.satellite.x += 0;
+            //printf("%f %f %f",move.planet1.x, move.planet1.y,move.planet1.z);
+
+
+
+
+            
+
+
+            move.satellite.x += 0.5;
+            move.satellite.y += 0.5;
+
+          /*  move.satellite.x += 2;
+            move.satellite.y -= 2;*/
 
         } else {
             move.satellite.x += 10;

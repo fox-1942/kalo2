@@ -52,6 +52,7 @@ float angle = 135;
 double degree1 = 0;
 double degree3 = 0;
 double degree4 = 0;
+double deegrew = 0;
 double distance_a1 = 4000;
 double distance_b1 = 4000;
 double distance_a3 = 6000;

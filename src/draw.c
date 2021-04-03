@@ -85,17 +85,10 @@ void draw_normals(const struct Model *model, double length) {
 
 void draw_bounding_box(const Model *model) {
     glLineWidth(1);
-
-   /* Vertex half_diag;
-    half_diag.x = (model->box.maxVertex.x - model->box.minVertex.x) / 2;
-    half_diag.y = (model->box.maxVertex.y - model->box.minVertex.y) / 2;
-    half_diag.z = (model->box.maxVertex.z - model->box.minVertex.z) / 2;*/
-
     glBegin(GL_LINES);
     glVertex3d(model->box.minVertex.x, model->box.minVertex.y, model->box.minVertex.z);
     glVertex3d(model->box.maxVertex.x, model->box.maxVertex.y, model->box.maxVertex.z);
     glEnd();
-
 }
 
 
@@ -286,7 +279,7 @@ void draw_environment(World world, Rotate *rotate, Move move) {
 // the bounding box diagonal of the planet.
 bool is_point_inside_spheres(double x, double y, double z, double x2, double y2, double z2, double radius) {
 
-    printf("---------------------------------------------------------------------------\n");
+  /*  printf("---------------------------------------------------------------------------\n");
     printf("Sat position: %f, %f, %f |",x, y, z);
     printf(" Planet position: %f, %f, %f",x2, y2, z2);
 
@@ -295,7 +288,12 @@ bool is_point_inside_spheres(double x, double y, double z, double x2, double y2,
         printf("--> Inside.\n");
     } else {
         printf("--> Outside.\n");
-    }
+    }*/
+
+    double diagonal_x = x - x2;
+    double diagonal_y = y - y2;
+    double diagonal_z = z - z2;
+    printf("Vector: %f, %f, %f \n",diagonal_x, diagonal_y, diagonal_z);
 
     return vector_length(x, y, z, x2, y2, z2) < radius;
 }
