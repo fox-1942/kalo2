@@ -60,6 +60,7 @@ double distance_b3 = 6000;
 double distance_a4 = 2000;
 double distance_b4 = 2000;
 int satellite = 0;
+bool inside = false;
 
 
 #endif //KALO_MAIN_H

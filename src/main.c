@@ -69,7 +69,6 @@ void specialFunc(int key, int x, int y) {
                 glLightModelfv(GL_LIGHT_MODEL_AMBIENT, ones);
             }
     }
-
 }
 
 void reshape(GLsizei width, GLsizei height) {
@@ -181,27 +180,21 @@ void movement_of_objects() {
             move.satellite.z = 400;
         }
 
-        bool inside = is_point_inside_spheres(move.satellite.x, move.satellite.y, move.satellite.z,
-                                              move.planet1.x, move.planet1.y, move.planet1.z,
-                                              world.planet1.model.box.diagonal_length+100);
+        for (int i = 0; i < 4; i++) {
+            if (is_point_inside_spheres(move.satellite.x, move.satellite.y, move.satellite.z,
+                                        move.Move[i].x, move.Move[i].y, move.Move[i].z,
+                                        world.World[i].model.box.diagonal_length)) {
+                inside = true;
+                break;
+            }
+        }
 
         if (inside) {
-            //printf("%f %f %f",move.planet1.x, move.planet1.y,move.planet1.z);
-
-
-
-
-            
-
-
-            move.satellite.x += 0.5;
-            move.satellite.y += 0.5;
-
-          /*  move.satellite.x += 2;
-            move.satellite.y -= 2;*/
-
+            move.satellite.x += 0;
+            move.satellite.y += 0.6;
+            inside = false;
         } else {
-            move.satellite.x += 10;
+            move.satellite.x += 20;
         }
 
         satellite = 1;

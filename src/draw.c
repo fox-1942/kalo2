@@ -293,7 +293,7 @@ bool is_point_inside_spheres(double x, double y, double z, double x2, double y2,
     double diagonal_x = x - x2;
     double diagonal_y = y - y2;
     double diagonal_z = z - z2;
-    printf("Vector: %f, %f, %f \n",diagonal_x, diagonal_y, diagonal_z);
+   // printf("Vector: %f, %f, %f \n",diagonal_x, diagonal_y, diagonal_z);
 
     return vector_length(x, y, z, x2, y2, z2) < radius;
 }
