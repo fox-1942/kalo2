@@ -127,19 +127,26 @@ void rotation_of_objects() {
 
 void movement_of_objects() {
 
-    // Jupiter
+    // dark Jupiter +its moon
     if (action.move_planet1_in_galaxy == TRUE) {
         degree1 += 0.4;
         double angle = degree_to_radian(degree1);
         move.planet1.x = cos(angle) * distance_a1;
         move.planet1.y = sin(angle) * distance_b1;
-        move.planet1.z = 0;
+        move.planet1.z = 500;
+        move.planet2.x=move.planet1.x + 1000;
+        move.planet2.y=move.planet1.y + 1000;
+        move.planet2.z=move.planet1.z - 100;
     } else if (move.planet1.x == 0) {
         move.planet1.x = 4000;
         move.planet1.y = 0;
-        move.planet1.z = 0;
+        move.planet1.z = 500;
+        move.planet2.x=move.planet1.x + 1000;
+        move.planet2.y=move.planet1.y + 1000;
+        move.planet2.z=move.planet1.z - 100;
     }
 
+    // Light jupiter
     if (action.move_planet3_in_galaxy == TRUE) {
         degree3 += 0.2;
         double angle = degree_to_radian(degree3);
@@ -153,6 +160,7 @@ void movement_of_objects() {
         move.planet3.z = 0;
     }
 
+    // Saturnus
     if (action.move_planet4_in_galaxy == TRUE) {
         degree4 += 0.3;
         double angle = degree_to_radian(degree4);
@@ -174,8 +182,8 @@ void movement_of_objects() {
         }
 
         bool inside = is_point_inside_spheres(move.satellite.x, move.satellite.y, move.satellite.z,
-                                              move.planet1.x, move.planet1.y, move.planet1.z,
-                                              world.planet1.model.box.diagonal_length);
+                                              move.planet2.x, move.planet2.y, move.planet2.z,
+                                              world.planet2.model.box.diagonal_length);
         if (inside) {
             move.satellite.x += 0;
 

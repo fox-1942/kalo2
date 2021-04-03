@@ -471,6 +471,7 @@ void calc_bounding_box(struct Model *model) {
     model->box.maxVertex.z = max_z;
 
     model->box.diagonal_length = vector_length(min_x, min_y, min_z, max_x, max_y, max_z);
+    printf("bbox diagonal: %f \n", model->box.diagonal_length);
 
     /* double diagonal_x=max_x-min_x;
     double diagonal_y=max_y-min_y;

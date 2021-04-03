@@ -222,7 +222,7 @@ void draw_environment(World world, Rotate *rotate, Move move) {
     draw_model(&world.sun.model);
     glPopMatrix();
 
-    //Draw the planet1.
+    //Draw the planet1. Dark Jupiter
     glPushMatrix();
     glTranslatef(move.planet1.x, move.planet1.y, move.planet1.z);
     glMaterialfv(GL_FRONT, GL_AMBIENT, world.planet1.material_ambient);
@@ -234,7 +234,7 @@ void draw_environment(World world, Rotate *rotate, Move move) {
     glPopMatrix();
 
 
-    //Draw the planet2.
+    //Draw the planet2, it is the moon of the dark Jupiter, so it is relative to the movement of planet 1.
     glPushMatrix();
 
     glTranslatef(move.planet1.x + 1000, move.planet1.y + 1000, move.planet1.z - 100);
@@ -248,7 +248,7 @@ void draw_environment(World world, Rotate *rotate, Move move) {
     glPopMatrix();
 
 
-    //Draw the planet3.
+    //Draw the planet3.   Light Jupiter
     glPushMatrix();
     glTranslatef(move.planet3.x, move.planet3.y, move.planet3.z);
     glMaterialfv(GL_FRONT, GL_AMBIENT, world.planet3.material_ambient);
@@ -258,7 +258,7 @@ void draw_environment(World world, Rotate *rotate, Move move) {
     draw_model(&world.planet3.model);
     glPopMatrix();
 
-    //Draw the planet4.
+    //Draw the planet4. Saturnus
     glPushMatrix();
     glTranslatef(move.planet4.x, move.planet4.y, move.planet4.z);
     glMaterialfv(GL_FRONT, GL_AMBIENT, world.planet4.material_ambient);
@@ -285,14 +285,17 @@ void draw_environment(World world, Rotate *rotate, Move move) {
 // Determines whether the satellite is inside the planet's filed of gravity. The radius is coming from
 // the bounding box diagonal of the planet.
 bool is_point_inside_spheres(double x, double y, double z, double x2, double y2, double z2, double radius) {
+
+    printf("---------------------------------------------------------------------------\n");
+    printf("Sat position: %f, %f, %f |",x, y, z);
+    printf(" Planet position: %f, %f, %f",x2, y2, z2);
+
+    printf("\nVector length: %f | radius: %f ",vector_length(x, y, z, x2, y2, z2), radius );
     if (vector_length(x, y, z, x2, y2, z2) < radius) {
-        printf("BBB ");
+        printf("--> Inside.\n");
     } else {
-        printf("XXX ");
+        printf("--> Outside.\n");
     }
-
-
-
 
     return vector_length(x, y, z, x2, y2, z2) < radius;
 }
