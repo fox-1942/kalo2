@@ -173,11 +173,16 @@ void movement_of_objects() {
             move.satellite.z = 400;
         }
 
+        bool inside = is_point_inside_spheres(move.satellite.x, move.satellite.y, move.satellite.z,
+                                              move.planet1.x, move.planet1.y, move.planet1.z,
+                                              world.planet1.model.box.diagonal_length);
+        if (inside) {
+            move.satellite.x += 0;
 
+        } else {
+            move.satellite.x += 10;
+        }
 
-
-
-        move.satellite.x += 20.0;
         satellite = 1;
 
     } else if (action.call_satellite == TRUE && move.satellite.x >= 6000) {
@@ -214,7 +219,6 @@ void display() {
         movement_of_objects();
         rotation_of_objects();
         reshape(WINDOW_WIDTH, WINDOW_HEIGHT);
-
 
 
         glutSwapBuffers();

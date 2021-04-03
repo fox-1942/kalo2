@@ -86,25 +86,15 @@ void draw_normals(const struct Model *model, double length) {
 void draw_bounding_box(const Model *model) {
     glLineWidth(1);
 
-    Vertex half_diag;
+   /* Vertex half_diag;
     half_diag.x = (model->box.maxVertex.x - model->box.minVertex.x) / 2;
     half_diag.y = (model->box.maxVertex.y - model->box.minVertex.y) / 2;
-    half_diag.z = (model->box.maxVertex.z - model->box.minVertex.z) / 2;
+    half_diag.z = (model->box.maxVertex.z - model->box.minVertex.z) / 2;*/
 
     glBegin(GL_LINES);
     glVertex3d(model->box.minVertex.x, model->box.minVertex.y, model->box.minVertex.z);
     glVertex3d(model->box.maxVertex.x, model->box.maxVertex.y, model->box.maxVertex.z);
     glEnd();
-
-    /* float m[16];
-     glGetFloatv(GL_MODELVIEW_MATRIX, &m);
-
-     float proj [16];
-     glGetFloatv(GL_PROJECTION_MATRIX, &proj);
-
-     int view[4];
-     glGetIntegerv(GL_VIEWPORT, &view);*/
-
 
 }
 
@@ -292,9 +282,17 @@ void draw_environment(World world, Rotate *rotate, Move move) {
     glPopMatrix();
 }
 
-bool is_point_inside_sphere(Move sat, Move mov2, Model planet) {
-    /*double point_sphere_dist=vector_length(sat.satellite.x,sat.satellite.y,sat.satellite.z);
+// Determines whether the satellite is inside the planet's filed of gravity. The radius is coming from
+// the bounding box diagonal of the planet.
+bool is_point_inside_spheres(double x, double y, double z, double x2, double y2, double z2, double radius) {
+    if (vector_length(x, y, z, x2, y2, z2) < radius) {
+        printf("BBB ");
+    } else {
+        printf("XXX ");
+    }
 
-    planet.box.diagonal_length< ;*/
 
+
+
+    return vector_length(x, y, z, x2, y2, z2) < radius;
 }

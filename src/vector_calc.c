@@ -4,7 +4,6 @@
 
 #include "vector_calc.h"
 
-
 double vector_length(double min_x, double min_y, double min_z, double max_x, double max_y, double max_z) {
     double diagonal_x = max_x - min_x;
     double diagonal_y = max_y - min_y;

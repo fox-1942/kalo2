@@ -5,10 +5,13 @@
 
 #define SKYBOX_SIZE 10000.0
 
-typedef struct Position {
-    double x;
-    double y;
-    double z;
+typedef union Position {
+    struct {
+        double x;
+        double y;
+        double z;
+    };
+    double Position[3];
 } Position;
 
 typedef struct Rotate {
@@ -20,13 +23,16 @@ typedef struct Rotate {
     double sun_rotation;
 } Rotate;
 
-typedef struct Move {
-    Position planet1;
-    Position planet2;
-    Position planet3;
-    Position planet4;
-    Position sun;
-    Position satellite;
+typedef union Move {
+    struct {
+        Position planet1;
+        Position planet2;
+        Position planet3;
+        Position planet4;
+        Position sun;
+        Position satellite;
+    };
+    Position Move[6];
 } Move;
 
 //Draw the model.
@@ -53,6 +59,6 @@ void draw_skybox_bottom(Entity skybox);
 //Draw the entitys to the world.
 void draw_environment(World world, Rotate *rotate, Move move);
 
-bool is_point_inside_sphere(Move mov, Move mov2, Model planet);
+bool is_point_inside_spheres(double x, double y, double z, double x2, double y2, double z2, double radius);
 
 #endif

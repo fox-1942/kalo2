@@ -1,10 +1,8 @@
 #ifndef MODEL_H_
 #define MODEL_H_
 
-
 #include "vector_calc.h"
 #include <stdio.h>
-
 #include <GL/glut.h>
 #include <stdbool.h>
 #include "SOIL/SOIL.h"
@@ -71,14 +69,17 @@ typedef struct Entity {
     float material_ambient[4];
 } Entity;
 
-typedef struct World {
-    Entity skybox;
-    Entity planet1;
-    Entity planet2;
-    Entity planet3;
-    Entity planet4;
-    Entity sun;
-    Entity satellite;
+typedef union World {
+    struct {
+        Entity planet1;
+        Entity planet2;
+        Entity planet3;
+        Entity planet4;
+        Entity sun;
+        Entity satellite;
+        Entity skybox;
+    };
+    Entity World[7];
 } World;
 
 //Count the tokens in the text.
