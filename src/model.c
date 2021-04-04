@@ -143,6 +143,14 @@ void free_model(struct Model* model)
     free(model->quads);
 }
 
+void init_model_counters(Model* model)
+{
+    model->n_vertices = 0;
+    model->n_texture_vertices = 0;
+    model->n_normals = 0;
+    model->n_triangles = 0;
+    model->n_quads = 0;
+}
 
 void count_elements(FILE* file, struct Model* model)
 {
@@ -171,17 +179,6 @@ void read_elements(FILE* file, struct Model* model)
         read_element_from_line(line, model);
     }
 }
-
-
-void init_model_counters(Model* model)
-{
-    model->n_vertices = 0;
-    model->n_texture_vertices = 0;
-    model->n_normals = 0;
-    model->n_triangles = 0;
-    model->n_quads = 0;
-}
-
 
 void clear_comment(char* line)
 {
@@ -474,14 +471,14 @@ void calc_bounding_box(struct Model *model) {
 
     if (model->n_vertices == 0) { return; }
 
-    min_x = model->vertices[0].x;
-    max_x = model->vertices[0].x;
-    min_y = model->vertices[0].y;
-    max_y = model->vertices[0].y;
-    min_z = model->vertices[0].z;
-    max_z = model->vertices[0].z;
+    min_x = model->vertices[1].x;
+    max_x = model->vertices[1].x;
+    min_y = model->vertices[1].y;
+    max_y = model->vertices[1].y;
+    min_z = model->vertices[1].z;
+    max_z = model->vertices[1].z;
 
-    for (i = 0; i < model->n_vertices; ++i) {
+    for (i = 1; i < model->n_vertices; ++i) {
         x = model->vertices[i].x;
         y = model->vertices[i].y;
         z = model->vertices[i].z;
@@ -553,7 +550,6 @@ int load_model(const char* filename, Model* model)
 
 
 void init_entities(World *world) {
-
     //Load the planet1 object and texture.
     load_model("..\\objects\\geoid.obj", &world->planet1.model);
     world->planet1.texture = load_texture("..\\textures\\planet2.png");
