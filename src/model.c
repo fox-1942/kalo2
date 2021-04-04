@@ -457,10 +457,10 @@ void calc_bounding_box(struct Model *model) {
             max_z = z;
         }
     }
-    /*printf("Bounding box:\n");
+    printf("Bounding box:\n");
     printf("x in [%lf, %lf]\n", min_x, max_x);
     printf("y in [%lf, %lf]\n", min_y, max_y);
-    printf("z in [%lf, %lf]\n", min_z, max_z);*/
+    printf("z in [%lf, %lf]\n", min_z, max_z);
 
     // setting the coordinates of the bounding box for the specific model
     model->box.minVertex.x = min_x;
@@ -473,10 +473,6 @@ void calc_bounding_box(struct Model *model) {
     model->box.diagonal_length = vector_length(min_x, min_y, min_z, max_x, max_y, max_z);
     printf("bbox diagonal: %f \n", model->box.diagonal_length);
 
-    /* double diagonal_x=max_x-min_x;
-    double diagonal_y=max_y-min_y;
-    double diagonal_z=max_z-min_z;
-    model->box.diagonal_length=sqrt(pow(diagonal_x,2)+pow(diagonal_y,2)+pow(diagonal_z,2));*/
 }
 
 void scale_model(struct Model *model, double sx, double sy, double sz) {
@@ -503,19 +499,18 @@ int load_model(const char *filename, Model *model) {
     printf("Read ..\n");
     read_elements(obj_file, model);
 
+    fclose(obj_file);
+
     return TRUE;
 }
 
 
 void init_entities(World *world) {
 
-    //Load the skybox texture.
-    world->skybox.texture = load_texture("..\\textures\\sky.png");
-
-    //Load the sun object and texture.
-    load_model("..\\objects\\geoid.obj", &world->sun.model);
-    world->sun.texture = load_texture("..\\textures\\sun.png");
-    scale_model(&world->sun.model, 2, 2, 2);
+    //Load the planet1 object and texture.
+    load_model("..\\objects\\geoid.obj", &world->planet1.model);
+    world->planet1.texture = load_texture("..\\textures\\planet2.png");
+    scale_model(&world->planet1.model, 0.4, 0.4, 0.4);
 
     //Load the planet2 and texture.
     load_model("..\\objects\\geoid.obj", &world->planet2.model);
@@ -532,10 +527,10 @@ void init_entities(World *world) {
     world->planet4.texture = load_texture("..\\textures\\planet4.jpg");
     scale_model(&world->planet4.model, 0.2, 0.2, 0.2);
 
-    //Load the planet1 object and texture.
-    load_model("..\\objects\\geoid.obj", &world->planet1.model);
-    world->planet1.texture = load_texture("..\\textures\\planet2.png");
-    scale_model(&world->planet1.model, 0.4, 0.4, 0.4);
+    //Load the sun object and texture.
+    load_model("..\\objects\\geoid.obj", &world->sun.model);
+    world->sun.texture = load_texture("..\\textures\\sun.png");
+    scale_model(&world->sun.model, 2, 2, 2);
 
     //Load the satellite object and texture.
     load_model("..\\objects\\satellite.obj", &world->satellite.model);
@@ -543,12 +538,15 @@ void init_entities(World *world) {
     world->satellite.texture2 = load_texture("..\\textures\\satellite2.jpg");
     scale_model(&world->satellite.model, 12, 12, 12);
 
+    //Load the skybox texture.
+    world->skybox.texture = load_texture("..\\textures\\sky.png");
+
     //Storing bounding-box coordinates in each model
     calc_bounding_box(&world->planet1.model);
     calc_bounding_box(&world->planet2.model);
     calc_bounding_box(&world->planet3.model);
-    calc_bounding_box(&world->sun.model);
     calc_bounding_box(&world->planet4.model);
+    calc_bounding_box(&world->sun.model);
     calc_bounding_box(&world->satellite.model);
 
 }
@@ -557,10 +555,6 @@ double vector_length(double min_x, double min_y, double min_z, double max_x, dou
     double diagonal_x = max_x - min_x;
     double diagonal_y = max_y - min_y;
     double diagonal_z = max_z - min_z;
-
-    /* printf("hid: %f %f %f ",diagonal_x, diagonal_y,diagonal_z);
-     printf("Pow-ok: %f %f %f ",pow(diagonal_x, 2), pow(diagonal_y, 2),pow(diagonal_z, 2));
-     printf("Result: %f ",sqrt(pow(diagonal_x, 2) + pow(diagonal_y, 2) + pow(diagonal_z, 2)));*/
 
     return sqrt(pow(diagonal_x, 2) + pow(diagonal_y, 2) + pow(diagonal_z, 2));
 }

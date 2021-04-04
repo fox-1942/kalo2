@@ -221,13 +221,8 @@ void movement_of_objects() {
                     break;
 
                 case 4: // Sun
-                    if (indicator.y <= 0) {
-                        move.satellite.x += 2;
-                        move.satellite.y -= 0.7;
-                    } else {
-                        move.satellite.x += 10;
-                        move.satellite.y += 0.7;
-                    }
+                    move.satellite.x += 10;
+                    move.satellite.y += 0.7;
                     break;
             }
             inside = false;  // It gives the possibility to let the satellite get the normal speed in the next iteration.
