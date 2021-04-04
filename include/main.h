@@ -7,20 +7,17 @@
 
 #include "camera.h"
 
-#define resolution 1  // 1: 1920*1080   0: 1366*768
-#define fullscreen 1   // 1: fullscreen  0: windowed
+#define resolution 0  // 1: 1920*1080   0: 1366*768
+#define fullscreen 0   // 1: fullscreen  0: windowed
 
 GLfloat light_position[] = {0, 0, 0, 0};
 GLfloat light_ambient[] = {0.5, 0.5, 0.5, 0};
 GLfloat light_diffuse[] = {0.5, 0.5, 0, 0};
 GLfloat light_specular[] = {1, 1, 1, 0};
 
-World world;
-Rotate rotate;
-Move move;
-
-struct Camera camera;
-struct Action action;
+World world={0};
+Rotate rotate={0};;
+Move move={0};;
 
 struct Action {
     int move_forward;
@@ -40,6 +37,9 @@ struct Action {
     int increase_light;
     int decrease_light;
 };
+
+struct Camera camera={0};
+struct Action action={0};
 
 int WINDOW_WIDTH = 0;
 int WINDOW_HEIGHT = 0;
