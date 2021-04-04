@@ -10,15 +10,6 @@
 #define resolution 0  // 1: 1920*1080   0: 1366*768
 #define fullscreen 0   // 1: fullscreen  0: windowed
 
-GLfloat light_position[] = {0, 0, 0, 0};
-GLfloat light_ambient[] = {0.5, 0.5, 0.5, 0};
-GLfloat light_diffuse[] = {0.5, 0.5, 0, 0};
-GLfloat light_specular[] = {1, 1, 1, 0};
-
-World world={0};
-Rotate rotate={0};;
-Move move={0};;
-
 struct Action {
     int move_forward;
     int move_backward;
@@ -37,6 +28,15 @@ struct Action {
     int increase_light;
     int decrease_light;
 };
+
+GLfloat light_position[] = {0, 0, 0, 0};
+GLfloat light_ambient[] = {0.5, 0.5, 0.5, 0};
+GLfloat light_diffuse[] = {0.5, 0.5, 0, 0};
+GLfloat light_specular[] = {1, 1, 1, 0};
+
+World world={0};
+Rotate rotate={0};
+Move move={0};;
 
 struct Camera camera={0};
 struct Action action={0};
@@ -61,6 +61,5 @@ double distance_a4 = 2000;
 double distance_b4 = 2000;
 int satellite = 0;
 bool inside = false;
-
 
 #endif //KALO_MAIN_H

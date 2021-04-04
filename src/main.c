@@ -203,20 +203,20 @@ void movement_of_objects() {
 
                     if (indicator.y <= 0) {  // if satellite goes against the rotation of the first two planets
                         move.satellite.x += 1.5;  // satelitte losts more speed on the X axis than is the 'else' case
-                        move.satellite.y -= 0.7;
+                        move.satellite.y -= 1;
                     } else {
                         move.satellite.x += 2; // if satellite goes parellel with the rotation of the first two planets
-                        move.satellite.y += 0.7;
+                        move.satellite.y += 1;
                     }
                     break;
                 case 2: // Light Jupiter
                 case 3: // Saturnus
                     if (indicator.y <= 0) {
                         move.satellite.x += 2;
-                        move.satellite.y -= 0.7;
+                        move.satellite.y -= 1;
                     } else {
                         move.satellite.x += 1.5;
-                        move.satellite.y += 0.7;
+                        move.satellite.y += 1;
                     }
                     break;
 
@@ -227,7 +227,7 @@ void movement_of_objects() {
             }
             inside = false;  // It gives the possibility to let the satellite get the normal speed in the next iteration.
         } else {
-            move.satellite.x += 20;
+            move.satellite.x += 15;
         }
 
         satellite = 1;
