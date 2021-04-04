@@ -10,7 +10,7 @@ add_executable(${PROJECT_NAME}
         src/camera.c
         src/draw.c
         src/model.c
-        src/vector_calc.c)
+        )
 
 target_include_directories(${PROJECT_NAME} PUBLIC include)
 

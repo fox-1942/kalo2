@@ -552,3 +552,20 @@ void init_entities(World *world) {
     calc_bounding_box(&world->satellite.model);
 
 }
+
+double vector_length(double min_x, double min_y, double min_z, double max_x, double max_y, double max_z) {
+    double diagonal_x = max_x - min_x;
+    double diagonal_y = max_y - min_y;
+    double diagonal_z = max_z - min_z;
+
+    /* printf("hid: %f %f %f ",diagonal_x, diagonal_y,diagonal_z);
+     printf("Pow-ok: %f %f %f ",pow(diagonal_x, 2), pow(diagonal_y, 2),pow(diagonal_z, 2));
+     printf("Result: %f ",sqrt(pow(diagonal_x, 2) + pow(diagonal_y, 2) + pow(diagonal_z, 2)));*/
+
+    return sqrt(pow(diagonal_x, 2) + pow(diagonal_y, 2) + pow(diagonal_z, 2));
+}
+
+Vertex vector_from_two_vertex(double a_x, double a_y, double a_z, double b_x, double b_y, double b_z) {
+    return (Vertex) {.x =  a_x - b_x, .y = a_y - b_y, .z = a_z - b_z};
+}
+

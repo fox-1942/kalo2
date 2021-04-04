@@ -275,25 +275,20 @@ void draw_environment(World world, Rotate *rotate, Move move) {
     glPopMatrix();
 }
 
-// Determines whether the satellite is inside the planet's filed of gravity. The radius is coming from
-// the bounding box diagonal of the planet.
+// Determines whether the satellite is inside the planet's field of gravity. The radius is coming from
+// the bounding box diagonal of the planet, calculated by the specific method in model.c
 bool is_point_inside_spheres(double x, double y, double z, double x2, double y2, double z2, double radius) {
 
-  /*  printf("---------------------------------------------------------------------------\n");
-    printf("Sat position: %f, %f, %f |",x, y, z);
-    printf(" Planet position: %f, %f, %f",x2, y2, z2);
+    /*printf("---------------------------------------------------------------------------\n");
+      printf("Sat position: %f, %f, %f |",x, y, z);
+      printf(" Planet position: %f, %f, %f",x2, y2, z2);
 
-    printf("\nVector length: %f | radius: %f ",vector_length(x, y, z, x2, y2, z2), radius );
-    if (vector_length(x, y, z, x2, y2, z2) < radius) {
-        printf("--> Inside.\n");
-    } else {
-        printf("--> Outside.\n");
-    }*/
-
-    double diagonal_x = x - x2;
-    double diagonal_y = y - y2;
-    double diagonal_z = z - z2;
-   // printf("Vector: %f, %f, %f \n",diagonal_x, diagonal_y, diagonal_z);
+      printf("\nVector length: %f | radius: %f ",vector_length(x, y, z, x2, y2, z2), radius );
+      if (vector_length(x, y, z, x2, y2, z2) < radius) {
+          printf("--> Inside.\n");
+      } else {
+          printf("--> Outside.\n");
+      }*/
 
     return vector_length(x, y, z, x2, y2, z2) < radius;
 }

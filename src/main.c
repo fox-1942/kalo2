@@ -144,7 +144,6 @@ void movement_of_objects() {
         move.planet2.y = move.planet1.y + 1000;
         move.planet2.z = move.planet1.z - 100;
     }
-
     // Light jupiter
     if (action.move_planet3_in_galaxy == TRUE) {
         degree3 += 0.2;
@@ -180,7 +179,9 @@ void movement_of_objects() {
             move.satellite.z = 400;
         }
 
-        for (int i = 0; i < 4; i++) {
+        // Examining, whether the sat is inside one of the gravity fields or not.
+        int i;
+        for (i = 0; i < 5; i++) {
             if (is_point_inside_spheres(move.satellite.x, move.satellite.y, move.satellite.z,
                                         move.Move[i].x, move.Move[i].y, move.Move[i].z,
                                         world.World[i].model.box.diagonal_length)) {
@@ -189,10 +190,47 @@ void movement_of_objects() {
             }
         }
 
+        // If sat is inside on of the gravitiy fields.
         if (inside) {
-            move.satellite.x += 0;
-            move.satellite.y += 0.6;
-            inside = false;
+            Vertex indicator = vector_from_two_vertex(move.satellite.x, move.satellite.y, move.satellite.z,
+                                                      move.Move[i].x, move.Move[i].y, move.Move[i].z);
+
+            // setting up the effects of gravity fields of the planets, taking the direction
+            // where the satellite comes from also in consideration. Index of "i" indicates a specific planet.
+            switch (i) {
+                case 0:  // Planet 1 - Dark. Jupiter
+                case 1:  // Planet 2 - Moon of Dark. Jupiter
+
+                    if (indicator.y <= 0) {  // if satellite goes against the rotation of the first two planets
+                        move.satellite.x += 1.5;  // satelitte losts more speed on the X axis than is the 'else' case
+                        move.satellite.y -= 0.7;
+                    } else {
+                        move.satellite.x += 2; // if satellite goes parellel with the rotation of the first two planets
+                        move.satellite.y += 0.7;
+                    }
+                    break;
+                case 2: // Light Jupiter
+                case 3: // Saturnus
+                    if (indicator.y <= 0) {
+                        move.satellite.x += 2;
+                        move.satellite.y -= 0.7;
+                    } else {
+                        move.satellite.x += 1.5;
+                        move.satellite.y += 0.7;
+                    }
+                    break;
+
+                case 4: // Sun
+                    if (indicator.y <= 0) {
+                        move.satellite.x += 2;
+                        move.satellite.y -= 0.7;
+                    } else {
+                        move.satellite.x += 10;
+                        move.satellite.y += 0.7;
+                    }
+                    break;
+            }
+            inside = false;  // It gives the possibility to let the satellite get the normal speed in the next iteration.
         } else {
             move.satellite.x += 20;
         }

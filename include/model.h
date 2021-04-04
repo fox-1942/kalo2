@@ -1,11 +1,11 @@
 #ifndef MODEL_H_
 #define MODEL_H_
 
-#include "vector_calc.h"
 #include <stdio.h>
 #include <GL/glut.h>
 #include <stdbool.h>
 #include "SOIL/SOIL.h"
+#include <math.h>
 
 #define TRUE 1
 #define FALSE 0
@@ -21,6 +21,7 @@ typedef struct Vertex {
     double x;
     double y;
     double z;
+
 } Vertex;
 
 struct TextureVertex {
@@ -198,6 +199,10 @@ void scale_model(struct Model *model, double sx, double sy, double sz);
 void init_entities(World *world);
 
 GLuint load_texture(const char *filename);
+
+double vector_length(double min_x, double min_y, double min_z, double max_x, double max_y, double max_z);
+
+Vertex vector_from_two_vertex(double a_x, double a_y, double a_z, double b_x, double b_y, double b_z);
 
 
 #endif
