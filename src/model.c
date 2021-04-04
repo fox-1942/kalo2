@@ -28,7 +28,9 @@ GLuint load_texture(const char *filename) {
 }
 
 
-int count_tokens(const char *text) {
+
+int count_tokens(const char* text)
+{
     int i = 0;
     int is_token = FALSE;
     int count = 0;
@@ -37,7 +39,8 @@ int count_tokens(const char *text) {
         if (is_token == FALSE && text[i] != ' ') {
             ++count;
             is_token = TRUE;
-        } else if (is_token == TRUE && text[i] == ' ') {
+        }
+        else if (is_token == TRUE && text[i] == ' ') {
             is_token = FALSE;
         }
         ++i;
@@ -47,14 +50,15 @@ int count_tokens(const char *text) {
 }
 
 
-void extract_tokens(const char *text, struct TokenArray *token_array) {
+void extract_tokens(const char* text, struct TokenArray* token_array)
+{
     int n_tokens, token_length;
-    char *token;
+    char* token;
     int i;
 
     n_tokens = count_tokens(text);
 
-    token_array->tokens = (char **) malloc(n_tokens * sizeof(char *));
+    token_array->tokens = (char**)malloc(n_tokens * sizeof(char*));
     token_array->n_tokens = 0;
 
     i = 0;
@@ -64,18 +68,20 @@ void extract_tokens(const char *text, struct TokenArray *token_array) {
             token = copy_token(text, i, token_length);
             insert_token(token, token_array);
             i += token_length;
-        } else {
+        }
+        else {
             ++i;
         }
     }
 }
 
 
-char *copy_token(const char *text, int offset, int length) {
-    char *token;
+char* copy_token(const char* text, int offset, int length)
+{
+    char* token;
     int i;
 
-    token = (char *) malloc((length + 1) * sizeof(char));
+    token = (char*)malloc((length + 1) * sizeof(char));
     for (i = 0; i < length; ++i) {
         token[i] = text[offset + i];
     }
@@ -85,13 +91,15 @@ char *copy_token(const char *text, int offset, int length) {
 }
 
 
-void insert_token(const char *token, struct TokenArray *token_array) {
-    token_array->tokens[token_array->n_tokens] = (char *) token;
+void insert_token(const char* token, struct TokenArray* token_array)
+{
+    token_array->tokens[token_array->n_tokens] = (char*)token;
     ++token_array->n_tokens;
 }
 
 
-int calc_token_length(const char *text, int start_index) {
+int calc_token_length(const char* text, int start_index)
+{
     int end_index, length;
 
     end_index = start_index;
@@ -104,7 +112,8 @@ int calc_token_length(const char *text, int start_index) {
 }
 
 
-void free_tokens(struct TokenArray *token_array) {
+void free_tokens(struct TokenArray* token_array)
+{
     int i;
 
     for (i = 0; i < token_array->n_tokens; ++i) {
@@ -113,7 +122,10 @@ void free_tokens(struct TokenArray *token_array) {
     free(token_array->tokens);
 }
 
-void print_model_info(const struct Model *model) {
+
+
+void print_model_info(const struct Model* model)
+{
     printf("Vertices: %d\n", model->n_vertices);
     printf("Texture vertices: %d\n", model->n_texture_vertices);
     printf("Normals: %d\n", model->n_normals);
@@ -121,7 +133,9 @@ void print_model_info(const struct Model *model) {
     printf("Quads: %d\n", model->n_quads);
 }
 
-void free_model(struct Model *model) {
+
+void free_model(struct Model* model)
+{
     free(model->vertices);
     free(model->texture_vertices);
     free(model->normals);
@@ -130,7 +144,8 @@ void free_model(struct Model *model) {
 }
 
 
-void count_elements(FILE *file, struct Model *model) {
+void count_elements(FILE* file, struct Model* model)
+{
     char line[LINE_BUFFER_SIZE];
 
     init_model_counters(model);
@@ -141,7 +156,8 @@ void count_elements(FILE *file, struct Model *model) {
 }
 
 
-void read_elements(FILE *file, struct Model *model) {
+void read_elements(FILE* file, struct Model* model)
+{
     char line[LINE_BUFFER_SIZE];
 
     init_model_counters(model);
@@ -157,7 +173,8 @@ void read_elements(FILE *file, struct Model *model) {
 }
 
 
-void init_model_counters(Model *model) {
+void init_model_counters(Model* model)
+{
     model->n_vertices = 0;
     model->n_texture_vertices = 0;
     model->n_normals = 0;
@@ -166,7 +183,8 @@ void init_model_counters(Model *model) {
 }
 
 
-void clear_comment(char *line) {
+void clear_comment(char* line)
+{
     int i = 0;
     while (line[i] != 0 && line[i] != '#' && line[i] != 0x0D && line[i] != 0x0A) {
         ++i;
@@ -177,9 +195,11 @@ void clear_comment(char *line) {
     }
 }
 
-void count_element_in_line(const char *line, Model *model) {
+
+void count_element_in_line(const char* line, Model* model)
+{
     struct TokenArray token_array;
-    char *first_token;
+    char* first_token;
 
     extract_tokens(line, &token_array);
 
@@ -187,16 +207,21 @@ void count_element_in_line(const char *line, Model *model) {
         first_token = token_array.tokens[0];
         if (strcmp(first_token, "v") == 0) {
             ++model->n_vertices;
-        } else if (strcmp(first_token, "vt") == 0) {
+        }
+        else if (strcmp(first_token, "vt") == 0) {
             ++model->n_texture_vertices;
-        } else if (strcmp(first_token, "vn") == 0) {
+        }
+        else if (strcmp(first_token, "vn") == 0) {
             ++model->n_normals;
-        } else if (strcmp(first_token, "f") == 0) {
+        }
+        else if (strcmp(first_token, "f") == 0) {
             if (token_array.n_tokens == 1 + 3) {
                 ++model->n_triangles;
-            } else if (token_array.n_tokens == 1 + 4) {
+            }
+            else if (token_array.n_tokens == 1 + 4) {
                 ++model->n_quads;
-            } else {
+            }
+            else {
                 //printf("WARN: Invalid number of face elements! %d\n", token_array.n_tokens);
             }
         }
@@ -206,11 +231,12 @@ void count_element_in_line(const char *line, Model *model) {
 }
 
 
-void read_element_from_line(const char *line, Model *model) {
+void read_element_from_line(const char* line, Model* model)
+{
     struct TokenArray token_array;
-    char *first_token;
-    struct Triangle *triangle;
-    struct Quad *quad;
+    char* first_token;
+    struct Triangle* triangle;
+    struct Quad* quad;
 
     extract_tokens(line, &token_array);
 
@@ -219,13 +245,16 @@ void read_element_from_line(const char *line, Model *model) {
         if (strcmp(first_token, "v") == 0) {
             read_vertex(&token_array, &(model->vertices[model->n_vertices]));
             ++model->n_vertices;
-        } else if (strcmp(first_token, "vt") == 0) {
+        }
+        else if (strcmp(first_token, "vt") == 0) {
             read_texture_vertex(&token_array, &(model->texture_vertices[model->n_texture_vertices]));
             ++model->n_texture_vertices;
-        } else if (strcmp(first_token, "vn") == 0) {
+        }
+        else if (strcmp(first_token, "vn") == 0) {
             read_normal(&token_array, &(model->normals[model->n_normals]));
             ++model->n_normals;
-        } else if (strcmp(first_token, "f") == 0) {
+        }
+        else if (strcmp(first_token, "f") == 0) {
             if (token_array.n_tokens == 1 + 3) {
                 triangle = &(model->triangles[model->n_triangles]);
                 read_triangle(&token_array, triangle);
@@ -233,7 +262,8 @@ void read_element_from_line(const char *line, Model *model) {
                     printf("line: '%s'\n", line);
                 }
                 ++model->n_triangles;
-            } else if (token_array.n_tokens == 1 + 4) {
+            }
+            else if (token_array.n_tokens == 1 + 4) {
                 quad = &(model->quads[model->n_quads]);
                 read_quad(&token_array, quad);
                 if (is_valid_quad(quad, model) == FALSE) {
@@ -248,37 +278,41 @@ void read_element_from_line(const char *line, Model *model) {
 }
 
 
-void create_arrays(struct Model *model) {
-    model->vertices = (struct Vertex *) malloc((model->n_vertices + 1) * sizeof(struct Vertex));
-    model->texture_vertices = (struct TextureVertex *) malloc(
-            (model->n_texture_vertices + 1) * sizeof(struct TextureVertex));
-    model->normals = (struct Vertex *) malloc((model->n_normals + 1) * sizeof(struct Vertex));
-    model->triangles = (struct Triangle *) malloc(model->n_triangles * sizeof(struct Triangle));
-    model->quads = (struct Quad *) malloc(model->n_quads * sizeof(struct Quad));
+void create_arrays(struct Model* model)
+{
+    model->vertices = (struct Vertex*)malloc((model->n_vertices + 1) * sizeof(struct Vertex));
+    model->texture_vertices = (struct TextureVertex*)malloc((model->n_texture_vertices + 1) * sizeof(struct TextureVertex));
+    model->normals = (struct Vertex*)malloc((model->n_normals + 1) * sizeof(struct Vertex));
+    model->triangles = (struct Triangle*)malloc(model->n_triangles * sizeof(struct Triangle));
+    model->quads = (struct Quad*)malloc(model->n_quads * sizeof(struct Quad));
 }
 
 
-void read_vertex(const struct TokenArray *token_array, struct Vertex *vertex) {
+void read_vertex(const struct TokenArray* token_array, struct Vertex* vertex)
+{
     vertex->x = atof(token_array->tokens[1]);
     vertex->y = atof(token_array->tokens[2]);
     vertex->z = atof(token_array->tokens[3]);
 }
 
 
-void read_texture_vertex(const struct TokenArray *token_array, struct TextureVertex *texture_vertex) {
+void read_texture_vertex(const struct TokenArray* token_array, struct TextureVertex* texture_vertex)
+{
     texture_vertex->u = atof(token_array->tokens[1]);
     texture_vertex->v = atof(token_array->tokens[2]);
 }
 
 
-void read_normal(const struct TokenArray *token_array, struct Vertex *normal) {
+void read_normal(const struct TokenArray* token_array, struct Vertex* normal)
+{
     normal->x = atof(token_array->tokens[1]);
     normal->y = atof(token_array->tokens[2]);
     normal->z = atof(token_array->tokens[3]);
 }
 
 
-void read_triangle(const struct TokenArray *token_array, struct Triangle *triangle) {
+void read_triangle(const struct TokenArray* token_array, struct Triangle* triangle)
+{
     int i;
 
     for (i = 0; i < 3; ++i) {
@@ -287,7 +321,8 @@ void read_triangle(const struct TokenArray *token_array, struct Triangle *triang
 }
 
 
-void read_quad(const struct TokenArray *token_array, struct Quad *quad) {
+void read_quad(const struct TokenArray* token_array, struct Quad* quad)
+{
     int i;
 
     for (i = 0; i < 4; ++i) {
@@ -296,9 +331,10 @@ void read_quad(const struct TokenArray *token_array, struct Quad *quad) {
 }
 
 
-void read_face_point(const char *text, struct FacePoint *face_point) {
+void read_face_point(const char* text, struct FacePoint* face_point)
+{
     int delimiter_count;
-    const char *token;
+    const char* token;
     int length;
 
     token = text;
@@ -308,24 +344,28 @@ void read_face_point(const char *text, struct FacePoint *face_point) {
         face_point->vertex_index = read_next_index(token, &length);
         face_point->texture_index = INVALID_VERTEX_INDEX;
         face_point->normal_index = INVALID_VERTEX_INDEX;
-    } else if (delimiter_count == 1) {
+    }
+    else if (delimiter_count == 1) {
         face_point->vertex_index = read_next_index(token, &length);
         token += length;
         face_point->texture_index = read_next_index(token, &length);
         face_point->normal_index = INVALID_VERTEX_INDEX;
-    } else if (delimiter_count == 2) {
+    }
+    else if (delimiter_count == 2) {
         face_point->vertex_index = read_next_index(token, &length);
         token += length;
         face_point->texture_index = read_next_index(token, &length);
         token += length;
         face_point->normal_index = read_next_index(token, &length);
-    } else {
+    }
+    else {
         printf("ERROR: Invalid face token! '%s'", text);
     }
 }
 
 
-int count_face_delimiters(const char *text) {
+int count_face_delimiters(const char* text)
+{
     int count, i;
 
     count = 0;
@@ -341,7 +381,8 @@ int count_face_delimiters(const char *text) {
 }
 
 
-int read_next_index(const char *text, int *length) {
+int read_next_index(const char* text, int* length)
+{
     int i, j, index;
     char buffer[32];
 
@@ -369,7 +410,8 @@ int read_next_index(const char *text, int *length) {
 }
 
 
-int is_digit(char c) {
+int is_digit(char c)
+{
     if (c >= '0' && c <= '9') {
         return TRUE;
     }
@@ -377,7 +419,8 @@ int is_digit(char c) {
 }
 
 
-int is_valid_triangle(const struct Triangle *triangle, const struct Model *model) {
+int is_valid_triangle(const struct Triangle* triangle, const struct Model* model)
+{
     int k;
 
     for (k = 0; k < 3; ++k) {
@@ -398,7 +441,8 @@ int is_valid_triangle(const struct Triangle *triangle, const struct Model *model
 }
 
 
-int is_valid_quad(const struct Quad *quad, const struct Model *model) {
+int is_valid_quad(const struct Quad* quad, const struct Model* model)
+{
     int k;
     int vertex_index, texture_index, normal_index;
 
@@ -475,7 +519,8 @@ void calc_bounding_box(struct Model *model) {
 
 }
 
-void scale_model(struct Model *model, double sx, double sy, double sz) {
+void scale_model(struct Model* model, double sx, double sy, double sz)
+{
     int i;
 
     for (i = 0; i < model->n_vertices; ++i) {
@@ -485,8 +530,10 @@ void scale_model(struct Model *model, double sx, double sy, double sz) {
     }
 }
 
-int load_model(const char *filename, Model *model) {
-    FILE *obj_file = fopen(filename, "r");
+
+int load_model(const char* filename, Model* model)
+{
+    FILE* obj_file = fopen(filename, "r");
     printf("Load model '%s' ...\n", filename);
     if (obj_file == NULL) {
         printf("ERROR: Unable to open '%s' file!\n", filename);
@@ -498,8 +545,8 @@ int load_model(const char *filename, Model *model) {
     create_arrays(model);
     printf("Read ..\n");
     read_elements(obj_file, model);
-
     fclose(obj_file);
+
 
     return TRUE;
 }
@@ -562,4 +609,3 @@ double vector_length(double min_x, double min_y, double min_z, double max_x, dou
 Vertex vector_from_two_vertex(double a_x, double a_y, double a_z, double b_x, double b_y, double b_z) {
     return (Vertex) {.x =  a_x - b_x, .y = a_y - b_y, .z = a_z - b_z};
 }
-
