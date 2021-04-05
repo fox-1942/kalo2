@@ -17,11 +17,12 @@ GLuint load_texture(const char *filename) {
     glBindTexture(GL_TEXTURE_2D, texture_name);
     glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, (Pixel *) image);
 
-    glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);
-    glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);
+    glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+    glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
     glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
     glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
     glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
+
 
     SOIL_free_image_data(image);
     return texture_name;
@@ -546,6 +547,7 @@ void init_entities(World *world) {
     calc_bounding_box(&world->planet3.model);
     calc_bounding_box(&world->planet4.model);
     calc_bounding_box(&world->sun.model);
+    world->sun.model.box.diagonal_length-=10; // small optimalization for better demonstration.
 }
 
 double vector_length(double min_x, double min_y, double min_z, double max_x, double max_y, double max_z) {

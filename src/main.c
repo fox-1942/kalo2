@@ -59,14 +59,8 @@ void specialFunc(int key, int x, int y) {
         case GLUT_KEY_F1:
             if (help_on) {
                 help_on = 0;
-
-                glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT, light_ambient);
-                glLightModelfv(GL_LIGHT_MODEL_AMBIENT, light_ambient);
             } else {
                 help_on = 1;
-                GLfloat ones[] = {1, 1, 1, 1};
-                glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT, ones);
-                glLightModelfv(GL_LIGHT_MODEL_AMBIENT, ones);
             }
     }
 }
@@ -79,20 +73,17 @@ void reshape(GLsizei width, GLsizei height) {
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
 
-    if (!help_on)
+    if (!help_on) {
         gluPerspective(50.0, (GLdouble) width / (GLdouble) height, 0.1, 20000.0);
-    else
+    } else {
         gluOrtho2D(0, width, height, 0);
+    }
+
 }
 
 void draw_help() {
-
-    GLfloat ones[] = {1, 1, 1, 1};
-    glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT, ones);
-    glLightModelfv(GL_LIGHT_MODEL_AMBIENT, ones);
-
-
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
     glEnable(GL_TEXTURE_2D);
@@ -132,14 +123,14 @@ void movement_of_objects() {
         double angle = degree_to_radian(degree1);
         move.planet1.x = cos(angle) * distance_a1;
         move.planet1.y = sin(angle) * distance_b1;
-        move.planet1.z = 500;
+        move.planet1.z = 0;
         move.planet2.x = move.planet1.x + 1000;
         move.planet2.y = move.planet1.y + 1000;
         move.planet2.z = move.planet1.z - 100;
     } else if (move.planet1.x == 0) {
-        move.planet1.x = 3768;
-        move.planet1.y = 1341;
-        move.planet1.z = 500;
+        move.planet1.x = 4000;
+        move.planet1.y = 0;
+        move.planet1.z = 0;
         move.planet2.x = move.planet1.x + 1000;
         move.planet2.y = move.planet1.y + 1000;
         move.planet2.z = move.planet1.z - 100;
@@ -181,10 +172,11 @@ void movement_of_objects() {
 
         // Examining, whether the sat is inside one of the gravity fields or not.
         int i;
-        for (i = 0; i < 5; i++) {
+        for (i = 0; i <= 4; i++) {
             if (is_point_inside_spheres(move.satellite.x, move.satellite.y, move.satellite.z,
                                         move.Move[i].x, move.Move[i].y, move.Move[i].z,
-                                        world.World[i].model.box.diagonal_length)) {
+                                        world.World[i].model.box.diagonal_length+10)) {
+
                 inside = true;
                 break;
             }
@@ -202,32 +194,32 @@ void movement_of_objects() {
                 case 1:  // Planet 2 - Moon of Dark. Jupiter
 
                     if (indicator.y <= 0) {  // if satellite goes against the rotation of the first two planets
-                        move.satellite.x += 1.5;  // satelitte losts more speed on the X axis than is the 'else' case
+                        move.satellite.x += 1.0;  // satelitte losts more speed on the X axis than is the 'else' case
                         move.satellite.y -= 1;
                     } else {
-                        move.satellite.x += 2; // if satellite goes parellel with the rotation of the first two planets
+                        move.satellite.x += 1.5; // if satellite goes parellel with the rotation of the first two planets
                         move.satellite.y += 1;
                     }
                     break;
                 case 2: // Light Jupiter
                 case 3: // Saturnus
                     if (indicator.y <= 0) {
-                        move.satellite.x += 2;
+                        move.satellite.x += 1.5;
                         move.satellite.y -= 1;
                     } else {
-                        move.satellite.x += 1.5;
+                        move.satellite.x += 1.0;
                         move.satellite.y += 1;
                     }
                     break;
 
                 case 4: // Sun
-                    move.satellite.x += 10;
-                    move.satellite.y += 0.7;
+                    move.satellite.x += 5;
+                    move.satellite.y += 0.3;
                     break;
             }
             inside = false;  // It gives the possibility to let the satellite get the normal speed in the next iteration.
         } else {
-            move.satellite.x += 15;
+            move.satellite.x += 7;
         }
 
         satellite = 1;
@@ -255,18 +247,22 @@ void display() {
         update_camera_position(&camera, elapsed_time);
         set_view_point(&camera);
 
-        glLightfv(GL_LIGHT1, GL_POSITION, light_position);
-        glLightfv(GL_LIGHT1, GL_AMBIENT, light_ambient);
-        glLightfv(GL_LIGHT1, GL_SPECULAR, light_specular);
-        glLightfv(GL_LIGHT1, GL_DIFFUSE, light_diffuse);
-        glMaterialfv(GL_FRONT, GL_SPECULAR, light_ambient);
-        glEnable(GL_LIGHT1);
+        /* glLightfv(GL_LIGHT1, GL_POSITION, light_position);
+         glLightfv(GL_LIGHT1, GL_AMBIENT, light_ambient);
+         glLightfv(GL_LIGHT1, GL_SPECULAR, light_specular);
+         glLightfv(GL_LIGHT1, GL_DIFFUSE, light_diffuse);
+         glMaterialfv(GL_FRONT, GL_SPECULAR, light_ambient);
+         glEnable(GL_LIGHT1);
+         */
+
+        GLfloat ones[] = {1, 1, 1, 1};
+        glMaterialfv(GL_FRONT, GL_AMBIENT, ones);
+        glLightModelfv(GL_LIGHT_MODEL_AMBIENT, ones);
 
         draw_environment(&world, &rotate, &move);
         movement_of_objects();
         rotation_of_objects();
         reshape(WINDOW_WIDTH, WINDOW_HEIGHT);
-
 
         glutSwapBuffers();
 
@@ -395,9 +391,11 @@ void idle() {
     glutPostRedisplay();
 }
 
-void change_satellite_texture() {
+// The delay of resetting e_time means the time of the led operation on the sat.
+// Texture change in the draw_environment() method.
+void set_satellite_led_working_time() {
     e_time = calc_elapsed_time2();
-    glutTimerFunc(3000, change_satellite_texture, 0);
+    glutTimerFunc(3000, set_satellite_led_working_time, 0);
 }
 
 void set_callbacks() {
@@ -409,7 +407,7 @@ void set_callbacks() {
     glutMotionFunc(motion_handler);
     glutIdleFunc(idle);
     glutSpecialFunc(specialFunc);
-    glutTimerFunc(0, change_satellite_texture, 0);
+    glutTimerFunc(0, set_satellite_led_working_time, 0);
 
     if (fullscreen == 1) { glutFullScreen(); }
 }
@@ -429,8 +427,8 @@ void initialize() {
     glEnable(GL_DEPTH_TEST);
     glEnable(GL_COLOR_MATERIAL);
     glClearDepth(1.0);
+
     glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, light_ambient);
-    glEnable(GL_LIGHTING);
     help = load_texture("..\\textures\\help.png");
     init_entities(&world);
     glEnable(GL_TEXTURE_2D);

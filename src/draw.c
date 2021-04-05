@@ -95,7 +95,7 @@ void draw_bounding_box(const Model *model) {
 void draw_model(const Model *model) {
     //draw_triangles(model);
     draw_quads(model);
-    draw_bounding_box(model);
+   // draw_bounding_box(model);
 
 }
 
@@ -274,11 +274,12 @@ void draw_environment(World *world, Rotate *rotate, Move *move) {
     glTranslatef(move->satellite.x, move->satellite.y, move->satellite.z);
     glMaterialfv(GL_FRONT, GL_AMBIENT, world->satellite.material_ambient);
 
+    // switching texture if two seconds lasts
+    // e_time variable is reset in change_satellite_texture. The delay
+    // of resetting e_time means the blinked interval of the sat led.
     double r = calc_elapsed_time2();
-    printf("%f\n", r);
     if (r - e_time > 2000) {
         glBindTexture(GL_TEXTURE_2D, world->satellite.texture2);
-        printf("Bennt.----------------------------\n");
     } else {
         glBindTexture(GL_TEXTURE_2D, world->satellite.texture);
     }
