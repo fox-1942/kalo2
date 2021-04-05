@@ -504,7 +504,6 @@ int load_model(const char *filename, Model *model) {
     return TRUE;
 }
 
-
 void init_entities(World *world) {
     //Load the planet1 object and texture.
     load_model("..\\objects\\geoid.obj", &world->planet1.model);
@@ -534,6 +533,8 @@ void init_entities(World *world) {
     //Load the satellite object and texture.
     load_model("..\\objects\\satellite.obj", &world->satellite.model);
     world->satellite.texture = load_texture("..\\textures\\satellite.jpg");
+    world->satellite.texture2 = load_texture("..\\textures\\satellite2.jpg");
+
     scale_model(&world->satellite.model, 12, 12, 12);
 
     //Load the skybox texture.

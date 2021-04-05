@@ -38,6 +38,7 @@ World world={0};
 Rotate rotate={0};
 Move move={0};;
 
+double cTime=0;
 struct Camera camera={0};
 struct Action action={0};
 

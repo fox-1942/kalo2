@@ -262,7 +262,7 @@ void display() {
         glMaterialfv(GL_FRONT, GL_SPECULAR, light_ambient);
         glEnable(GL_LIGHT1);
 
-        draw_environment(world, &rotate, move);
+        draw_environment(&world, &rotate, &move);
         movement_of_objects();
         rotation_of_objects();
         reshape(WINDOW_WIDTH, WINDOW_HEIGHT);
@@ -395,6 +395,17 @@ void idle() {
     glutPostRedisplay();
 }
 
+void change_satellite_texture() {
+
+
+    glPushMatrix();
+    glBindTexture(GL_TEXTURE_2D, world.satellite.texture2);
+    draw_model(&world.satellite.model);
+    glPopMatrix();
+
+    glutTimerFunc(2000/60, change_satellite_texture, 0);
+}
+
 void set_callbacks() {
     glutDisplayFunc(display);
     glutReshapeFunc(reshape);
@@ -404,9 +415,9 @@ void set_callbacks() {
     glutMotionFunc(motion_handler);
     glutIdleFunc(idle);
     glutSpecialFunc(specialFunc);
+   // glutTimerFunc(0, change_satellite_texture, 0);
 
-    if (fullscreen == 1)
-        glutFullScreen();
+    if (fullscreen == 1) { glutFullScreen(); }
 }
 
 
@@ -433,7 +444,6 @@ void initialize() {
 
 
 int main(int argc, char **argv) {
-
     glutInit(&argc, argv);
     if (resolution == 1) { glutInitWindowSize(1920, 1080); }
     else { glutInitWindowSize(1366, 768); }

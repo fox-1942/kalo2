@@ -194,35 +194,44 @@ void draw_skybox_top(Entity skybox) {
     glPopMatrix();
 }
 
+double e_time = 0;
 
-void draw_environment(World world, Rotate *rotate, Move move) {
+double calc_elapsed_time2() {
+    int current_time;
+    double elapsed_time;
+    current_time = glutGet(GLUT_ELAPSED_TIME);
+    elapsed_time = (double) current_time;
+    return elapsed_time;
+}
+
+void draw_environment(World *world, Rotate *rotate, Move *move) {
 
     glEnable(GL_TEXTURE_2D);
 
     //Draw the bottom skybox.
-    draw_skybox_bottom(world.skybox);
+    draw_skybox_bottom(world->skybox);
 
     //Draw the top skybox.
-    draw_skybox_top(world.skybox);
+    draw_skybox_top(world->skybox);
 
     //Draw the sun.
     glPushMatrix();
     glTranslatef(0, 0, 0);
-    glMaterialfv(GL_FRONT, GL_AMBIENT, world.sun.material_ambient);
-    glBindTexture(GL_TEXTURE_2D, world.sun.texture);
+    glMaterialfv(GL_FRONT, GL_AMBIENT, world->sun.material_ambient);
+    glBindTexture(GL_TEXTURE_2D, world->sun.texture);
     glScalef(1.0f, 1.0f, 1.0f);
     glRotatef(rotate->sun_rotation, 1, 1, 1);
-    draw_model(&world.sun.model);
+    draw_model(&world->sun.model);
     glPopMatrix();
 
     //Draw the planet1. Dark Jupiter
     glPushMatrix();
-    glTranslatef(move.planet1.x, move.planet1.y, move.planet1.z);
-    glMaterialfv(GL_FRONT, GL_AMBIENT, world.planet1.material_ambient);
-    glBindTexture(GL_TEXTURE_2D, world.planet1.texture);
+    glTranslatef(move->planet1.x, move->planet1.y, move->planet1.z);
+    glMaterialfv(GL_FRONT, GL_AMBIENT, world->planet1.material_ambient);
+    glBindTexture(GL_TEXTURE_2D, world->planet1.texture);
     glScalef(1.0f, 1.0f, 1.0f);
     glRotatef(rotate->planet1_rotation, 0, 0, 1);
-    draw_model(&world.planet1.model);
+    draw_model(&world->planet1.model);
 
     glPopMatrix();
 
@@ -230,48 +239,59 @@ void draw_environment(World world, Rotate *rotate, Move move) {
     //Draw the planet2, it is the moon of the dark Jupiter, so it is relative to the movement of planet 1.
     glPushMatrix();
 
-    glTranslatef(move.planet1.x + 1000, move.planet1.y + 1000, move.planet1.z - 100);
-    glMaterialfv(GL_FRONT, GL_AMBIENT, world.planet2.material_ambient);
-    glBindTexture(GL_TEXTURE_2D, world.planet2.texture);
+    glTranslatef(move->planet1.x + 1000, move->planet1.y + 1000, move->planet1.z - 100);
+    glMaterialfv(GL_FRONT, GL_AMBIENT, world->planet2.material_ambient);
+    glBindTexture(GL_TEXTURE_2D, world->planet2.texture);
     glScalef(1.0f, 1.0f, 1.0f);
     glRotatef(180, 0, 0, 1);
     glRotatef(rotate->planet2_rotation, 0, 0, 1);
-    draw_model(&world.planet2.model);
+    draw_model(&world->planet2.model);
 
     glPopMatrix();
 
 
     //Draw the planet3.   Light Jupiter
     glPushMatrix();
-    glTranslatef(move.planet3.x, move.planet3.y, move.planet3.z);
-    glMaterialfv(GL_FRONT, GL_AMBIENT, world.planet3.material_ambient);
-    glBindTexture(GL_TEXTURE_2D, world.planet3.texture);
+    glTranslatef(move->planet3.x, move->planet3.y, move->planet3.z);
+    glMaterialfv(GL_FRONT, GL_AMBIENT, world->planet3.material_ambient);
+    glBindTexture(GL_TEXTURE_2D, world->planet3.texture);
     glScalef(1.0f, 1.0f, 1.0f);
     glRotatef(rotate->planet3_rotation, 0, 0, -1);
-    draw_model(&world.planet3.model);
+    draw_model(&world->planet3.model);
     glPopMatrix();
 
     //Draw the planet4. Saturnus
     glPushMatrix();
-    glTranslatef(move.planet4.x, move.planet4.y, move.planet4.z);
-    glMaterialfv(GL_FRONT, GL_AMBIENT, world.planet4.material_ambient);
-    glBindTexture(GL_TEXTURE_2D, world.planet4.texture);
+    glTranslatef(move->planet4.x, move->planet4.y, move->planet4.z);
+    glMaterialfv(GL_FRONT, GL_AMBIENT, world->planet4.material_ambient);
+    glBindTexture(GL_TEXTURE_2D, world->planet4.texture);
     glScalef(1.0f, 1.0f, 1.0f);
     glRotatef(rotate->planet4_rotation, 0, 0, -1);
-    draw_model(&world.planet4.model);
+    draw_model(&world->planet4.model);
     glPopMatrix();
 
     //Draw the satellite.
     glPushMatrix();
-    glTranslatef(move.satellite.x, move.satellite.y, move.satellite.z);
-    glMaterialfv(GL_FRONT, GL_AMBIENT, world.satellite.material_ambient);
-    glBindTexture(GL_TEXTURE_2D, world.satellite.texture);
+    glTranslatef(move->satellite.x, move->satellite.y, move->satellite.z);
+    glMaterialfv(GL_FRONT, GL_AMBIENT, world->satellite.material_ambient);
+
+
+    double r=calc_elapsed_time2();
+    printf("%f\n",r);
+    if (r - e_time > 3000) {
+        //glBindTexture(GL_TEXTURE_2D, 0);
+        glBindTexture(GL_TEXTURE_2D, world->satellite.texture2);
+        printf("Bennt.----------------------------\n");
+        e_time = calc_elapsed_time2();
+    } else {
+        glBindTexture(GL_TEXTURE_2D, world->satellite.texture);
+    }
 
     glScalef(1.0f, 1.0f, 1.0f);
     glRotatef(90, 1, 0, 0);
     glRotatef(270, 0, 1, 0);
     glRotatef(rotate->satellite_rotation, 0, 0, 1);
-    draw_model(&world.satellite.model);
+    draw_model(&world->satellite.model);
     glPopMatrix();
 }
 
@@ -292,3 +312,4 @@ bool is_point_inside_spheres(double x, double y, double z, double x2, double y2,
 
     return vector_length(x, y, z, x2, y2, z2) < radius;
 }
+

@@ -57,8 +57,10 @@ void draw_skybox_bottom(Entity skybox);
 
 
 //Draw the entitys to the world.
-void draw_environment(World world, Rotate *rotate, Move move);
+void draw_environment(World *world, Rotate *rotate, Move *move);
 
 bool is_point_inside_spheres(double x, double y, double z, double x2, double y2, double z2, double radius);
+
+double calc_elapsed_time2();
 
 #endif
