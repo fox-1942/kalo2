@@ -396,14 +396,8 @@ void idle() {
 }
 
 void change_satellite_texture() {
-
-
-    glPushMatrix();
-    glBindTexture(GL_TEXTURE_2D, world.satellite.texture2);
-    draw_model(&world.satellite.model);
-    glPopMatrix();
-
-    glutTimerFunc(2000/60, change_satellite_texture, 0);
+    e_time = calc_elapsed_time2();
+    glutTimerFunc(3000, change_satellite_texture, 0);
 }
 
 void set_callbacks() {
@@ -415,7 +409,7 @@ void set_callbacks() {
     glutMotionFunc(motion_handler);
     glutIdleFunc(idle);
     glutSpecialFunc(specialFunc);
-   // glutTimerFunc(0, change_satellite_texture, 0);
+    glutTimerFunc(0, change_satellite_texture, 0);
 
     if (fullscreen == 1) { glutFullScreen(); }
 }

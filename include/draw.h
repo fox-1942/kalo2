@@ -35,6 +35,8 @@ typedef union Move {
     Position Move[6];
 } Move;
 
+double e_time;
+
 //Draw the model.
 void draw_model(const struct Model *model);
 

@@ -194,7 +194,6 @@ void draw_skybox_top(Entity skybox) {
     glPopMatrix();
 }
 
-double e_time = 0;
 
 double calc_elapsed_time2() {
     int current_time;
@@ -275,14 +274,11 @@ void draw_environment(World *world, Rotate *rotate, Move *move) {
     glTranslatef(move->satellite.x, move->satellite.y, move->satellite.z);
     glMaterialfv(GL_FRONT, GL_AMBIENT, world->satellite.material_ambient);
 
-
-    double r=calc_elapsed_time2();
-    printf("%f\n",r);
-    if (r - e_time > 3000) {
-        //glBindTexture(GL_TEXTURE_2D, 0);
+    double r = calc_elapsed_time2();
+    printf("%f\n", r);
+    if (r - e_time > 2000) {
         glBindTexture(GL_TEXTURE_2D, world->satellite.texture2);
         printf("Bennt.----------------------------\n");
-        e_time = calc_elapsed_time2();
     } else {
         glBindTexture(GL_TEXTURE_2D, world->satellite.texture);
     }
