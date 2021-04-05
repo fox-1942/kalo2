@@ -1,6 +1,5 @@
-//
-// Created by Fox-1942 on 01/04/2021.
-//
+/* main.h is created for giving a better outlook of main.c*/
+
 
 #ifndef KALO_MAIN_H
 #define KALO_MAIN_H
@@ -29,14 +28,10 @@ struct Action {
     int decrease_light;
 };
 
-GLfloat light_position[] = {0, 0, 0, 0};
 GLfloat light_ambient[] = {0.5, 0.5, 0.5, 0};
-GLfloat light_diffuse[] = {0.5, 0.5, 0, 0};
-GLfloat light_specular[] = {1, 1, 1, 0};
-
 World world={0};
 Rotate rotate={0};
-Move move={0};;
+Move move={0};
 
 struct Camera camera={0};
 struct Action action={0};

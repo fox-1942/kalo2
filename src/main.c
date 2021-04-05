@@ -247,14 +247,6 @@ void display() {
         update_camera_position(&camera, elapsed_time);
         set_view_point(&camera);
 
-        /* glLightfv(GL_LIGHT1, GL_POSITION, light_position);
-         glLightfv(GL_LIGHT1, GL_AMBIENT, light_ambient);
-         glLightfv(GL_LIGHT1, GL_SPECULAR, light_specular);
-         glLightfv(GL_LIGHT1, GL_DIFFUSE, light_diffuse);
-         glMaterialfv(GL_FRONT, GL_SPECULAR, light_ambient);
-         glEnable(GL_LIGHT1);
-         */
-
         GLfloat ones[] = {1, 1, 1, 1};
         glMaterialfv(GL_FRONT, GL_AMBIENT, ones);
         glLightModelfv(GL_LIGHT_MODEL_AMBIENT, ones);
