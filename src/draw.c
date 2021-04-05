@@ -195,7 +195,7 @@ void draw_skybox_top(Entity skybox) {
 }
 
 
-double calc_elapsed_time2() {
+double calc_elapsed_for_led() {
     int current_time;
     double elapsed_time;
     current_time = glutGet(GLUT_ELAPSED_TIME);
@@ -277,7 +277,7 @@ void draw_environment(World *world, Rotate *rotate, Move *move) {
     // switching texture if two seconds lasts
     // e_time variable is reset in change_satellite_texture. The delay
     // of resetting e_time means the blinked interval of the sat led.
-    double r = calc_elapsed_time2();
+    double r = calc_elapsed_for_led();
     if (r - e_time > 2000) {
         glBindTexture(GL_TEXTURE_2D, world->satellite.texture2);
     } else {

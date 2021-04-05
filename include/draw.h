@@ -63,6 +63,6 @@ void draw_environment(World *world, Rotate *rotate, Move *move);
 
 bool is_point_inside_spheres(double x, double y, double z, double x2, double y2, double z2, double radius);
 
-double calc_elapsed_time2();
+double calc_elapsed_for_led();
 
 #endif

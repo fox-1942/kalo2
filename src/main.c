@@ -386,7 +386,7 @@ void idle() {
 // The delay of resetting e_time means the time of the led operation on the sat.
 // Texture change in the draw_environment() method.
 void set_satellite_led_working_time() {
-    e_time = calc_elapsed_time2();
+    e_time = calc_elapsed_for_led();
     glutTimerFunc(3000, set_satellite_led_working_time, 0);
 }
 
