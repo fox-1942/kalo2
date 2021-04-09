@@ -68,7 +68,6 @@ void specialFunc(int key, int x, int y) {
 void reshape(GLsizei width, GLsizei height) {
     WINDOW_WIDTH = width;
     WINDOW_HEIGHT = height;
-
     glViewport(0, 0, width, height);
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
@@ -176,7 +175,6 @@ void movement_of_objects() {
             if (is_point_inside_spheres(move.satellite.x, move.satellite.y, move.satellite.z,
                                         move.Move[i].x, move.Move[i].y, move.Move[i].z,
                                         world.World[i].model.box.diagonal_length+10)) {
-
                 inside = true;
                 break;
             }
@@ -237,28 +235,24 @@ void movement_of_objects() {
 void display() {
     if (!help_on) {
         double elapsed_time;
-
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
         glMatrixMode(GL_MODELVIEW);
         glLoadIdentity();
-
         elapsed_time = calc_elapsed_time();
         update_camera_position(&camera, elapsed_time);
         set_view_point(&camera);
 
-        GLfloat ones[] = {1, 1, 1, 1};
-        glMaterialfv(GL_FRONT, GL_AMBIENT, ones);
-        glLightModelfv(GL_LIGHT_MODEL_AMBIENT, ones);
+        glLightfv(GL_LIGHT1, GL_AMBIENT, light_ambient);
+        glEnable(GL_LIGHT1);
 
-        draw_environment(&world, &rotate, &move);
+        draw_environment(&world, &rotate,&move);
         movement_of_objects();
         rotation_of_objects();
         reshape(WINDOW_WIDTH, WINDOW_HEIGHT);
-
         glutSwapBuffers();
 
-    } else {
+    }
+    else {
         draw_help();
     }
 }
@@ -305,14 +299,8 @@ void key_handler(unsigned char key, int x, int y) {
         case 'q':
             if (action.rotate_planet1_in_galaxy == FALSE) {
                 action.rotate_planet1_in_galaxy = TRUE;
-                action.rotate_planet2_in_galaxy = TRUE;
-                action.rotate_planet3_in_galaxy = TRUE;
-                action.rotate_planet4_in_galaxy = TRUE;
             } else {
                 action.rotate_planet1_in_galaxy = FALSE;
-                action.rotate_planet2_in_galaxy = FALSE;
-                action.rotate_planet3_in_galaxy = FALSE;
-                action.rotate_planet4_in_galaxy = FALSE;
             }
             break;
         case 'e':
@@ -405,26 +393,25 @@ void set_callbacks() {
 }
 
 
-void initialize() {
+void initialize()
+{
     set_callbacks();
-
     init_camera(&camera);
     glShadeModel(GL_SMOOTH);
     glEnable(GL_NORMALIZE);
     glEnable(GL_AUTO_NORMAL);
     glClearColor(0.1, 0.1, 0.1, 1.0);
-
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
     glEnable(GL_DEPTH_TEST);
     glEnable(GL_COLOR_MATERIAL);
     glClearDepth(1.0);
-
-    glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, light_ambient);
-    help = load_texture("..\\textures\\help.png");
+    glEnable(GL_LIGHTING);
+    help = load_texture("..//textures//help.png");
     init_entities(&world);
     glEnable(GL_TEXTURE_2D);
 }
+
 
 
 int main(int argc, char **argv) {
@@ -442,9 +429,6 @@ int main(int argc, char **argv) {
     action.step_left = FALSE;
     action.step_right = FALSE;
     action.rotate_planet1_in_galaxy = TRUE;
-    action.rotate_planet2_in_galaxy = TRUE;
-    action.rotate_planet3_in_galaxy = TRUE;
-    action.rotate_planet4_in_galaxy = TRUE;
     action.call_satellite = FALSE;
 
     glutMainLoop();

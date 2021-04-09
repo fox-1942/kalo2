@@ -55,7 +55,7 @@ void draw_skybox_top(Entity skybox);
 
 
 //Draw the bottom skybox.
-void draw_skybox_bottom(Entity skybox);
+void draw_skybox(Entity skybox, int z_sign);
 
 
 //Draw the entitys to the world.

@@ -54,7 +54,6 @@ void don_not_head_up_against_the_wall (struct Camera* camera, Move move){
 			camera->position.y<move.satellite.y+satellite_size && camera->position.y>move.satellite.y-satellite_size &&
 			camera->position.z<move.satellite.z+satellite_size && camera->position.z>move.satellite.z-satellite_size)
 			init_camera (camera);
-
 }
 
 
@@ -67,8 +66,6 @@ void set_view_point(const struct Camera* camera)
 	glRotatef(-(camera->pose.z - 90), 0, 0, 1.0);
 	glTranslatef(-camera->position.x, -camera->position.y, -camera->position.z);
 }
-
-
 
 void rotate_camera(struct Camera* camera, double horizontal, double vertical)
 {
@@ -109,8 +106,6 @@ void move_camera_down(struct Camera* camera, double distance)
 	camera->position.z -= distance;
 }
 
-
-
 void move_camera_backward(struct Camera* camera, double distance)
 {
 	camera->prev_position = camera->position;
@@ -118,20 +113,14 @@ void move_camera_backward(struct Camera* camera, double distance)
 
 	camera->position.x -= cos(angle) * distance;
 	camera->position.y -= sin(angle) * distance;
-
-
 }
-
 
 void move_camera_forward(struct Camera* camera, double distance)
 {
 	camera->prev_position = camera->position;
 	double angle = degree_to_radian(camera->pose.z);
-
-
 	camera->position.x += cos(angle) * distance;
 	camera->position.y += sin(angle) * distance;
-
 }
 
 void step_camera_right(struct Camera* camera, double distance)
