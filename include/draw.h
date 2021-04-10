@@ -25,10 +25,10 @@ typedef struct Rotate {
 
 typedef union Move {
     struct {
-        Position planet1;
-        Position planet2;
-        Position planet3;
-        Position planet4;
+        Position jupiter;
+        Position jupiter_moon;
+        Position venus;
+        Position saturnus;
         Position sun;
         Position satellite;
     };

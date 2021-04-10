@@ -11,49 +11,6 @@ double calc_elapsed_time() {
     return elapsed_time;
 }
 
-void update_camera_position(struct Camera *camera, double elapsed_time) {
-    double distance;
-
-    distance = elapsed_time * MOVE_SPEED * speed;
-
-    if (action.move_forward == TRUE) {
-        move_camera_forward(camera, distance);
-    }
-
-    if (action.move_backward == TRUE) {
-        move_camera_backward(camera, distance);
-    }
-
-    if (action.step_left == TRUE) {
-        step_camera_left(camera, distance);
-    }
-
-    if (action.step_right == TRUE) {
-        step_camera_right(camera, distance);
-    }
-
-    if (action.move_up == TRUE) {
-        move_camera_up(camera, distance);
-    }
-
-    if (action.move_down == TRUE) {
-        move_camera_down(camera, distance);
-    }
-
-    if (action.increase_light == TRUE) {
-        if (light_ambient[0] < 1)
-            light_ambient[0] = light_ambient[1] = light_ambient[2] += 0.01;
-    }
-
-    if (action.decrease_light == TRUE) {
-        if (light_ambient[0] > -0.51)
-            light_ambient[0] = light_ambient[1] = light_ambient[2] -= 0.01;
-    }
-
-    don_not_head_up_against_the_wall(camera, move);
-
-}
-
 void specialFunc(int key, int x, int y) {
     switch (key) {
         case GLUT_KEY_F1:
@@ -82,7 +39,6 @@ void reshape(GLsizei width, GLsizei height) {
 
 void draw_help() {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
     glEnable(GL_TEXTURE_2D);
@@ -102,37 +58,23 @@ void draw_help() {
     glutSwapBuffers();
 }
 
-
-void rotation_of_objects() {
-    if (action.rotate_planet1_in_galaxy == TRUE) {
-        rotate.planet1_rotation += 0.5;
-        rotate.planet2_rotation += 1;
-        rotate.planet3_rotation += 0.4;
-        rotate.planet4_rotation += 0.2;
-        rotate.sun_rotation += 0.05;
-    }
-    rotate.satellite_rotation += 0.5;
-}
-
 void display() {
     if (!help_on) {
-        double elapsed_time;
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         glMatrixMode(GL_MODELVIEW);
         glLoadIdentity();
-        elapsed_time = calc_elapsed_time();
-        update_camera_position(&camera, elapsed_time);
+        double elapsed_time = calc_elapsed_time();
+        update_camera_position(&camera, &action, &move, light_ambient, elapsed_time, speed);
         set_view_point(&camera);
 
         glLightfv(GL_LIGHT1, GL_AMBIENT, light_ambient);
         glEnable(GL_LIGHT1);
 
         draw_environment(&world, &rotate, &move);
-        movement_of_objects(&move,&action,&world);
-        rotation_of_objects();
+        movement_of_objects(&move, &action, &world);
+        rotation_of_objects(&action, &rotate);
         reshape(WINDOW_WIDTH, WINDOW_HEIGHT);
         glutSwapBuffers();
-
     } else {
         draw_help();
     }
@@ -185,14 +127,14 @@ void key_handler(unsigned char key, int x, int y) {
             }
             break;
         case 'e':
-            if (action.move_planet1_in_galaxy == FALSE) {
-                action.move_planet1_in_galaxy = TRUE;
-                action.move_planet3_in_galaxy = TRUE;
-                action.move_planet4_in_galaxy = TRUE;
+            if (action.move_jupiter_plus_moon_in_galaxy == FALSE) {
+                action.move_jupiter_plus_moon_in_galaxy = TRUE;
+                action.move_venus_in_galaxy = TRUE;
+                action.saturnus = TRUE;
             } else {
-                action.move_planet1_in_galaxy = FALSE;
-                action.move_planet3_in_galaxy = FALSE;
-                action.move_planet4_in_galaxy = FALSE;
+                action.move_jupiter_plus_moon_in_galaxy = FALSE;
+                action.move_venus_in_galaxy = FALSE;
+                action.saturnus = FALSE;
             }
             break;
         case 'f':

@@ -1,63 +1,64 @@
 #include "action_move.h"
 
-bool inside = false;
-int satellite = 0;
-double degree1 = 0;
-double degree3 = 0;
-double degree4 = 0;
-double distance_a1 = 4000;
-double distance_b1 = 4000;
-double distance_a3 = 6000;
-double distance_b3 = 6000;
-double distance_a4 = 2000;
-double distance_b4 = 2000;
+bool inside_gravity_field = false;
+int satellite;
+double degree1;
+double degree3;
+double degree4;
+const double distance_jupiter_a = 4000;
+const double distance_jupiter_b = 4000;
+const double distance_venus_a = 6000;
+const double distance_venus_b = 6000;
+const double distance_saturn_a = 2000;
+const double distance_dsturn_b = 2000;
 
-void movement_of_objects(Move *move, Action* action, World* world) {
+void movement_of_objects(Move *move, Action *action, World *world) {
 
-    // dark Jupiter + its moon
-    if (action->move_planet1_in_galaxy == TRUE) {
+    // Jupiter + its moon
+    if (action->move_jupiter_plus_moon_in_galaxy == TRUE) {
         degree1 += 0.4;
         double angle = degree_to_radian(degree1);
-        move->planet1.x = cos(angle) * distance_a1;
-        move->planet1.y = sin(angle) * distance_b1;
-        move->planet1.z = 0;
-        move->planet2.x = move->planet1.x + 1000;
-        move->planet2.y = move->planet1.y + 1000;
-        move->planet2.z = move->planet1.z - 100;
-    } else if (move->planet1.x == 0) {
-        move->planet1.x = 4000;
-        move->planet1.y = 0;
-        move->planet1.z = 0;
-        move->planet2.x = move->planet1.x + 1000;
-        move->planet2.y = move->planet1.y + 1000;
-        move->planet2.z = move->planet1.z - 100;
+        move->jupiter.x = cos(angle) * distance_jupiter_a;
+        move->jupiter.y = sin(angle) * distance_jupiter_b;
+        move->jupiter.z = 0;
+        move->jupiter_moon.x = move->jupiter.x + 1000;
+        move->jupiter_moon.y = move->jupiter.y + 1000;
+        move->jupiter_moon.z = move->jupiter.z - 100;
+    } else if (move->jupiter.x == 0) {
+        move->jupiter.x = 4000;
+        move->jupiter.y = 0;
+        move->jupiter.z = 0;
+        move->jupiter_moon.x = move->jupiter.x + 1000;
+        move->jupiter_moon.y = move->jupiter.y + 1000;
+        move->jupiter_moon.z = move->jupiter.z - 100;
     }
-    // Light jupiter
-    if (action->move_planet3_in_galaxy == TRUE) {
+
+    // Venus
+    if (action->move_venus_in_galaxy == TRUE) {
         degree3 += 0.2;
         double angle = degree_to_radian(degree3);
-        move->planet3.x = cos(angle) * distance_a3;
-        move->planet3.y = sin(angle) * distance_b3;
-        move->planet3.z = 0;
+        move->venus.x = cos(angle) * distance_venus_a;
+        move->venus.y = sin(angle) * distance_venus_b;
+        move->venus.z = 0;
 
-    } else if (move->planet3.x == 0) {
-        move->planet3.x = 6000;
-        move->planet3.y = 0;
-        move->planet3.z = 0;
+    } else if (move->venus.x == 0) {
+        move->venus.x = 6000;
+        move->venus.y = 0;
+        move->venus.z = 0;
     }
 
     // Saturnus
-    if (action->move_planet4_in_galaxy == TRUE) {
+    if (action->saturnus == TRUE) {
         degree4 += 0.3;
         double angle = degree_to_radian(degree4);
-        move->planet4.x = cos(angle) * distance_a4;
-        move->planet4.y = sin(angle) * distance_b4;
-        move->planet4.z = 0;
+        move->saturnus.x = cos(angle) * distance_saturn_a;
+        move->saturnus.y = sin(angle) * distance_dsturn_b;
+        move->saturnus.z = 0;
 
-    } else if (move->planet4.x == 0) {
-        move->planet4.x = 2000;
-        move->planet4.y = 0;
-        move->planet4.z = 0;
+    } else if (move->saturnus.x == 0) {
+        move->saturnus.x = 2000;
+        move->saturnus.y = 0;
+        move->saturnus.z = 0;
     }
 
     if (action->call_satellite == TRUE && move->satellite.x < 6000) {
@@ -73,15 +74,15 @@ void movement_of_objects(Move *move, Action* action, World* world) {
             if (is_point_inside_spheres(move->satellite.x, move->satellite.y, move->satellite.z,
                                         move->Move[i].x, move->Move[i].y, move->Move[i].z,
                                         world->World[i].model.box.diagonal_length + 10)) {
-                inside = true;
+                inside_gravity_field = true;
                 break;
             }
         }
 
         // If sat is inside on of the gravitiy fields.
-        if (inside) {
-            Vertex indicator = vector_from_two_vertex(move->satellite.x, move->satellite.y, move->satellite.z,
-                                                      move->Move[i].x, move->Move[i].y, move->Move[i].z);
+        if (inside_gravity_field) {
+            Vertex distance_vector = vector_from_two_vertex(move->satellite.x, move->satellite.y, move->satellite.z,
+                                                            move->Move[i].x, move->Move[i].y, move->Move[i].z);
 
             // setting up the effects of gravity fields of the planets, taking the direction
             // where the satellite comes from also in consideration. Index of "i" indicates a specific planet.
@@ -89,7 +90,7 @@ void movement_of_objects(Move *move, Action* action, World* world) {
                 case 0:  // Planet 1 - Dark. Jupiter
                 case 1:  // Planet 2 - Moon of Dark. Jupiter
 
-                    if (indicator.y <= 0) {  // if satellite goes against the rotation of the first two planets
+                    if (distance_vector.y <= 0) {  // if satellite goes against the rotation of the first two planets
                         move->satellite.x += 1.0;  // satelitte losts more speed on the X axis than is the 'else' case
                         move->satellite.y -= 1;
                     } else {
@@ -99,7 +100,7 @@ void movement_of_objects(Move *move, Action* action, World* world) {
                     break;
                 case 2: // Light Jupiter
                 case 3: // Saturnus
-                    if (indicator.y <= 0) {
+                    if (distance_vector.y <= 0) {
                         move->satellite.x += 1.5;
                         move->satellite.y -= 1;
                     } else {
@@ -113,7 +114,7 @@ void movement_of_objects(Move *move, Action* action, World* world) {
                     move->satellite.y += 0.3;
                     break;
             }
-            inside = false;  // It gives the possibility to let the satellite get the normal speed in the next iteration.
+            inside_gravity_field = false;  // It gives the possibility to let the satellite get the normal speed in the next iteration.
         } else {
             move->satellite.x += 7;
         }
@@ -127,4 +128,15 @@ void movement_of_objects(Move *move, Action* action, World* world) {
     } else if (action->call_satellite == FALSE) {
         move->satellite.x = -20000;
     }
+}
+
+void rotation_of_objects(Action* action, Rotate* rotate) {
+    if (action->rotate_planet1_in_galaxy == TRUE) {
+        rotate->planet1_rotation += 0.5;
+        rotate->planet2_rotation += 1;
+        rotate->planet3_rotation += 0.4;
+        rotate->planet4_rotation += 0.2;
+        rotate->sun_rotation += 0.05;
+    }
+    rotate->satellite_rotation += 0.5;
 }

@@ -5,8 +5,8 @@
 #ifndef KALO_BASIC_H
 #define KALO_BASIC_H
 
-#define M_PI 3.14159265358979323846
 #include <GL/glut.h>
+#define M_PI 3.14159265358979323846
 
 typedef GLubyte Pixel;
 struct TokenArray {
