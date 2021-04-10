@@ -103,7 +103,7 @@ double calc_elapsed_for_led() {
     return elapsed_time;
 }
 
-void draw_environment(World *world, Rotate *rotate, Move *move) {
+void draw_environment(World *world, Rotate *rotate, Move *move, double e_time) {
     glEnable(GL_TEXTURE_2D);
 
     //Draw the bottom skybox.
@@ -190,6 +190,8 @@ void draw_environment(World *world, Rotate *rotate, Move *move) {
     draw_model(&world->satellite.model);
     glPopMatrix();
 }
+
+
 
 // Determines whether the satellite is inside the planet's field of gravity. The radius is coming from
 // the bounding box diagonal of the planet, calculated by the specific method in model.c

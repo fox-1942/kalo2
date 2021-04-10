@@ -9,20 +9,12 @@
 #define fullscreen 0   // 1: fullscreen  0: windowed
 
 GLfloat light_ambient[] = { 0.5, 0.5, 0.5, 0 };
+
 World world={0};
 Rotate rotate={0};
 Move move={0};
-struct Camera camera={0};
-struct Action action={0};
-
-int WINDOW_WIDTH = 0;
-int WINDOW_HEIGHT = 0;
-int mouse_x = 0;
-int mouse_y = 0;
-int previous_time = 0;
-int help, help_on = 0;
-float speed = 70;
-float angle = 135;
-
+Camera camera={0};
+Action action={0};
+Data data={0};
 
 #endif //KALO_MAIN_H
