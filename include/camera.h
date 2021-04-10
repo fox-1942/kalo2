@@ -1,9 +1,8 @@
 #ifndef CAMERA_H
 #define CAMERA_H
 
-#include "draw.h"
+#include "action_move.h"
 
-#define M_PI 3.14159265358979323846
 #define skybox_size 6000
 #define sun_size 920
 #define planet1_size 200
@@ -22,8 +21,6 @@ typedef struct Camera
 	struct Vertex prev_position;
 } Camera ;
 
-//Converts degree to radian.
-double degree_to_radian(double degree);
 
 
 //Checks if the camera can move. If it can't, loads the starter position.

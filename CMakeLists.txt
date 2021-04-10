@@ -8,6 +8,8 @@ add_executable(${PROJECT_NAME}
         src/camera.c
         src/draw.c
         src/model.c
+        src/action_move.c
+        src/basic.c
         )
 
 target_include_directories(${PROJECT_NAME} PUBLIC include)

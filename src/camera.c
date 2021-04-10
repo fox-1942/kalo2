@@ -1,10 +1,5 @@
 #include "camera.h"
 
-double degree_to_radian(double degree)
-{
-	return degree * M_PI / 180.0;
-}
-
 void init_camera(struct Camera* camera)
 {
 	camera->position.x = 3000;

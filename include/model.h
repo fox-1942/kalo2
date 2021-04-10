@@ -1,8 +1,8 @@
 #ifndef MODEL_H_
 #define MODEL_H_
 
+#include "basic.h"
 #include <stdio.h>
-#include <GL/glut.h>
 #include <stdbool.h>
 #include "SOIL/SOIL.h"
 #include <math.h>
@@ -10,30 +10,6 @@
 #define TRUE 1
 #define FALSE 0
 #define INVALID_VERTEX_INDEX 0
-
-typedef GLubyte Pixel;
-struct TokenArray {
-    char **tokens;
-    int n_tokens;
-};
-
-typedef struct Vertex {
-    double x;
-    double y;
-    double z;
-
-} Vertex;
-
-struct TextureVertex {
-    double u;
-    double v;
-};
-
-struct FacePoint {
-    int vertex_index;
-    int texture_index;
-    int normal_index;
-};
 
 struct Triangle {
     struct FacePoint points[3];
