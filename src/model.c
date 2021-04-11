@@ -507,24 +507,24 @@ int load_model(const char *filename, Model *model) {
 
 void init_entities(World *world) {
     //Load the planet1 object and texture.
-    load_model("..\\objects\\geoid.obj", &world->planet1.model);
-    world->planet1.texture = load_texture("..\\textures\\planet2.png");
-    scale_model(&world->planet1.model, 0.4, 0.4, 0.4);
+    load_model("..\\objects\\geoid.obj", &world->jupiter.model);
+    world->jupiter.texture = load_texture("..\\textures\\planet2.png");
+    scale_model(&world->jupiter.model, 0.4, 0.4, 0.4);
 
     //Load the planet2 and texture.
-    load_model("..\\objects\\geoid.obj", &world->planet2.model);
-    world->planet2.texture = load_texture("..\\textures\\planet3.png");
-    scale_model(&world->planet2.model, 0.2, 0.2, 0.2);
+    load_model("..\\objects\\geoid.obj", &world->jupiter_moon.model);
+    world->jupiter_moon.texture = load_texture("..\\textures\\planet3.png");
+    scale_model(&world->jupiter_moon.model, 0.2, 0.2, 0.2);
 
     //Load the planet3 and texture.
-    load_model("..\\objects\\geoid.obj", &world->planet3.model);
-    world->planet3.texture = load_texture("..\\textures\\planet1.png");
-    scale_model(&world->planet3.model, 0.5, 0.5, 0.5);
+    load_model("..\\objects\\geoid.obj", &world->venus.model);
+    world->venus.texture = load_texture("..\\textures\\planet1.png");
+    scale_model(&world->venus.model, 0.5, 0.5, 0.5);
 
     //Load the planet4 and texture.
-    load_model("..\\objects\\saturn.obj", &world->planet4.model);
-    world->planet4.texture = load_texture("..\\textures\\planet4.jpg");
-    scale_model(&world->planet4.model, 0.2, 0.2, 0.2);
+    load_model("..\\objects\\saturn.obj", &world->saturnus.model);
+    world->saturnus.texture = load_texture("..\\textures\\planet4.jpg");
+    scale_model(&world->saturnus.model, 0.2, 0.2, 0.2);
 
     //Load the sun object and texture.
     load_model("..\\objects\\geoid.obj", &world->sun.model);
@@ -542,10 +542,10 @@ void init_entities(World *world) {
     world->skybox.texture = load_texture("..\\textures\\sky.png");
 
     //Storing bounding-box coordinates in each model
-    calc_bounding_box(&world->planet1.model);
-    calc_bounding_box(&world->planet2.model);
-    calc_bounding_box(&world->planet3.model);
-    calc_bounding_box(&world->planet4.model);
+    calc_bounding_box(&world->jupiter.model);
+    calc_bounding_box(&world->jupiter_moon.model);
+    calc_bounding_box(&world->venus.model);
+    calc_bounding_box(&world->saturnus.model);
     calc_bounding_box(&world->sun.model);
     world->sun.model.box.diagonal_length-=10; // small optimalization for better demonstration.
 }

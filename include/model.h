@@ -48,10 +48,10 @@ typedef struct Entity {
 
 typedef union World {
     struct {
-        Entity planet1;
-        Entity planet2;
-        Entity planet3;
-        Entity planet4;
+        Entity jupiter;
+        Entity jupiter_moon;
+        Entity venus;
+        Entity saturnus;
         Entity sun;
         Entity satellite;
         Entity skybox;
@@ -72,14 +72,18 @@ typedef struct Action {
     int step_right;
     int move_up;
     int move_down;
-    int rotate_planet1_in_galaxy;
+    int rotate_planets_in_galaxy;
     int move_jupiter_plus_moon_in_galaxy;
     int move_venus_in_galaxy;
-    int saturnus;
+    int move_saturnus_in_galaxy;
     int call_satellite;
     int increase_light;
     int decrease_light;
 } Action;
+
+extern Camera camera;
+extern Action action;
+
 
 typedef union Position {
     struct {
@@ -111,6 +115,10 @@ typedef union Move {
     Position Move[6];
 } Move;
 
+extern Rotate rotate;
+extern Move move;
+
+
 typedef struct Data {
     int WINDOW_WIDTH;
     int WINDOW_HEIGHT;
@@ -123,13 +131,10 @@ typedef struct Data {
     double e_time;
 } Data;
 
-
 extern GLfloat light_ambient[];
 extern World world;
-extern Rotate rotate;
-extern Move move;
-extern Camera camera;
-extern Action action;
+
+
 extern Data data;
 
 //Count the tokens in the text.
@@ -252,6 +257,5 @@ GLuint load_texture(const char *filename);
 double vector_length(double min_x, double min_y, double min_z, double max_x, double max_y, double max_z);
 
 Vertex vector_from_two_vertex(double a_x, double a_y, double a_z, double b_x, double b_y, double b_z);
-
 
 #endif

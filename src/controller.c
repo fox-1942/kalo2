@@ -51,21 +51,21 @@ void key_handler(unsigned char key, int x, int y) {
             action.move_up = TRUE;
             break;
         case 'q':
-            if (action.rotate_planet1_in_galaxy == FALSE) {
-                action.rotate_planet1_in_galaxy = TRUE;
+            if (action.rotate_planets_in_galaxy == FALSE) {
+                action.rotate_planets_in_galaxy = TRUE;
             } else {
-                action.rotate_planet1_in_galaxy = FALSE;
+                action.rotate_planets_in_galaxy = FALSE;
             }
             break;
         case 'e':
             if (action.move_jupiter_plus_moon_in_galaxy == FALSE) {
                 action.move_jupiter_plus_moon_in_galaxy = TRUE;
                 action.move_venus_in_galaxy = TRUE;
-                action.saturnus = TRUE;
+                action.move_saturnus_in_galaxy = TRUE;
             } else {
                 action.move_jupiter_plus_moon_in_galaxy = FALSE;
                 action.move_venus_in_galaxy = FALSE;
-                action.saturnus = FALSE;
+                action.move_saturnus_in_galaxy = FALSE;
             }
             break;
         case 'f':

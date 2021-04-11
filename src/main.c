@@ -1,12 +1,12 @@
 #include <draw.h>
 #include "controller.h"
 
-World world={0};
-Rotate rotate={0};
-Move move={0};
-Camera camera={0};
-Action action={0};
-Data data={0};
+World world = {0};
+Rotate rotate = {0};
+Move move = {0};
+Camera camera = {0};
+Action action = {0};
+Data data = {0};
 GLfloat light_ambient[] = {0.5, 0.5, 0.5, 0};
 
 void set_callbacks() {
@@ -59,7 +59,7 @@ int main(int argc, char **argv) {
     action.move_backward = FALSE;
     action.step_left = FALSE;
     action.step_right = FALSE;
-    action.rotate_planet1_in_galaxy = TRUE;
+    action.rotate_planets_in_galaxy = TRUE;
     action.call_satellite = FALSE;
 
     glutMainLoop();

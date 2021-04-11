@@ -33,7 +33,6 @@ void draw_bounding_box(const Model *model) {
     glEnd();
 }
 
-
 void draw_model(const Model *model) {
     //draw_triangles(model);
     draw_quads(model);
@@ -116,11 +115,11 @@ void draw_environment(World *world, Rotate *rotate, Move *move, double timer) {
     //Draw the planet1. Dark Jupiter
     glPushMatrix();
     glTranslatef(move->jupiter.x, move->jupiter.y, move->jupiter.z);
-    glMaterialfv(GL_FRONT, GL_AMBIENT, world->planet1.material_ambient);
-    glBindTexture(GL_TEXTURE_2D, world->planet1.texture);
+    glMaterialfv(GL_FRONT, GL_AMBIENT, world->jupiter.material_ambient);
+    glBindTexture(GL_TEXTURE_2D, world->jupiter.texture);
     glScalef(1.0f, 1.0f, 1.0f);
     glRotatef(rotate->planet1_rotation, 0, 0, 1);
-    draw_model(&world->planet1.model);
+    draw_model(&world->jupiter.model);
 
     glPopMatrix();
 
@@ -129,12 +128,12 @@ void draw_environment(World *world, Rotate *rotate, Move *move, double timer) {
     glPushMatrix();
 
     glTranslatef(move->jupiter.x + 1000, move->jupiter.y + 1000, move->jupiter.z - 100);
-    glMaterialfv(GL_FRONT, GL_AMBIENT, world->planet2.material_ambient);
-    glBindTexture(GL_TEXTURE_2D, world->planet2.texture);
+    glMaterialfv(GL_FRONT, GL_AMBIENT, world->jupiter_moon.material_ambient);
+    glBindTexture(GL_TEXTURE_2D, world->jupiter_moon.texture);
     glScalef(1.0f, 1.0f, 1.0f);
     glRotatef(180, 0, 0, 1);
     glRotatef(rotate->planet2_rotation, 0, 0, 1);
-    draw_model(&world->planet2.model);
+    draw_model(&world->jupiter_moon.model);
 
     glPopMatrix();
 
@@ -142,21 +141,21 @@ void draw_environment(World *world, Rotate *rotate, Move *move, double timer) {
     //Draw the planet3.   Light Jupiter
     glPushMatrix();
     glTranslatef(move->venus.x, move->venus.y, move->venus.z);
-    glMaterialfv(GL_FRONT, GL_AMBIENT, world->planet3.material_ambient);
-    glBindTexture(GL_TEXTURE_2D, world->planet3.texture);
+    glMaterialfv(GL_FRONT, GL_AMBIENT, world->venus.material_ambient);
+    glBindTexture(GL_TEXTURE_2D, world->venus.texture);
     glScalef(1.0f, 1.0f, 1.0f);
     glRotatef(rotate->planet3_rotation, 0, 0, -1);
-    draw_model(&world->planet3.model);
+    draw_model(&world->venus.model);
     glPopMatrix();
 
     //Draw the planet4. Saturnus
     glPushMatrix();
     glTranslatef(move->saturnus.x, move->saturnus.y, move->saturnus.z);
-    glMaterialfv(GL_FRONT, GL_AMBIENT, world->planet4.material_ambient);
-    glBindTexture(GL_TEXTURE_2D, world->planet4.texture);
+    glMaterialfv(GL_FRONT, GL_AMBIENT, world->saturnus.material_ambient);
+    glBindTexture(GL_TEXTURE_2D, world->saturnus.texture);
     glScalef(1.0f, 1.0f, 1.0f);
     glRotatef(rotate->planet4_rotation, 0, 0, -1);
-    draw_model(&world->planet4.model);
+    draw_model(&world->saturnus.model);
     glPopMatrix();
 
     //Draw the satellite.

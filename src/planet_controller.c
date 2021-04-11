@@ -49,7 +49,7 @@ void movement_of_objects(Move *move, Action *action, World *world) {
     }
 
     // Saturnus
-    if (action->saturnus == TRUE) {
+    if (action->move_saturnus_in_galaxy == TRUE) {
         degree4 += 0.3;
         double angle = degree_to_radian(degree4);
         move->saturnus.x = cos(angle) * distance_saturn_a;
@@ -132,7 +132,7 @@ void movement_of_objects(Move *move, Action *action, World *world) {
 }
 
 void rotation_of_objects(Action* action, Rotate* rotate) {
-    if (action->rotate_planet1_in_galaxy == TRUE) {
+    if (action->rotate_planets_in_galaxy == TRUE) {
         rotate->planet1_rotation += 0.5;
         rotate->planet2_rotation += 1;
         rotate->planet3_rotation += 0.4;

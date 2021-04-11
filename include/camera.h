@@ -10,9 +10,12 @@
 #define planet3_size 220
 #define planet4_size 150
 #define satellite_size 50
-
 #define MOVE_SPEED 10.0  //BIGGER IS FASTER
 #define CAMERA_SPEED 5.0 //BIGGER IS SLOWER
+
+
+
+
 
 
 //Checks if the camera can move. If it can't, loads the starter position.
