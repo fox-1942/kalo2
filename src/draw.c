@@ -246,7 +246,7 @@ void display() {
         glMatrixMode(GL_MODELVIEW);
         glLoadIdentity();
         double elapsed_time = calc_elapsed_time();
-        update_camera_position(&camera, &action, &move, light_ambient, elapsed_time, data.speed);
+        update_camera_position(&camera, &action, &move, light_ambient, elapsed_time);
         set_view_point(&camera);
 
         glLightfv(GL_LIGHT1, GL_AMBIENT, light_ambient);

@@ -8,7 +8,6 @@ add_executable(${PROJECT_NAME}
         src/camera.c
         src/draw.c
         src/model.c
-        src/planet_controller.c
         src/basic.c
         src/main.c
         )

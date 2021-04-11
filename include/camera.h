@@ -13,9 +13,30 @@
 #define MOVE_SPEED 10.0  //BIGGER IS FASTER
 #define CAMERA_SPEED 5.0 //BIGGER IS SLOWER
 
+typedef struct Camera {
+    struct Vertex position;
+    struct Vertex pose;
+    struct Vertex prev_position;
+} Camera;
 
+typedef struct Action {
+    int move_forward;
+    int move_backward;
+    int step_left;
+    int step_right;
+    int move_up;
+    int move_down;
+    int rotate_planets_in_galaxy;
+    int move_jupiter_plus_moon_in_galaxy;
+    int move_venus_in_galaxy;
+    int move_saturnus_in_galaxy;
+    int call_satellite;
+    int increase_light;
+    int decrease_light;
+} Action;
 
-
+extern Camera camera;
+extern Action action;
 
 
 //Checks if the camera can move. If it can't, loads the starter position.
@@ -56,7 +77,6 @@ void move_camera_up(struct Camera *camera, double distance);
 //Move the camera down.
 void move_camera_down(struct Camera *camera, double distance);
 
-void update_camera_position(Camera *camera, Action *action, Move *move, GLfloat *light_ambient, double elapsed_time,
-                            double speed);
+void update_camera_position(Camera *camera, Action *action, Move *move, GLfloat *light_ambient, double elapsed_time);
 
 #endif

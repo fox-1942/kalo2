@@ -1,3 +1,4 @@
+#include <controller.h>
 #include "camera.h"
 
 void init_camera(struct Camera *camera) {
@@ -10,10 +11,9 @@ void init_camera(struct Camera *camera) {
     camera->pose.z = 90;
 }
 
-void update_camera_position(Camera *camera, Action *action, Move *move, GLfloat *light_ambient, double elapsed_time,
-                            double speed) {
+void update_camera_position(Camera *camera, Action *action, Move *move, GLfloat *light_ambient, double elapsed_time) {
     double distance;
-    distance = elapsed_time * MOVE_SPEED * speed;
+    distance = elapsed_time * MOVE_SPEED * data.speed;
 
     if (action->move_forward == TRUE) {
         move_camera_forward(camera, distance);
