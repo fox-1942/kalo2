@@ -1,7 +1,7 @@
 #ifndef CAMERA_H
 #define CAMERA_H
 
-#include "action_move.h"
+#include "planet_controller.h"
 
 #define skybox_size 6000
 #define sun_size 920

@@ -1,4 +1,4 @@
-#include "action_move.h"
+#include "planet_controller.h"
 
 bool inside_gravity_field = false;
 int satellite;

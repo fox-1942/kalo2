@@ -191,8 +191,6 @@ void draw_environment(World *world, Rotate *rotate, Move *move, double e_time) {
     glPopMatrix();
 }
 
-
-
 // Determines whether the satellite is inside the planet's field of gravity. The radius is coming from
 // the bounding box diagonal of the planet, calculated by the specific method in model.c
 bool is_point_inside_spheres(double x, double y, double z, double x2, double y2, double z2, double radius) {
@@ -210,4 +208,5 @@ bool is_point_inside_spheres(double x, double y, double z, double x2, double y2,
 
     return vector_length(x, y, z, x2, y2, z2) < radius;
 }
+
 
