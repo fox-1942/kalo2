@@ -11,7 +11,7 @@ const double distance_jupiter_b = 4000;
 const double distance_venus_a = 6000;
 const double distance_venus_b = 6000;
 const double distance_saturn_a = 2000;
-const double distance_dsturn_b = 2000;
+const double distance_saturn_b = 2000;
 
 void movement_of_objects(Move *move, Action *action, World *world) {
 
@@ -53,7 +53,7 @@ void movement_of_objects(Move *move, Action *action, World *world) {
         degree4 += 0.3;
         double angle = degree_to_radian(degree4);
         move->saturnus.x = cos(angle) * distance_saturn_a;
-        move->saturnus.y = sin(angle) * distance_dsturn_b;
+        move->saturnus.y = sin(angle) * distance_saturn_b;
         move->saturnus.z = 0;
 
     } else if (move->saturnus.x == 0) {

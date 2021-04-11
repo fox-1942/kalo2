@@ -91,6 +91,8 @@ typedef union Move {
 
 extern Rotate rotate;
 extern Move move;
+
+
 extern GLfloat light_ambient[];
 extern World world;
 

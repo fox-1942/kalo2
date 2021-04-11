@@ -3,8 +3,6 @@
 
 #include "controller.h"
 
-#define SKYBOX_SIZE 10000.0
-
 
 //Draw the model.
 void draw_model(const struct Model *model);

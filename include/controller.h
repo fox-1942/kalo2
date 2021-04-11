@@ -18,6 +18,8 @@ typedef struct Data {
     double e_time;
 } Data;
 
+
+
 extern Data data;
 
 void movement_of_objects(Move *move, Action *action, World *world);

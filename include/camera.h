@@ -3,16 +3,6 @@
 
 #include "model.h"
 
-#define skybox_size 6000
-#define sun_size 920
-#define planet1_size 200
-#define planet2_size 85
-#define planet3_size 220
-#define planet4_size 150
-#define satellite_size 50
-#define MOVE_SPEED 10.0  //BIGGER IS FASTER
-#define CAMERA_SPEED 5.0 //BIGGER IS SLOWER
-
 typedef struct Camera {
     struct Vertex position;
     struct Vertex pose;

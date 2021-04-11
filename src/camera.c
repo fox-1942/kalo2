@@ -1,6 +1,16 @@
 #include <controller.h>
 #include "camera.h"
 
+#define SKYBOX_SIZE 6000
+#define SUN_SIZE 920
+#define JUPITER_SIZE 200
+#define JUPITER_MOON_SIZE 85
+#define VENUS_SIZE 220
+#define SATURN_SIZE 150
+#define SAT_SIZE 50
+#define MOVE_SPEED 10.0  //BIGGER IS FASTER
+#define CAMERA_SPEED 5.0 //BIGGER IS SLOWER
+
 void init_camera(struct Camera *camera) {
     camera->position.x = 3000;
     camera->position.y = -5000;
@@ -55,45 +65,45 @@ void update_camera_position(Camera *camera, Action *action, Move *move, GLfloat 
 void don_not_head_up_against_the_wall(Camera *camera, Move *move) {
 
     //Skybox
-    if (camera->position.x < -skybox_size || camera->position.x > skybox_size ||
-        camera->position.y < -skybox_size || camera->position.y > skybox_size ||
-        camera->position.z < -skybox_size || camera->position.z > skybox_size)
+    if (camera->position.x < -SKYBOX_SIZE || camera->position.x > SKYBOX_SIZE ||
+        camera->position.y < -SKYBOX_SIZE || camera->position.y > SKYBOX_SIZE ||
+        camera->position.z < -SKYBOX_SIZE || camera->position.z > SKYBOX_SIZE)
         init_camera(camera);
     //Sun
-    if (camera->position.x < sun_size && camera->position.x > -sun_size &&
-        camera->position.y < sun_size && camera->position.y > -sun_size &&
-        camera->position.z < sun_size && camera->position.z > -sun_size)
+    if (camera->position.x < SUN_SIZE && camera->position.x > -SUN_SIZE &&
+        camera->position.y < SUN_SIZE && camera->position.y > -SUN_SIZE &&
+        camera->position.z < SUN_SIZE && camera->position.z > -SUN_SIZE)
         init_camera(camera);
     //Planet1
-    if (camera->position.x < move->jupiter.x + planet1_size && camera->position.x > move->jupiter.x - planet1_size &&
-        camera->position.y < move->jupiter.y + planet1_size && camera->position.y > move->jupiter.y - planet1_size &&
-        camera->position.z < move->jupiter.z + planet1_size && camera->position.z > move->jupiter.z - planet1_size)
+    if (camera->position.x < move->jupiter.x + JUPITER_SIZE && camera->position.x > move->jupiter.x - JUPITER_SIZE &&
+        camera->position.y < move->jupiter.y + JUPITER_SIZE && camera->position.y > move->jupiter.y - JUPITER_SIZE &&
+        camera->position.z < move->jupiter.z + JUPITER_SIZE && camera->position.z > move->jupiter.z - JUPITER_SIZE)
         init_camera(camera);
     //Planet2
-    if (camera->position.x < move->jupiter.x + 1000 + planet2_size &&
-        camera->position.x > move->jupiter.x + 1000 - planet2_size &&
-        camera->position.y < move->jupiter.y + 1000 + planet2_size &&
-        camera->position.y > move->jupiter.y + 1000 - planet2_size &&
-        camera->position.z < move->jupiter.z - 100 + planet2_size &&
-        camera->position.z > move->jupiter.z - 100 - planet2_size)
+    if (camera->position.x < move->jupiter.x + 1000 + JUPITER_MOON_SIZE &&
+        camera->position.x > move->jupiter.x + 1000 - JUPITER_MOON_SIZE &&
+        camera->position.y < move->jupiter.y + 1000 + JUPITER_MOON_SIZE &&
+        camera->position.y > move->jupiter.y + 1000 - JUPITER_MOON_SIZE &&
+        camera->position.z < move->jupiter.z - 100 + JUPITER_MOON_SIZE &&
+        camera->position.z > move->jupiter.z - 100 - JUPITER_MOON_SIZE)
         init_camera(camera);
     //Planet3
-    if (camera->position.x < move->venus.x + planet3_size && camera->position.x > move->venus.x - planet3_size &&
-        camera->position.y < move->venus.y + planet3_size && camera->position.y > move->venus.y - planet3_size &&
-        camera->position.z < move->venus.z + planet3_size && camera->position.z > move->venus.z - planet3_size)
+    if (camera->position.x < move->venus.x + VENUS_SIZE && camera->position.x > move->venus.x - VENUS_SIZE &&
+        camera->position.y < move->venus.y + VENUS_SIZE && camera->position.y > move->venus.y - VENUS_SIZE &&
+        camera->position.z < move->venus.z + VENUS_SIZE && camera->position.z > move->venus.z - VENUS_SIZE)
         init_camera(camera);
     //Planet4
-    if (camera->position.x < move->saturnus.x + planet4_size && camera->position.x > move->saturnus.x - planet4_size &&
-        camera->position.y < move->saturnus.y + planet4_size && camera->position.y > move->saturnus.y - planet4_size &&
-        camera->position.z < move->saturnus.z + planet4_size && camera->position.z > move->saturnus.z - planet4_size)
+    if (camera->position.x < move->saturnus.x + SATURN_SIZE && camera->position.x > move->saturnus.x - SATURN_SIZE &&
+        camera->position.y < move->saturnus.y + SATURN_SIZE && camera->position.y > move->saturnus.y - SATURN_SIZE &&
+        camera->position.z < move->saturnus.z + SATURN_SIZE && camera->position.z > move->saturnus.z - SATURN_SIZE)
         init_camera(camera);
     //Satellite
-    if (camera->position.x < move->satellite.x + satellite_size + 1500 &&
-        camera->position.x > move->satellite.x - satellite_size &&
-        camera->position.y < move->satellite.y + satellite_size &&
-        camera->position.y > move->satellite.y - satellite_size &&
-        camera->position.z < move->satellite.z + satellite_size &&
-        camera->position.z > move->satellite.z - satellite_size)
+    if (camera->position.x < move->satellite.x + SAT_SIZE + 1500 &&
+        camera->position.x > move->satellite.x - SAT_SIZE &&
+        camera->position.y < move->satellite.y + SAT_SIZE &&
+        camera->position.y > move->satellite.y - SAT_SIZE &&
+        camera->position.z < move->satellite.z + SAT_SIZE &&
+        camera->position.z > move->satellite.z - SAT_SIZE)
         init_camera(camera);
 }
 

@@ -1,5 +1,8 @@
 #include "draw.h"
 
+#define SKYBOX_SCALE 10000.0
+
+
 void draw_quads(const struct Model *model) {
     int i, k;
     int vertex_index, texture_index;
@@ -46,16 +49,15 @@ void draw_skybox(Entity skybox, int z_sign) {
     double u, v1, v2;
 
     int n_slices, n_stacks;
-    double radius;
+
     int i, k;
 
     n_slices = 12;
     n_stacks = 6;
-    radius = SKYBOX_SIZE;
 
     glPushMatrix();
     glBindTexture(GL_TEXTURE_2D, skybox.texture);
-    glScaled(radius, radius, radius);
+    glScaled(SKYBOX_SCALE, SKYBOX_SCALE, SKYBOX_SCALE);
 
     glColor3f(1, 1, 1);
 
