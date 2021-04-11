@@ -1,3 +1,4 @@
+#include <draw.h>
 #include "controller.h"
 
 World world={0};
@@ -6,6 +7,7 @@ Move move={0};
 Camera camera={0};
 Action action={0};
 Data data={0};
+GLfloat light_ambient[] = {0.5, 0.5, 0.5, 0};
 
 void set_callbacks() {
     glutDisplayFunc(display);

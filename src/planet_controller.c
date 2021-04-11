@@ -1,4 +1,5 @@
 #include "planet_controller.h"
+#include <draw.h>
 
 bool inside_gravity_field = false;
 int satellite;

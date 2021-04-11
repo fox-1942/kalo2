@@ -1,51 +1,9 @@
 #ifndef DRAW_H
 #define DRAW_H
 
-#include "model.h"
+#include "controller.h"
 
 #define SKYBOX_SIZE 10000.0
-
-typedef union Position {
-    struct {
-        double x;
-        double y;
-        double z;
-    };
-    double Position[3];
-} Position;
-
-typedef struct Rotate {
-    double planet1_rotation;
-    double planet2_rotation;
-    double planet3_rotation;
-    double planet4_rotation;
-    double satellite_rotation;
-    double sun_rotation;
-} Rotate;
-
-typedef union Move {
-    struct {
-        Position jupiter;
-        Position jupiter_moon;
-        Position venus;
-        Position saturnus;
-        Position sun;
-        Position satellite;
-    };
-    Position Move[6];
-} Move;
-
-typedef struct Data {
-    int WINDOW_WIDTH;
-    int WINDOW_HEIGHT;
-    int mouse_x;
-    int mouse_y;
-    int previous_time;
-    int help, help_on;
-    float speed;
-    float angle;
-    double e_time;
-} Data;
 
 //Draw the model.
 void draw_model(const struct Model *model);
@@ -71,5 +29,16 @@ void draw_environment(World *world, Rotate *rotate, Move *move, double e_time);
 bool is_point_inside_spheres(double x, double y, double z, double x2, double y2, double z2, double radius);
 
 double calc_elapsed_for_led();
+
+void reshape(GLsizei width, GLsizei height);
+
+void draw_help();
+
+void display();
+
+void set_satellite_led_working_time();
+
+void idle();
+
 
 #endif

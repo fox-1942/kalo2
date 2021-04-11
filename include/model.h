@@ -59,6 +59,79 @@ typedef union World {
     Entity World[7];
 } World;
 
+typedef struct Camera {
+    struct Vertex position;
+    struct Vertex pose;
+    struct Vertex prev_position;
+} Camera;
+
+typedef struct Action {
+    int move_forward;
+    int move_backward;
+    int step_left;
+    int step_right;
+    int move_up;
+    int move_down;
+    int rotate_planet1_in_galaxy;
+    int move_jupiter_plus_moon_in_galaxy;
+    int move_venus_in_galaxy;
+    int saturnus;
+    int call_satellite;
+    int increase_light;
+    int decrease_light;
+} Action;
+
+typedef union Position {
+    struct {
+        double x;
+        double y;
+        double z;
+    };
+    double Position[3];
+} Position;
+
+typedef struct Rotate {
+    double planet1_rotation;
+    double planet2_rotation;
+    double planet3_rotation;
+    double planet4_rotation;
+    double satellite_rotation;
+    double sun_rotation;
+} Rotate;
+
+typedef union Move {
+    struct {
+        Position jupiter;
+        Position jupiter_moon;
+        Position venus;
+        Position saturnus;
+        Position sun;
+        Position satellite;
+    };
+    Position Move[6];
+} Move;
+
+typedef struct Data {
+    int WINDOW_WIDTH;
+    int WINDOW_HEIGHT;
+    int mouse_x;
+    int mouse_y;
+    int previous_time;
+    int help, help_on;
+    float speed;
+    float angle;
+    double e_time;
+} Data;
+
+
+extern GLfloat light_ambient[];
+extern World world;
+extern Rotate rotate;
+extern Move move;
+extern Camera camera;
+extern Action action;
+extern Data data;
+
 //Count the tokens in the text.
 int count_tokens(const char *text);
 

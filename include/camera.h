@@ -1,7 +1,7 @@
 #ifndef CAMERA_H
 #define CAMERA_H
 
-#include "planet_controller.h"
+#include "model.h"
 
 #define skybox_size 6000
 #define sun_size 920
@@ -14,11 +14,6 @@
 #define MOVE_SPEED 10.0  //BIGGER IS FASTER
 #define CAMERA_SPEED 5.0 //BIGGER IS SLOWER
 
-typedef struct Camera {
-    struct Vertex position;
-    struct Vertex pose;
-    struct Vertex prev_position;
-} Camera;
 
 //Checks if the camera can move. If it can't, loads the starter position.
 void don_not_head_up_against_the_wall(Camera *camera, Move *move);

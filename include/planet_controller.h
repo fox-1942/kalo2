@@ -5,23 +5,7 @@
 #ifndef KALO_PLANET_CONTROLLER_H
 #define KALO_PLANET_CONTROLLER_H
 
-#include "draw.h"
-
-typedef struct Action {
-    int move_forward;
-    int move_backward;
-    int step_left;
-    int step_right;
-    int move_up;
-    int move_down;
-    int rotate_planet1_in_galaxy;
-    int move_jupiter_plus_moon_in_galaxy;
-    int move_venus_in_galaxy;
-    int saturnus;
-    int call_satellite;
-    int increase_light;
-    int decrease_light;
-} Action;
+#include "camera.h"
 
 void movement_of_objects(Move *move, Action *action, World *world);
 
