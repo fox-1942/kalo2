@@ -24,7 +24,7 @@ void draw_skybox_top(Entity skybox);
 void draw_skybox(Entity skybox, int z_sign);
 
 //Draw the entities to the world.
-void draw_environment(World *world, Rotate *rotate, Move *move, double e_time);
+void draw_environment(World *world, Rotate *rotate, Move *move, double timer);
 
 bool is_point_inside_spheres(double x, double y, double z, double x2, double y2, double z2, double radius);
 

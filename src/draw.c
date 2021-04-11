@@ -94,15 +94,7 @@ void draw_skybox(Entity skybox, int z_sign) {
     glPopMatrix();
 }
 
-double calc_elapsed_for_led() {
-    int current_time;
-    double elapsed_time;
-    current_time = glutGet(GLUT_ELAPSED_TIME);
-    elapsed_time = (double) current_time;
-    return elapsed_time;
-}
-
-void draw_environment(World *world, Rotate *rotate, Move *move, double e_time) {
+void draw_environment(World *world, Rotate *rotate, Move *move, double timer) {
     glEnable(GL_TEXTURE_2D);
 
     //Draw the bottom skybox.
@@ -175,8 +167,8 @@ void draw_environment(World *world, Rotate *rotate, Move *move, double e_time) {
     // switching texture if two seconds lasts
     // e_time variable is reset in change_satellite_texture. The delay
     // of resetting e_time means the blinked interval of the sat led.
-    double r = calc_elapsed_for_led();
-    if (r - e_time > 2000) {
+    double actual_t = (double) glutGet(GLUT_ELAPSED_TIME);
+    if (actual_t - timer > 2000) {
         glBindTexture(GL_TEXTURE_2D, world->satellite.texture2);
     } else {
         glBindTexture(GL_TEXTURE_2D, world->satellite.texture);
@@ -195,7 +187,6 @@ void draw_environment(World *world, Rotate *rotate, Move *move, double e_time) {
 bool is_point_inside_spheres(double x, double y, double z, double x2, double y2, double z2, double radius) {
     return vector_length(x, y, z, x2, y2, z2) < radius;
 }
-
 
 void reshape(GLsizei width, GLsizei height) {
     data.WINDOW_WIDTH = width;
@@ -236,18 +227,17 @@ void draw_help() {
 double calc_elapsed_time() {
     int current_time;
     double elapsed_time;
-
     current_time = glutGet(GLUT_ELAPSED_TIME);
     elapsed_time = (double) (current_time - data.previous_time) / 1000.0;
     data.previous_time = current_time;
-
     return elapsed_time;
 }
+
 
 // The delay of resetting e_time means the time of the led operation on the sat.
 // Texture change in the draw_environment() method.
 void set_satellite_led_working_time() {
-    data.e_time = calc_elapsed_for_led();
+    data.e_time = (double) glutGet(GLUT_ELAPSED_TIME);
     glutTimerFunc(3000, set_satellite_led_working_time, 0);
 }
 
