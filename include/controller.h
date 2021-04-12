@@ -2,9 +2,10 @@
 #define KALO_CONTROLLER_H
 
 #include "camera.h"
+#include "draw.h"
 
-#define resolution 0  // 1: 1920*1080   0: 1366*768
-#define fullscreen 0   // 1: fullscreen  0: windowed
+#define RESOLUTION 0  // 1: 1920*1080   0: 1366*768
+#define FULLSCREEN 0   // 1: fullscreen  0: windowed
 
 typedef struct Data {
     int WINDOW_WIDTH;

@@ -1,17 +1,19 @@
 #include "controller.h"
 #include <draw.h>
 
+#include <stdbool.h>
+#include <math.h>
+
+
+#define DIST_JUP  4000;
+#define DIST_VENUS  6000;
+#define DIST_SAT  2000;
+
 bool inside_gravity_field = false;
 int satellite;
 double degree1;
 double degree3;
 double degree4;
-const double distance_jupiter_a = 4000;
-const double distance_jupiter_b = 4000;
-const double distance_venus_a = 6000;
-const double distance_venus_b = 6000;
-const double distance_saturn_a = 2000;
-const double distance_saturn_b = 2000;
 
 void movement_of_objects(Move *move, Action *action, World *world) {
 
@@ -19,8 +21,8 @@ void movement_of_objects(Move *move, Action *action, World *world) {
     if (action->move_jupiter_plus_moon_in_galaxy == TRUE) {
         degree1 += 0.4;
         double angle = degree_to_radian(degree1);
-        move->jupiter.x = cos(angle) * distance_jupiter_a;
-        move->jupiter.y = sin(angle) * distance_jupiter_b;
+        move->jupiter.x = cos(angle) * DIST_JUP;
+        move->jupiter.y = sin(angle) * DIST_JUP;
         move->jupiter.z = 0;
         move->jupiter_moon.x = move->jupiter.x + 1000;
         move->jupiter_moon.y = move->jupiter.y + 1000;
@@ -38,8 +40,8 @@ void movement_of_objects(Move *move, Action *action, World *world) {
     if (action->move_venus_in_galaxy == TRUE) {
         degree3 += 0.2;
         double angle = degree_to_radian(degree3);
-        move->venus.x = cos(angle) * distance_venus_a;
-        move->venus.y = sin(angle) * distance_venus_b;
+        move->venus.x = cos(angle) * DIST_VENUS;
+        move->venus.y = sin(angle) * DIST_VENUS;
         move->venus.z = 0;
 
     } else if (move->venus.x == 0) {
@@ -52,8 +54,8 @@ void movement_of_objects(Move *move, Action *action, World *world) {
     if (action->move_saturnus_in_galaxy == TRUE) {
         degree4 += 0.3;
         double angle = degree_to_radian(degree4);
-        move->saturnus.x = cos(angle) * distance_saturn_a;
-        move->saturnus.y = sin(angle) * distance_saturn_b;
+        move->saturnus.x = cos(angle) * DIST_SAT;
+        move->saturnus.y = sin(angle) * DIST_SAT;
         move->saturnus.z = 0;
 
     } else if (move->saturnus.x == 0) {

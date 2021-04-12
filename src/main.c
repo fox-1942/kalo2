@@ -1,13 +1,12 @@
 #include <draw.h>
 #include "controller.h"
 
-World world = {0};
-Rotate rotate = {0};
-Move move = {0};
-Camera camera = {0};
-Action action = {0};
-Data data = {0};
-GLfloat light_ambient[] = {0.5, 0.5, 0.5, 0};
+World world;
+Rotate rotate;
+Move move;
+Camera camera;
+Action action;
+Data data;
 
 void set_callbacks() {
     glutDisplayFunc(display);
@@ -19,8 +18,7 @@ void set_callbacks() {
     glutIdleFunc(idle);
     glutSpecialFunc(specialFunc);
     glutTimerFunc(0, set_satellite_led_working_time, 0);
-
-    if (fullscreen == 1) { glutFullScreen(); }
+    if (FULLSCREEN == 1) { glutFullScreen(); }
 }
 
 void initialize() {
@@ -47,7 +45,7 @@ void initialize() {
 int main(int argc, char **argv) {
     glutInit(&argc, argv);
 
-    if (resolution == 1) { glutInitWindowSize(1920, 1080); }
+    if (RESOLUTION == 1) { glutInitWindowSize(1920, 1080); }
     else { glutInitWindowSize(1366, 768); }
     glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGBA | GLUT_DEPTH);
     int wnd = glutCreateWindow("New Solar System");

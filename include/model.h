@@ -3,9 +3,7 @@
 
 #include "basic_primitives.h"
 #include <stdio.h>
-#include <stdbool.h>
-#include "SOIL/SOIL.h"
-#include <math.h>
+
 
 #define TRUE 1
 #define FALSE 0
@@ -45,7 +43,6 @@ typedef union World {
     Entity World[7];
 } World;
 
-extern GLfloat light_ambient[];
 extern World world;
 
 //Count the tokens in the text.

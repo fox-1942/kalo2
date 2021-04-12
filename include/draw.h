@@ -1,7 +1,9 @@
 #ifndef DRAW_H
 #define DRAW_H
 
+#include <stdbool.h>
 #include "model.h"
+#include "basic_primitives.h"
 
 typedef struct Rotate {
     double jupiter_rotation;
@@ -59,6 +61,5 @@ void display();
 void set_satellite_led_working_time();
 
 void idle();
-
 
 #endif

@@ -1,4 +1,5 @@
 #include <controller.h>
+#include <math.h>
 #include "camera.h"
 
 #define SKYBOX_SIZE 6000

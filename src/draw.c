@@ -1,8 +1,10 @@
 #include <controller.h>
+#include <math.h>
 #include "draw.h"
 
 #define SKYBOX_SCALE 10000.0
 
+GLfloat light_ambient[] = {0.5, 0.5, 0.5, 0};
 
 void draw_quads(const struct Model *model) {
     int i, k;
@@ -234,7 +236,6 @@ double calc_elapsed_time() {
     data.previous_time = current_time;
     return elapsed_time;
 }
-
 
 // The delay of resetting e_time means the time of the led operation on the sat.
 // Texture change in the draw_environment() method.

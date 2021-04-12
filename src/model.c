@@ -1,4 +1,6 @@
+#include <math.h>
 #include "model.h"
+#include "SOIL/SOIL.h"
 
 #define LINE_BUFFER_SIZE 1024
 

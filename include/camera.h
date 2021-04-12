@@ -2,6 +2,8 @@
 #define CAMERA_H
 
 #include "draw.h"
+#include "model.h"
+#include "basic_primitives.h"
 
 typedef struct Camera {
     struct Vertex position;
