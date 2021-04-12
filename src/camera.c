@@ -136,12 +136,12 @@ void rotate_camera(struct Camera *camera, double horizontal, double vertical) {
         camera->pose.z -= 360.0;
     }
 
-    if (camera->pose.x < 0) {
-        camera->pose.x += 360.0;
+    if (camera->pose.x < -90) {
+        camera->pose.x += 90.0;
     }
 
-    if (camera->pose.x > 360.0) {
-        camera->pose.x -= 360.0;
+    if (camera->pose.x > 50.0) {
+        camera->pose.x -= 50.0;
     }
 
 }
