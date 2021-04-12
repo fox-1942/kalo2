@@ -1,9 +1,6 @@
 #include "controller.h"
-#include <draw.h>
-
 #include <stdbool.h>
 #include <math.h>
-
 
 #define DIST_JUP  4000;
 #define DIST_VENUS  6000;
