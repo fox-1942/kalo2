@@ -10,16 +10,12 @@
 typedef struct Data {
     int mouse_x;
     int mouse_y;
-
     int help, help_on;
-
-    float speed;
 
     int WINDOW_WIDTH;
     int WINDOW_HEIGHT;
     double e_time;
     int previous_time;
-
 } Data;
 
 extern Data data;

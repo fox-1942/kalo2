@@ -9,6 +9,7 @@ typedef struct Camera {
     struct Vertex position;
     struct Vertex pose;
     struct Vertex prev_position;
+    float camera_speed;
 } Camera;
 
 typedef struct Action {

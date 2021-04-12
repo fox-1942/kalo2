@@ -22,18 +22,14 @@ void set_callbacks() {
 }
 
 void initialize() {
-    data.speed = 70;
+    camera.camera_speed = 70;
     set_callbacks();
     init_camera(&camera);
     glShadeModel(GL_SMOOTH);
-    glEnable(GL_NORMALIZE);
-    glEnable(GL_AUTO_NORMAL);
-    glClearColor(0.1, 0.1, 0.1, 1.0);
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
     glEnable(GL_DEPTH_TEST);
     glEnable(GL_COLOR_MATERIAL);
-    glClearDepth(1.0);
     glEnable(GL_LIGHTING);
     data.help = load_texture("..//textures//help.png");
     init_entities(&world);
@@ -42,7 +38,6 @@ void initialize() {
 
 int main(int argc, char **argv) {
     glutInit(&argc, argv);
-
     if (RESOLUTION == 1) { glutInitWindowSize(1920, 1080); }
     else { glutInitWindowSize(1366, 768); }
 

@@ -31,7 +31,7 @@ void init_camera(struct Camera *camera) {
 
 void update_camera_position(Camera *camera, Action *action, Move *move, GLfloat *light_ambient, double elapsed_time) {
     double distance;
-    distance = elapsed_time * MOVE_SPEED * data.speed;
+    distance = elapsed_time * MOVE_SPEED * camera->camera_speed;
 
     if (action->move_forward == TRUE) {
         move_camera_forward(camera, distance);

@@ -102,10 +102,10 @@ void draw_environment(World *world, Rotate *rotate, Move *move, double timer) {
     glEnable(GL_TEXTURE_2D);
 
     //Draw the bottom skybox.
-    draw_skybox(world->skybox,0);
+    draw_skybox(world->skybox, 0);
 
     //Draw the top skybox.
-    draw_skybox(world->skybox,1);
+    draw_skybox(world->skybox, 1);
 
     //Draw the sun.
     glPushMatrix();
@@ -195,12 +195,13 @@ bool is_point_inside_spheres(double x, double y, double z, double x2, double y2,
 void reshape(GLsizei width, GLsizei height) {
     data.WINDOW_WIDTH = width;
     data.WINDOW_HEIGHT = height;
-    glViewport(0, 0, width, height);
+
+    glViewport(0, (height - 768) / 2, width, 768);
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
 
     if (!data.help_on) {
-        gluPerspective(50.0, (GLdouble) width / (GLdouble) height, 0.1, 20000.0);
+        gluPerspective(50.0, (GLdouble) width / (GLdouble) 768, 0.1, 20000.0);
     } else {
         gluOrtho2D(0, width, height, 0);
     }
