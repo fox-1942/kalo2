@@ -20,6 +20,13 @@ void init_camera(struct Camera *camera) {
     camera->pose.x = -15;
     camera->pose.y = 0;
     camera->pose.z = 90;
+
+    action.move_forward = FALSE;
+    action.move_backward = FALSE;
+    action.step_left = FALSE;
+    action.step_right = FALSE;
+    action.rotate_planets_in_galaxy = TRUE;
+    action.call_satellite = FALSE;
 }
 
 void update_camera_position(Camera *camera, Action *action, Move *move, GLfloat *light_ambient, double elapsed_time) {

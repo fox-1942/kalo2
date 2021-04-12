@@ -1,4 +1,4 @@
-#include <draw.h>
+#include "draw.h"
 #include "controller.h"
 
 World world;
@@ -23,8 +23,6 @@ void set_callbacks() {
 
 void initialize() {
     data.speed = 70;
-    data.angle = 135;
-
     set_callbacks();
     init_camera(&camera);
     glShadeModel(GL_SMOOTH);
@@ -47,19 +45,11 @@ int main(int argc, char **argv) {
 
     if (RESOLUTION == 1) { glutInitWindowSize(1920, 1080); }
     else { glutInitWindowSize(1366, 768); }
+
     glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGBA | GLUT_DEPTH);
     int wnd = glutCreateWindow("New Solar System");
     glutSetWindow(wnd);
-
     initialize();
-
-    action.move_forward = FALSE;
-    action.move_backward = FALSE;
-    action.step_left = FALSE;
-    action.step_right = FALSE;
-    action.rotate_planets_in_galaxy = TRUE;
-    action.call_satellite = FALSE;
-
     glutMainLoop();
     return 0;
 }

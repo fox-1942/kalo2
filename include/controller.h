@@ -8,15 +8,18 @@
 #define FULLSCREEN 0   // 1: fullscreen  0: windowed
 
 typedef struct Data {
-    int WINDOW_WIDTH;
-    int WINDOW_HEIGHT;
     int mouse_x;
     int mouse_y;
-    int previous_time;
+
     int help, help_on;
+
     float speed;
-    float angle;
+
+    int WINDOW_WIDTH;
+    int WINDOW_HEIGHT;
     double e_time;
+    int previous_time;
+
 } Data;
 
 extern Data data;
