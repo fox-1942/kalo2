@@ -69,52 +69,52 @@ void count_elements(Model* model, FILE* file)
 int read_elements(Model* model, FILE* file)
 {
     char line[LINE_BUFFER_SIZE];
-    int vertex_index;
-    int texture_index;
-    int normal_index;
-    int triangle_index;
     int success;
 
     allocate_model(model);
-    vertex_index = 1;
-    texture_index = 1;
-    normal_index = 1;
-    triangle_index = 0;
+
+    model->n_vertices = 1;
+    model->n_texture_vertices = 1;
+    model->n_normals = 1;
+    model->n_triangles = 0;
+    model->n_quads = 0;
+
+    fseek(file, 0, SEEK_SET);
     while (fgets(line, LINE_BUFFER_SIZE, file) != NULL) {
         switch (calc_element_type(line)) {
         case NONE:
             break;
         case VERTEX:
-            success = read_vertex(&(model->vertices[vertex_index]), line);
+            success = read_vertex(&(model->vertices[model->n_vertices]), line);
             if (success == FALSE) {
                 printf("Unable to read vertex data!\n");
                 return FALSE;
             }
-            ++vertex_index;
+            ++model->n_vertices;
             break;
         case TEXTURE_VERTEX:
-            success = read_texture_vertex(&(model->texture_vertices[texture_index]), line);
+            success = read_texture_vertex(&(model->texture_vertices[model->n_texture_vertices]), line);
             if (success == FALSE) {
                 printf("Unable to read texture vertex data!\n");
                 return FALSE;
             }
-            ++texture_index;
+            ++model->n_texture_vertices;
             break;
         case NORMAL:
-            success = read_normal(&(model->normals[normal_index]), line);
+            success = read_normal(&(model->normals[model->n_normals]), line);
             if (success == FALSE) {
                 printf("Unable to read normal vector data!\n");
                 return FALSE;
             }
-            ++normal_index;
+            ++model->n_normals;
             break;
         case FACE:
-            success = read_triangle(&(model->triangles[triangle_index]), line);
+            success = read_triangle(&(model->triangles[model->n_triangles]), line);
             if (success == FALSE) {
                 printf("Unable to read triangle face data!\n");
                 return FALSE;
             }
-            ++triangle_index;
+            ++model->n_triangles;
             break;
         }
     }

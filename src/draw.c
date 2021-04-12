@@ -76,8 +76,8 @@ void draw_bounding_box(const Model *model) {
 
 void draw_model(const Model *model) {
     draw_triangles(model);
-    draw_quads(model);
-    draw_bounding_box(model);
+  //  draw_quads(model);
+  //  draw_bounding_box(model);
 }
 
 void draw_skybox(Entity skybox, int z_sign) {

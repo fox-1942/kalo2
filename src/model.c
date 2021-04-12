@@ -19,14 +19,12 @@ void init_model(Model* model)
 
 void allocate_model(Model* model)
 {
-    model->vertices =
-        (Vertex*)malloc((model->n_vertices + 1) * sizeof(Vertex));
-    model->texture_vertices =
-        (TextureVertex*)malloc((model->n_texture_vertices + 1) * sizeof(TextureVertex));
-    model->normals =
-        (Vertex*)malloc((model->n_normals + 1) * sizeof(Vertex));
-    model->triangles =
-        (Triangle*)malloc(model->n_triangles * sizeof(Triangle));
+    model->vertices = (struct Vertex *) malloc((model->n_vertices + 1) * sizeof(struct Vertex));
+    model->texture_vertices = (struct TextureVertex *) malloc(
+            (model->n_texture_vertices + 1) * sizeof(struct TextureVertex));
+    model->normals = (struct Vertex *) malloc((model->n_normals + 1) * sizeof(struct Vertex));
+    model->triangles = (struct Triangle *) malloc(model->n_triangles * sizeof(struct Triangle));
+    model->quads = (struct Quad *) malloc(model->n_quads * sizeof(struct Quad));
 }
 
 void free_model(Model* model)
