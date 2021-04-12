@@ -7,9 +7,11 @@ add_executable(${PROJECT_NAME}
         src/controller.c
         src/camera.c
         src/draw.c
-        src/model.c
+        src/model_old.c
         src/basic_primitives.c
         src/main.c
+        src/load.c
+        src/model.c
         )
 
 target_include_directories(${PROJECT_NAME} PUBLIC include)

@@ -1,3 +1,4 @@
+#include <load.h>
 #include "draw.h"
 #include "controller.h"
 

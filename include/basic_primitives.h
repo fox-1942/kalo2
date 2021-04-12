@@ -6,6 +6,7 @@
 #define KALO_BASIC_PRIMITIVES_H
 
 #include <GL/glut.h>
+
 #define M_PI 3.14159265358979323846
 
 typedef GLubyte Pixel;
@@ -21,10 +22,10 @@ typedef struct Vertex {
 
 } Vertex;
 
-struct TextureVertex {
+typedef struct TextureVertex {
     double u;
     double v;
-};
+}TextureVertex;
 
 struct FacePoint {
     int vertex_index;
@@ -32,9 +33,9 @@ struct FacePoint {
     int normal_index;
 };
 
-struct Triangle {
+typedef struct Triangle {
     struct FacePoint points[3];
-};
+} Triangle;
 
 struct Quad {
     struct FacePoint points[4];
