@@ -133,10 +133,10 @@ void movement_of_objects(Move *move, Action *action, World *world) {
 
 void rotation_of_objects(Action* action, Rotate* rotate) {
     if (action->rotate_planets_in_galaxy == TRUE) {
-        rotate->planet1_rotation += 0.5;
-        rotate->planet2_rotation += 1;
-        rotate->planet3_rotation += 0.4;
-        rotate->planet4_rotation += 0.2;
+        rotate->jupiter_rotation += 0.5;
+        rotate->jupiter_moon_rotation += 1;
+        rotate->venus_rotation += 0.4;
+        rotate->saturnus_rotation += 0.2;
         rotate->sun_rotation += 0.05;
     }
     rotate->satellite_rotation += 0.5;

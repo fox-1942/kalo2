@@ -1,7 +1,7 @@
 #ifndef CAMERA_H
 #define CAMERA_H
 
-#include "model.h"
+#include "draw.h"
 
 typedef struct Camera {
     struct Vertex position;

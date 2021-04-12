@@ -2,8 +2,8 @@
 // Created by Fox-1942 on 10/04/2021.
 //
 
-#ifndef KALO_BASIC_H
-#define KALO_BASIC_H
+#ifndef KALO_BASIC_PRIMITIVES_H
+#define KALO_BASIC_PRIMITIVES_H
 
 #include <GL/glut.h>
 #define M_PI 3.14159265358979323846
@@ -32,6 +32,20 @@ struct FacePoint {
     int normal_index;
 };
 
+struct Triangle {
+    struct FacePoint points[3];
+};
+
+struct Quad {
+    struct FacePoint points[4];
+};
+
+struct BBox {
+    Vertex minVertex;
+    Vertex maxVertex;
+    double diagonal_length;
+};
+
 double degree_to_radian(double degree);
 
-#endif //KALO_BASIC_H
+#endif //KALO_BASIC_PRIMITIVES_H

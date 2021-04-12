@@ -1,3 +1,4 @@
+#include <controller.h>
 #include "draw.h"
 
 #define SKYBOX_SCALE 10000.0
@@ -120,7 +121,7 @@ void draw_environment(World *world, Rotate *rotate, Move *move, double timer) {
     glMaterialfv(GL_FRONT, GL_AMBIENT, world->jupiter.material_ambient);
     glBindTexture(GL_TEXTURE_2D, world->jupiter.texture);
     glScalef(1.0f, 1.0f, 1.0f);
-    glRotatef(rotate->planet1_rotation, 0, 0, 1);
+    glRotatef(rotate->jupiter_rotation, 0, 0, 1);
     draw_model(&world->jupiter.model);
 
     glPopMatrix();
@@ -134,7 +135,7 @@ void draw_environment(World *world, Rotate *rotate, Move *move, double timer) {
     glBindTexture(GL_TEXTURE_2D, world->jupiter_moon.texture);
     glScalef(1.0f, 1.0f, 1.0f);
     glRotatef(180, 0, 0, 1);
-    glRotatef(rotate->planet2_rotation, 0, 0, 1);
+    glRotatef(rotate->jupiter_moon_rotation, 0, 0, 1);
     draw_model(&world->jupiter_moon.model);
 
     glPopMatrix();
@@ -146,7 +147,7 @@ void draw_environment(World *world, Rotate *rotate, Move *move, double timer) {
     glMaterialfv(GL_FRONT, GL_AMBIENT, world->venus.material_ambient);
     glBindTexture(GL_TEXTURE_2D, world->venus.texture);
     glScalef(1.0f, 1.0f, 1.0f);
-    glRotatef(rotate->planet3_rotation, 0, 0, -1);
+    glRotatef(rotate->venus_rotation, 0, 0, -1);
     draw_model(&world->venus.model);
     glPopMatrix();
 
@@ -156,7 +157,7 @@ void draw_environment(World *world, Rotate *rotate, Move *move, double timer) {
     glMaterialfv(GL_FRONT, GL_AMBIENT, world->saturnus.material_ambient);
     glBindTexture(GL_TEXTURE_2D, world->saturnus.texture);
     glScalef(1.0f, 1.0f, 1.0f);
-    glRotatef(rotate->planet4_rotation, 0, 0, -1);
+    glRotatef(rotate->saturnus_rotation, 0, 0, -1);
     draw_model(&world->saturnus.model);
     glPopMatrix();
 

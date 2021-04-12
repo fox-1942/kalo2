@@ -8,7 +8,7 @@ add_executable(${PROJECT_NAME}
         src/camera.c
         src/draw.c
         src/model.c
-        src/basic.c
+        src/basic_primitives.c
         src/main.c
         )
 

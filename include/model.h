@@ -1,7 +1,7 @@
 #ifndef MODEL_H_
 #define MODEL_H_
 
-#include "basic.h"
+#include "basic_primitives.h"
 #include <stdio.h>
 #include <stdbool.h>
 #include "SOIL/SOIL.h"
@@ -10,20 +10,6 @@
 #define TRUE 1
 #define FALSE 0
 #define INVALID_VERTEX_INDEX 0
-
-struct Triangle {
-    struct FacePoint points[3];
-};
-
-struct Quad {
-    struct FacePoint points[4];
-};
-
-struct BBox {
-    Vertex minVertex;
-    Vertex maxVertex;
-    double diagonal_length;
-};
 
 typedef struct Model {
     int n_vertices;
@@ -58,40 +44,6 @@ typedef union World {
     };
     Entity World[7];
 } World;
-
-typedef union Position {
-    struct {
-        double x;
-        double y;
-        double z;
-    };
-    double Position[3];
-} Position;
-
-typedef struct Rotate {
-    double planet1_rotation;
-    double planet2_rotation;
-    double planet3_rotation;
-    double planet4_rotation;
-    double satellite_rotation;
-    double sun_rotation;
-} Rotate;
-
-typedef union Move {
-    struct {
-        Position jupiter;
-        Position jupiter_moon;
-        Position venus;
-        Position saturnus;
-        Position sun;
-        Position satellite;
-    };
-    Position Move[6];
-} Move;
-
-extern Rotate rotate;
-extern Move move;
-
 
 extern GLfloat light_ambient[];
 extern World world;
