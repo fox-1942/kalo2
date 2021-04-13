@@ -1,7 +1,3 @@
-//
-// Created by Fox-1942 on 10/04/2021.
-//
-
 #ifndef KALO_BASIC_PRIMITIVES_H
 #define KALO_BASIC_PRIMITIVES_H
 
@@ -10,10 +6,6 @@
 #define M_PI 3.14159265358979323846
 
 typedef GLubyte Pixel;
-struct TokenArray {
-    char **tokens;
-    int n_tokens;
-};
 
 typedef struct Vertex {
     double x;

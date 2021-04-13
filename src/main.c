@@ -1,4 +1,4 @@
-#include <load.h>
+#include "load.h"
 #include "draw.h"
 #include "controller.h"
 
@@ -26,7 +26,6 @@ void initialize() {
     camera.camera_speed = 70;
     set_callbacks();
     init_camera(&camera);
-    glShadeModel(GL_SMOOTH);
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
     glEnable(GL_DEPTH_TEST);

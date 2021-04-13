@@ -150,7 +150,7 @@ void draw_environment(World *world, Rotate *rotate, Move *move, double timer) {
     draw_model(&world->sun.model);
     glPopMatrix();
 
-    //Draw the planet1. Dark Jupiter
+    //Draw the Jupiter
     glPushMatrix();
     glTranslatef(move->jupiter.x, move->jupiter.y, move->jupiter.z);
     glMaterialfv(GL_FRONT, GL_AMBIENT, world->jupiter.material_ambient);
@@ -162,9 +162,8 @@ void draw_environment(World *world, Rotate *rotate, Move *move, double timer) {
     glPopMatrix();
 
 
-    //Draw the planet2, it is the moon of the dark Jupiter, so it is relative to the movement of planet 1.
+    //Draw the moon of the dark Jupiter, so it is relative to the movement of planet 1.
     glPushMatrix();
-
     glTranslatef(move->jupiter.x + 1000, move->jupiter.y + 1000, move->jupiter.z - 100);
     glMaterialfv(GL_FRONT, GL_AMBIENT, world->jupiter_moon.material_ambient);
     glBindTexture(GL_TEXTURE_2D, world->jupiter_moon.texture);
@@ -176,7 +175,7 @@ void draw_environment(World *world, Rotate *rotate, Move *move, double timer) {
     glPopMatrix();
 
 
-    //Draw the planet3.   Light Jupiter
+    //Draw Venus
     glPushMatrix();
     glTranslatef(move->venus.x, move->venus.y, move->venus.z);
     glMaterialfv(GL_FRONT, GL_AMBIENT, world->venus.material_ambient);
@@ -186,7 +185,7 @@ void draw_environment(World *world, Rotate *rotate, Move *move, double timer) {
     draw_model(&world->venus.model);
     glPopMatrix();
 
-    //Draw the planet4. Saturnus
+    //Draw Saturnus
     glPushMatrix();
     glTranslatef(move->saturnus.x, move->saturnus.y, move->saturnus.z);
     glMaterialfv(GL_FRONT, GL_AMBIENT, world->saturnus.material_ambient);

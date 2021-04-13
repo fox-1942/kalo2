@@ -1,5 +1,4 @@
 #include "load.h"
-
 #include <stdlib.h>
 #include <basic_primitives.h>
 #include <SOIL/SOIL.h>

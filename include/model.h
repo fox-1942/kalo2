@@ -6,13 +6,6 @@
 #define TRUE 1
 #define FALSE 0
 
-#define INVALID_VERTEX_INDEX 0
-
-/**
- * Three dimensional model with texture
- */
-
-
 typedef struct Model {
     int n_vertices;
     int n_texture_vertices;

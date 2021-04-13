@@ -1,9 +1,7 @@
 #include "model.h"
-
+#include "load.h"
 #include <stdlib.h>
 #include <math.h>
-#include <stdio.h>
-#include <load.h>
 
 void init_model(Model* model)
 {
@@ -107,27 +105,27 @@ void scale_model(struct Model *model, double sx, double sy, double sz) {
 }
 
 void init_entities(World *world) {
-    //Load the planet1 object and texture.
+    //Load the Jupiter object and texture.
     load_model("..\\objects\\geoid.obj", &world->jupiter.model);
     world->jupiter.texture = load_texture("..\\textures\\planet2.png");
     scale_model(&world->jupiter.model, 0.4, 0.4, 0.4);
 
-    //Load the planet2 and texture.
+    //Load the moon of Jupiter and texture.
     load_model("..\\objects\\geoid.obj", &world->jupiter_moon.model);
     world->jupiter_moon.texture = load_texture("..\\textures\\planet3.png");
     scale_model(&world->jupiter_moon.model, 0.2, 0.2, 0.2);
 
-    //Load the planet3 and texture.
+    //Load the Venus and texture.
     load_model("..\\objects\\geoid.obj", &world->venus.model);
     world->venus.texture = load_texture("..\\textures\\planet1.png");
     scale_model(&world->venus.model, 0.5, 0.5, 0.5);
 
-    //Load the planet4 and texture.
+    //Load the Saturnus and texture.
     load_model("..\\objects\\saturn.obj", &world->saturnus.model);
     world->saturnus.texture = load_texture("..\\textures\\planet4.jpg");
     scale_model(&world->saturnus.model, 0.2, 0.2, 0.2);
 
-    //Load the sun object and texture.
+    //Load the Sun object and texture.
     load_model("..\\objects\\geoid.obj", &world->sun.model);
     world->sun.texture = load_texture("..\\textures\\sun.png");
     scale_model(&world->sun.model, 2, 2, 2);

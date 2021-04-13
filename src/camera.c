@@ -1,6 +1,5 @@
-#include <controller.h>
-#include <math.h>
 #include "camera.h"
+#include <math.h>
 
 #define SKYBOX_SIZE 6000
 #define SUN_SIZE 920

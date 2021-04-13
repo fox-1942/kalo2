@@ -2,8 +2,8 @@
 #include <stdbool.h>
 #include <math.h>
 
-#define DIST_JUP  4000;
-#define DIST_VENUS  6000;
+#define DIST_JUP 4000;
+#define DIST_VENUS 6000;
 #define DIST_SAT  2000;
 
 bool inside_gravity_field = false;
@@ -87,8 +87,8 @@ void movement_of_objects(Move *move, Action *action, World *world) {
             // setting up the effects of gravity fields of the planets, taking the direction
             // where the satellite comes from also in consideration. Index of "i" indicates a specific planet.
             switch (i) {
-                case 0:  // Planet 1 - Dark. Jupiter
-                case 1:  // Planet 2 - Moon of Dark. Jupiter
+                case 0:  // Planet 1 - Jupiter
+                case 1:  // Planet 2 - Moon of Jupiter
 
                     if (distance_vector.y <= 0) {  // if satellite goes against the rotation of the first two planets
                         move->satellite.x += 1.0;  // satelitte losts more speed on the X axis than is the 'else' case
@@ -98,7 +98,7 @@ void movement_of_objects(Move *move, Action *action, World *world) {
                         move->satellite.y += 1;
                     }
                     break;
-                case 2: // Light Jupiter
+                case 2: // Venus
                 case 3: // Saturnus
                     if (distance_vector.y <= 0) {
                         move->satellite.x += 1.5;
@@ -130,7 +130,7 @@ void movement_of_objects(Move *move, Action *action, World *world) {
     }
 }
 
-void rotation_of_objects(Action* action, Rotate* rotate) {
+void rotation_of_objects(Action *action, Rotate *rotate) {
     if (action->rotate_planets_in_galaxy == TRUE) {
         rotate->jupiter_rotation += 0.5;
         rotate->jupiter_moon_rotation += 1;
