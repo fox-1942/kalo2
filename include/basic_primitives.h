@@ -27,19 +27,19 @@ typedef struct TextureVertex {
     double v;
 }TextureVertex;
 
-struct FacePoint {
+typedef struct FacePoint {
     int vertex_index;
     int texture_index;
     int normal_index;
-};
+} FacePoint;
 
 typedef struct Triangle {
     struct FacePoint points[3];
 } Triangle;
 
-struct Quad {
+typedef struct Quad {
     struct FacePoint points[4];
-};
+}Quad;
 
 struct BBox {
     Vertex minVertex;

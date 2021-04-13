@@ -12,7 +12,6 @@ void init_model(Model* model)
     model->n_normals = 1;
     model->n_triangles = 0;
     model->n_quads = 0;
-
 }
 
 void allocate_model(Model* model)
@@ -39,6 +38,10 @@ void free_model(Model* model)
     if (model->triangles != NULL) {
         free(model->triangles);
     }
+    if (model->quads != NULL) {
+        free(model->quads);
+    }
+
 }
 
 void calc_bounding_box(struct Model *model) {
@@ -89,7 +92,7 @@ void calc_bounding_box(struct Model *model) {
     model->box.maxVertex.z = max_z;
 
     model->box.diagonal_length = vector_length(min_x, min_y, min_z, max_x, max_y, max_z);
-    printf("Bbox diagonal length: %f \n", model->box.diagonal_length);
+    //printf("Bbox diagonal length: %f \n", model->box.diagonal_length);
 
 }
 

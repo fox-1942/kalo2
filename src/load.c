@@ -10,7 +10,7 @@ void print_model_info(const Model *model) {
     printf("\nVertices: %d\n", model->n_vertices);
     printf("Texture vertices: %d\n", model->n_texture_vertices);
     printf("Normals: %d\n", model->n_normals);
-    printf("Triangles: %d\n\n", model->n_triangles);
+    printf("Quads: %d\n\n", model->n_quads);
 }
 
 int load_model(const char *filename, Model *model) {
@@ -56,7 +56,7 @@ void count_elements(Model *model, FILE *file) {
                 ++model->n_normals;
                 break;
             case FACE:
-                ++model->n_triangles;
+                ++model->n_quads;
                 break;
         }
     }
@@ -97,12 +97,12 @@ int read_elements(Model *model, FILE *file) {
                 ++model->n_normals;
                 break;
             case FACE:
-                success = read_triangle(&(model->triangles[model->n_triangles]), line);
+                success = read_quad(&(model->quads[model->n_quads]), line);
                 if (success == FALSE) {
-                    printf("Unable to read triangle face data!\n");
+                    printf("Unable to read quad face data!\n");
                     return FALSE;
                 }
-                ++model->n_triangles;
+                ++model->n_quads;
                 break;
         }
     }
@@ -240,17 +240,17 @@ int read_normal(Vertex *normal, const char *text) {
     return TRUE;
 }
 
-int read_triangle(Triangle *triangle, const char *text) {
+int read_quad(Quad *quad, const char *text) {
     int point_index;
     int i;
 
     i = 0;
-    for (point_index = 0; point_index < 3; ++point_index) {
+    for (point_index = 0; point_index < 4; ++point_index) {
         while (text[i] != 0 && is_numeric(text[i]) == FALSE) {
             ++i;
         }
         if (text[i] != 0) {
-            triangle->points[point_index].vertex_index = atoi(&text[i]);
+            quad->points[point_index].vertex_index = atoi(&text[i]);
         } else {
             printf("The vertex index of the %d. points is missing!\n", point_index + 1);
             return FALSE;
@@ -260,7 +260,7 @@ int read_triangle(Triangle *triangle, const char *text) {
         }
         ++i;
         if (text[i] != 0) {
-            triangle->points[point_index].texture_index = atoi(&text[i]);
+            quad->points[point_index].texture_index = atoi(&text[i]);
         } else {
             printf("The texture index of the %d. points is missing!\n", point_index + 1);
             return FALSE;
@@ -270,7 +270,7 @@ int read_triangle(Triangle *triangle, const char *text) {
         }
         ++i;
         if (text[i] != 0) {
-            triangle->points[point_index].normal_index = atoi(&text[i]);
+            quad->points[point_index].normal_index = atoi(&text[i]);
         } else {
             printf("The normal index of the %d. points is missing!\n", point_index + 1);
             return FALSE;

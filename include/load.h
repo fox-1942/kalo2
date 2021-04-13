@@ -42,7 +42,7 @@ int read_normal(Vertex* normal, const char* text);
 /**
  * Read triangle data.
  */
-int read_triangle(Triangle* triangle, const char* text);
+int read_quad(struct Quad* quad, const char* text);
 
 /**
  * Check that the character is a numeric character.
