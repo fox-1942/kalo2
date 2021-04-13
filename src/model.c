@@ -7,14 +7,12 @@
 
 void init_model(Model* model)
 {
-    model->n_vertices = 0;
-    model->n_texture_vertices = 0;
-    model->n_normals = 0;
+    model->n_vertices = 1;
+    model->n_texture_vertices = 1;
+    model->n_normals = 1;
     model->n_triangles = 0;
-    model->vertices = NULL;
-    model->texture_vertices = NULL;
-    model->normals = NULL;
-    model->triangles = NULL;
+    model->n_quads = 0;
+
 }
 
 void allocate_model(Model* model)
@@ -41,9 +39,7 @@ void free_model(Model* model)
     if (model->triangles != NULL) {
         free(model->triangles);
     }
-    init_model(model);
 }
-
 
 void calc_bounding_box(struct Model *model) {
     int i;
