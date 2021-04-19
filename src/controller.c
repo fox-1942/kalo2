@@ -17,7 +17,6 @@ void init_move(Move *move) {
     memcpy(move->planets, planetsToAdd, sizeof(planetsToAdd));
 }
 
-
 void movement_of_objects(Move *move, Action *action, World *world) {
     bool inside_gravity_field = false;
 
@@ -90,7 +89,7 @@ void movement_of_objects(Move *move, Action *action, World *world) {
             Vertex distance_vector = vector_from_two_vertex(move->satellite.x, move->satellite.y, move->satellite.z,
                                                             move->planets[i]->x, move->planets[i]->y,
                                                             move->planets[i]->z);
-            if (i != 4) {
+            if (i != 4) { // every planet except Sun
                 if (distance_vector.y <= 0) {
                     move->satellite.x += 1.0;
                     move->satellite.y -= 1;
@@ -98,7 +97,7 @@ void movement_of_objects(Move *move, Action *action, World *world) {
                     move->satellite.x += 1.5;
                     move->satellite.y += 1;
                 }
-            } else {
+            } else { // Sun
                 move->satellite.x += 5;
                 move->satellite.y += 0.3;
             }

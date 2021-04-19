@@ -78,7 +78,6 @@ void calc_bounding_box(struct Model *model) {
     printf("y in [%lf, %lf]\n", min_y, max_y);
     printf("z in [%lf, %lf]\n", min_z, max_z);*/
 
-    // setting the coordinates of the bounding box for the specific model
     model->box.minVertex.x = min_x;
     model->box.minVertex.y = min_y;
     model->box.minVertex.z = min_z;

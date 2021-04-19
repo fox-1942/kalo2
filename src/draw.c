@@ -6,38 +6,11 @@
 
 GLfloat light_ambient[] = {0.5, 0.5, 0.5, 0};
 
-void draw_triangles(const Model *model) {
-    int i, k;
-    int vertex_index, texture_index, normal_index;
-    float x, y, z, u, v;
-
-    glBegin(GL_TRIANGLES);
-
-    for (i = 0; i < model->n_triangles; ++i) {
-        for (k = 0; k < 3; ++k) {
-
-            normal_index = model->triangles[i].points[k].normal_index;
-            x = model->normals[normal_index].x;
-            y = model->normals[normal_index].y;
-            z = model->normals[normal_index].z;
-            glNormal3f(x, y, z);
-
-            texture_index = model->triangles[i].points[k].texture_index;
-            u = model->texture_vertices[texture_index].u;
-            v = model->texture_vertices[texture_index].v;
-            glTexCoord2f(u, 1.0 - v);
-
-            vertex_index = model->triangles[i].points[k].vertex_index;
-            x = model->vertices[vertex_index].x;
-            y = model->vertices[vertex_index].y;
-            z = model->vertices[vertex_index].z;
-            glVertex3f(x, y, z);
-        }
-    }
-
-    glEnd();
+void init_rotate(Rotate *rotate) {
+    double *planetsToAdd[6] = {&rotate->jupiter_rotation, &rotate->jupiter_moon_rotation, &rotate->venus_rotation,
+                               &rotate->saturnus_rotation, &rotate->sun_rotation, &rotate->satellite_rotation};
+    memcpy(rotate->planets, planetsToAdd, sizeof(planetsToAdd));
 }
-
 
 void draw_quads(const struct Model *model) {
     int i, k;
@@ -73,7 +46,6 @@ void draw_bounding_box(const Model *model) {
 }
 
 void draw_model(const Model *model) {
-    // draw_triangles(model);
     draw_quads(model);
     // draw_bounding_box(model);
 }
@@ -134,88 +106,42 @@ void draw_skybox(Entity skybox, int z_sign) {
 void draw_environment(World *world, Rotate *rotate, Move *move, double timer) {
     glEnable(GL_TEXTURE_2D);
 
-    //Draw the bottom skybox.
-    draw_skybox(world->skybox, 0);
+    for (int i = 0; i < 6; ++i) {
+        glPushMatrix();
+        glTranslatef(move->planets[i]->x, move->planets[i]->y, move->planets[i]->z);
+        glMaterialfv(GL_FRONT, GL_AMBIENT, world->planets[i]->material_ambient);
 
-    //Draw the top skybox.
-    draw_skybox(world->skybox, 1);
+        if (i == 5) {  // Switching textures in case of satellite.
+            double actual_t = (double) glutGet(GLUT_ELAPSED_TIME);
+            if (actual_t - timer > 2000) {
+                glBindTexture(GL_TEXTURE_2D, world->planets[i]->texture2);
+            } else {
+                glBindTexture(GL_TEXTURE_2D, world->planets[i]->texture);
+            }
+        } else {
+            glBindTexture(GL_TEXTURE_2D, world->planets[i]->texture);
+        }
 
-    //Draw the sun.
-    glPushMatrix();
-    glTranslatef(0, 0, 0);
-    glMaterialfv(GL_FRONT, GL_AMBIENT, world->sun.material_ambient);
-    glBindTexture(GL_TEXTURE_2D, world->sun.texture);
-    glScalef(1.0f, 1.0f, 1.0f);
-    glRotatef(rotate->sun_rotation, 1, 1, 1);
-    draw_model(&world->sun.model);
-    glPopMatrix();
+        glScalef(1.0f, 1.0f, 1.0f);
 
-    //Draw the Jupiter
-    glPushMatrix();
-    glTranslatef(move->jupiter.x, move->jupiter.y, move->jupiter.z);
-    glMaterialfv(GL_FRONT, GL_AMBIENT, world->jupiter.material_ambient);
-    glBindTexture(GL_TEXTURE_2D, world->jupiter.texture);
-    glScalef(1.0f, 1.0f, 1.0f);
-    glRotatef(rotate->jupiter_rotation, 0, 0, 1);
-    draw_model(&world->jupiter.model);
+        if (i == 0 || i == 1) {
+            glRotatef(*rotate->planets[i], 0, 0, 1);  // Jupiter and its moon
+        } else if (i == 2 || i == 3) {
+            glRotatef(*rotate->planets[i], 0, 0, -1); // Venus, Saturnus
+        } else if (i == 4) {
+            glRotatef(*rotate->planets[i], 1, 1, 1);  //Sun
+        } else if (i == 5) {                                 // Satellite
+            glRotatef(90, 1, 0, 0);
+            glRotatef(270, 0, 1, 0);
+            glRotatef(*rotate->planets[i], 0, 0, 1);
+        }
 
-    glPopMatrix();
-
-
-    //Draw the moon of the dark Jupiter, so it is relative to the movement of planet 1.
-    glPushMatrix();
-    glTranslatef(move->jupiter.x + 1000, move->jupiter.y + 1000, move->jupiter.z - 100);
-    glMaterialfv(GL_FRONT, GL_AMBIENT, world->jupiter_moon.material_ambient);
-    glBindTexture(GL_TEXTURE_2D, world->jupiter_moon.texture);
-    glScalef(1.0f, 1.0f, 1.0f);
-    glRotatef(180, 0, 0, 1);
-    glRotatef(rotate->jupiter_moon_rotation, 0, 0, 1);
-    draw_model(&world->jupiter_moon.model);
-
-    glPopMatrix();
-
-
-    //Draw Venus
-    glPushMatrix();
-    glTranslatef(move->venus.x, move->venus.y, move->venus.z);
-    glMaterialfv(GL_FRONT, GL_AMBIENT, world->venus.material_ambient);
-    glBindTexture(GL_TEXTURE_2D, world->venus.texture);
-    glScalef(1.0f, 1.0f, 1.0f);
-    glRotatef(rotate->venus_rotation, 0, 0, -1);
-    draw_model(&world->venus.model);
-    glPopMatrix();
-
-    //Draw Saturnus
-    glPushMatrix();
-    glTranslatef(move->saturnus.x, move->saturnus.y, move->saturnus.z);
-    glMaterialfv(GL_FRONT, GL_AMBIENT, world->saturnus.material_ambient);
-    glBindTexture(GL_TEXTURE_2D, world->saturnus.texture);
-    glScalef(1.0f, 1.0f, 1.0f);
-    glRotatef(rotate->saturnus_rotation, 0, 0, -1);
-    draw_model(&world->saturnus.model);
-    glPopMatrix();
-
-    //Draw the satellite.
-    glPushMatrix();
-    glTranslatef(move->satellite.x, move->satellite.y, move->satellite.z);
-    glMaterialfv(GL_FRONT, GL_AMBIENT, world->satellite.material_ambient);
-
-    // switching texture if two seconds lasts
-    // e_time variable is reset in change_satellite_texture. The delay
-    // of resetting e_time means the blinked interval of the sat led.
-    double actual_t = (double) glutGet(GLUT_ELAPSED_TIME);
-    if (actual_t - timer > 2000) {
-        glBindTexture(GL_TEXTURE_2D, world->satellite.texture2);
-    } else {
-        glBindTexture(GL_TEXTURE_2D, world->satellite.texture);
+        draw_model(&world->planets[i]->model);
+        glPopMatrix();
     }
 
-    glScalef(1.0f, 1.0f, 1.0f);
-    glRotatef(90, 1, 0, 0);
-    glRotatef(270, 0, 1, 0);
-    glRotatef(rotate->satellite_rotation, 0, 0, 1);
-    draw_model(&world->satellite.model);
-    glPopMatrix();
+    draw_skybox(world->skybox, 0);
+    draw_skybox(world->skybox, 1);
 }
 
 // Determines whether the satellite is inside the planet's field of gravity. The radius is coming from

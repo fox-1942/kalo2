@@ -10,8 +10,9 @@ typedef struct Rotate {
     double jupiter_moon_rotation;
     double venus_rotation;
     double saturnus_rotation;
-    double satellite_rotation;
     double sun_rotation;
+    double satellite_rotation;
+    double *planets[6];
 } Rotate;
 
 typedef struct Position {
@@ -56,5 +57,7 @@ void display();
 void set_satellite_led_working_time();
 
 void idle();
+
+void init_rotate(Rotate *rotate);
 
 #endif
