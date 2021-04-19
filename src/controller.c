@@ -13,7 +13,7 @@ double degree4;
 
 void init_move(Move *move) {
     Position *planetsToAdd[6] = {&move->jupiter, &move->jupiter_moon, &move->venus,
-                                 &move->saturnus, &move->sun,&move->satellite};
+                                 &move->saturnus, &move->sun, &move->satellite};
     memcpy(move->planets, planetsToAdd, sizeof(planetsToAdd));
 }
 
@@ -86,43 +86,24 @@ void movement_of_objects(Move *move, Action *action, World *world) {
             }
         }
 
-        // If sat is inside on of the gravitiy fields.
         if (inside_gravity_field) {
             Vertex distance_vector = vector_from_two_vertex(move->satellite.x, move->satellite.y, move->satellite.z,
                                                             move->planets[i]->x, move->planets[i]->y,
                                                             move->planets[i]->z);
-
-            // setting up the effects of gravity fields of the planets, taking the direction
-            // where the satellite comes from also in consideration. Index of "i" indicates a specific planet.
-            switch (i) {
-                case 0:  // Planet 1 - Jupiter
-                case 1:  // Planet 2 - Moon of Jupiter
-
-                    if (distance_vector.y <= 0) {  // if satellite goes against the rotation of the first two planets
-                        move->satellite.x += 1.0;  // satelitte losts more speed on the X axis than is the 'else' case
-                        move->satellite.y -= 1;
-                    } else {
-                        move->satellite.x += 1.5; // if satellite goes parellel with the rotation of the first two planets
-                        move->satellite.y += 1;
-                    }
-                    break;
-                case 2: // Venus
-                case 3: // Saturnus
-                    if (distance_vector.y <= 0) {
-                        move->satellite.x += 1.5;
-                        move->satellite.y -= 1;
-                    } else {
-                        move->satellite.x += 1.0;
-                        move->satellite.y += 1;
-                    }
-                    break;
-
-                case 4: // Sun
-                    move->satellite.x += 5;
-                    move->satellite.y += 0.3;
-                    break;
+            if (i != 4) {
+                if (distance_vector.y <= 0) {
+                    move->satellite.x += 1.0;
+                    move->satellite.y -= 1;
+                } else {
+                    move->satellite.x += 1.5;
+                    move->satellite.y += 1;
+                }
+            } else {
+                move->satellite.x += 5;
+                move->satellite.y += 0.3;
             }
-            inside_gravity_field = false;  // It gives the possibility to let the satellite get the normal speed in the next iteration.
+
+            inside_gravity_field = false;
         } else {
             move->satellite.x += 7;
         }

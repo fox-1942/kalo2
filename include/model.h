@@ -36,7 +36,7 @@ typedef struct World {
     Entity sun;
     Entity satellite;
     Entity skybox;
-    Entity *planets[6];
+    Entity *planets[7];
 } World;
 
 World world;

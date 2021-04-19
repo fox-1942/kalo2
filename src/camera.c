@@ -2,13 +2,6 @@
 #include <math.h>
 #include <stdio.h>
 
-#define SKYBOX_SIZE 6000
-#define SUN_SIZE 920
-#define JUPITER_SIZE 200
-#define JUPITER_MOON_SIZE 85
-#define VENUS_SIZE 220
-#define SATURN_SIZE 150
-#define SAT_SIZE 50
 #define MOVE_SPEED 10.0  //BIGGER IS FASTER
 #define CAMERA_SPEED 5.0 //BIGGER IS SLOWER
 
@@ -71,11 +64,6 @@ void update_camera_position(Camera *camera, Action *action, Move *move, GLfloat 
 
 void don_not_head_up_against_the_wall(Camera *camera, Move *move) {
 
-    if (camera->position.x < -SKYBOX_SIZE || camera->position.x > SKYBOX_SIZE ||
-        camera->position.y < -SKYBOX_SIZE || camera->position.y > SKYBOX_SIZE ||
-        camera->position.z < -SKYBOX_SIZE || camera->position.z > SKYBOX_SIZE)
-        init_camera(camera);
-
     for (int i = 0; i < 6; ++i) {
         if (camera->position.x < move->planets[i]->x + world.planets[i]->size &&
             camera->position.x > move->planets[i]->x - world.planets[i]->size &&
@@ -85,6 +73,12 @@ void don_not_head_up_against_the_wall(Camera *camera, Move *move) {
             camera->position.z > move->planets[i]->z - world.planets[i]->size)
             init_camera(camera);
     }
+
+    //Skybox
+    if (camera->position.x < -world.planets[6]->size || camera->position.x > world.planets[6]->size ||
+        camera->position.y < -world.planets[6]->size || camera->position.y > world.planets[6]->size ||
+        camera->position.z < -world.planets[6]->size || camera->position.z > world.planets[6]->size)
+        init_camera(camera);
 }
 
 void set_view_point(const struct Camera *camera) {

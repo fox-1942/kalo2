@@ -151,8 +151,8 @@ void init_entities(World *world) {
     calc_bounding_box(&world->sun.model);
     world->sun.model.box.diagonal_length -= 10; // small optimalization for better demonstration.
 
-    Entity *planetsToAdd[6] = {&world->jupiter, &world->jupiter_moon, &world->venus,
-                               &world->saturnus, &world->sun, &world->satellite};
+    Entity *planetsToAdd[7] = {&world->jupiter, &world->jupiter_moon, &world->venus,
+                               &world->saturnus, &world->sun, &world->satellite, &world->skybox};
     memcpy(world->planets, planetsToAdd, sizeof(planetsToAdd));
 
 
