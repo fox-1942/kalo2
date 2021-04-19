@@ -3,8 +3,7 @@
 #include <stdlib.h>
 #include <math.h>
 
-void init_model(Model* model)
-{
+void init_model(Model *model) {
     model->n_vertices = 1;
     model->n_texture_vertices = 1;
     model->n_normals = 1;
@@ -12,8 +11,7 @@ void init_model(Model* model)
     model->n_quads = 0;
 }
 
-void allocate_model(Model* model)
-{
+void allocate_model(Model *model) {
     model->vertices = (struct Vertex *) malloc((model->n_vertices + 1) * sizeof(struct Vertex));
     model->texture_vertices = (struct TextureVertex *) malloc(
             (model->n_texture_vertices + 1) * sizeof(struct TextureVertex));
@@ -22,8 +20,7 @@ void allocate_model(Model* model)
     model->quads = (struct Quad *) malloc(model->n_quads * sizeof(struct Quad));
 }
 
-void free_model(Model* model)
-{
+void free_model(Model *model) {
     if (model->vertices != NULL) {
         free(model->vertices);
     }
@@ -108,37 +105,43 @@ void init_entities(World *world) {
     //Load the Jupiter object and texture.
     load_model("..\\objects\\geoid.obj", &world->jupiter.model);
     world->jupiter.texture = load_texture("..\\textures\\planet2.png");
+    world->jupiter.size = 200;
     scale_model(&world->jupiter.model, 0.4, 0.4, 0.4);
 
     //Load the moon of Jupiter and texture.
     load_model("..\\objects\\geoid.obj", &world->jupiter_moon.model);
     world->jupiter_moon.texture = load_texture("..\\textures\\planet3.png");
+    world->jupiter_moon.size = 85;
     scale_model(&world->jupiter_moon.model, 0.2, 0.2, 0.2);
 
     //Load the Venus and texture.
     load_model("..\\objects\\geoid.obj", &world->venus.model);
     world->venus.texture = load_texture("..\\textures\\planet1.png");
+    world->venus.size = 220;
     scale_model(&world->venus.model, 0.5, 0.5, 0.5);
 
     //Load the Saturnus and texture.
     load_model("..\\objects\\saturn.obj", &world->saturnus.model);
     world->saturnus.texture = load_texture("..\\textures\\planet4.jpg");
+    world->saturnus.size = 150;
     scale_model(&world->saturnus.model, 0.2, 0.2, 0.2);
 
     //Load the Sun object and texture.
     load_model("..\\objects\\geoid.obj", &world->sun.model);
     world->sun.texture = load_texture("..\\textures\\sun.png");
+    world->sun.size = 920;
     scale_model(&world->sun.model, 2, 2, 2);
 
     //Load the satellite object and texture.
     load_model("..\\objects\\satellite.obj", &world->satellite.model);
     world->satellite.texture = load_texture("..\\textures\\satellite.jpg");
     world->satellite.texture2 = load_texture("..\\textures\\satellite2.jpg");
-
+    world->satellite.size = 50;
     scale_model(&world->satellite.model, 12, 12, 12);
 
     //Load the skybox texture.
     world->skybox.texture = load_texture("..\\textures\\sky.png");
+    world->skybox.size = 6000;
 
     //Storing bounding-box coordinates in each model
     calc_bounding_box(&world->jupiter.model);
@@ -146,11 +149,12 @@ void init_entities(World *world) {
     calc_bounding_box(&world->venus.model);
     calc_bounding_box(&world->saturnus.model);
     calc_bounding_box(&world->sun.model);
-    world->sun.model.box.diagonal_length-=10; // small optimalization for better demonstration.
+    world->sun.model.box.diagonal_length -= 10; // small optimalization for better demonstration.
 
-    Entity *planetsToAdd[5]={&world->jupiter, &world->jupiter_moon, &world->venus,
-                             &world->saturnus, &world->sun};
-    memcpy( world->planets, planetsToAdd, sizeof(planetsToAdd));
+    Entity *planetsToAdd[6] = {&world->jupiter, &world->jupiter_moon, &world->venus,
+                               &world->saturnus, &world->sun, &world->satellite};
+    memcpy(world->planets, planetsToAdd, sizeof(planetsToAdd));
+
 
 }
 

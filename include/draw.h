@@ -27,7 +27,7 @@ typedef struct Move {
     Position saturnus;
     Position sun;
     Position satellite;
-    Position *planets[5];
+    Position *planets[6];
 } Move;
 
 Rotate rotate;

@@ -25,6 +25,7 @@ typedef struct Entity {
     int texture;
     int texture2;
     float material_ambient[4];
+    int size;
 } Entity;
 
 typedef struct World {
@@ -35,7 +36,7 @@ typedef struct World {
     Entity sun;
     Entity satellite;
     Entity skybox;
-    Entity *planets[5];
+    Entity *planets[6];
 } World;
 
 World world;

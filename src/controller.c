@@ -12,8 +12,8 @@ double degree3;
 double degree4;
 
 void init_move(Move *move) {
-    Position *planetsToAdd[5] = {&move->jupiter, &move->jupiter_moon, &move->venus,
-                                 &move->saturnus, &move->sun};
+    Position *planetsToAdd[6] = {&move->jupiter, &move->jupiter_moon, &move->venus,
+                                 &move->saturnus, &move->sun,&move->satellite};
     memcpy(move->planets, planetsToAdd, sizeof(planetsToAdd));
 }
 
