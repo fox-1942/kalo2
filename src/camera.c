@@ -1,6 +1,5 @@
 #include "camera.h"
 #include <math.h>
-#include <stdio.h>
 
 #define MOVE_SPEED 10.0  //BIGGER IS FASTER
 #define CAMERA_SPEED 5.0 //BIGGER IS SLOWER
@@ -14,51 +13,49 @@ void init_camera(struct Camera *camera) {
     camera->pose.y = 0;
     camera->pose.z = 90;
 
-    action.move_forward = FALSE;
-    action.move_backward = FALSE;
-    action.step_left = FALSE;
-    action.step_right = FALSE;
-    action.rotate_planets_in_galaxy = TRUE;
+    camera->move_forward = FALSE;
+    camera->move_backward = FALSE;
+    camera->step_left = FALSE;
+    camera->step_right = FALSE;
+
 }
 
-void update_camera_position(Camera *camera, Action *action, Move *move, GLfloat *light_ambient, double elapsed_time) {
-    double distance;
-    distance = elapsed_time * MOVE_SPEED * camera->camera_speed;
+double calc_elapsed_time() {
+    int current_time;
+    double elapsed_time;
+    current_time = glutGet(GLUT_ELAPSED_TIME);
+    elapsed_time = (double) (current_time - window.previous_time) / 1000.0;
+    window.previous_time = current_time;
+    return elapsed_time;
+}
 
-    if (action->move_forward == TRUE) {
+
+void update_camera_position(Camera *camera, Move *move) {
+    double distance = calc_elapsed_time() * MOVE_SPEED * camera->camera_speed;
+
+    if (camera->move_forward == TRUE) {
         move_camera_forward(camera, distance);
     }
 
-    if (action->move_backward == TRUE) {
+    if (camera->move_backward == TRUE) {
         move_camera_backward(camera, distance);
     }
 
-    if (action->step_left == TRUE) {
+    if (camera->step_left == TRUE) {
         step_camera_left(camera, distance);
     }
 
-    if (action->step_right == TRUE) {
+    if (camera->step_right == TRUE) {
         step_camera_right(camera, distance);
     }
 
-    if (action->move_up == TRUE) {
+    if (camera->move_up == TRUE) {
         move_camera_up(camera, distance);
     }
 
-    if (action->move_down == TRUE) {
+    if (camera->move_down == TRUE) {
         move_camera_down(camera, distance);
     }
-
-    if (action->increase_light == TRUE) {
-        if (light_ambient[0] < 1)
-            light_ambient[0] = light_ambient[1] = light_ambient[2] += 0.01;
-    }
-
-    if (action->decrease_light == TRUE) {
-        if (light_ambient[0] > -0.51)
-            light_ambient[0] = light_ambient[1] = light_ambient[2] -= 0.01;
-    }
-
     don_not_head_up_against_the_wall(camera, move);
 }
 
@@ -74,7 +71,7 @@ void don_not_head_up_against_the_wall(Camera *camera, Move *move) {
             init_camera(camera);
     }
 
-    //Skybox
+    // Skybox
     if (camera->position.x < -world.planets[6]->size || camera->position.x > world.planets[6]->size ||
         camera->position.y < -world.planets[6]->size || camera->position.y > world.planets[6]->size ||
         camera->position.z < -world.planets[6]->size || camera->position.z > world.planets[6]->size)
@@ -152,5 +149,3 @@ void step_camera_left(struct Camera *camera, double distance) {
     camera->position.x -= cos(angle) * distance;
     camera->position.y -= sin(angle) * distance;
 }
-
-

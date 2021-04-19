@@ -26,10 +26,10 @@ int load_model(const char *filename, Model *model) {
     count_elements(model, obj_file);
     printf("Allocate memory for model ...\n");
     allocate_model(model);
-    printf("Read model data ...\n");
+    printf("Read model window ...\n");
     success = read_elements(model, obj_file);
     if (success == FALSE) {
-        printf("ERROR: Unable to read the model data!\n");
+        printf("ERROR: Unable to read the model window!\n");
         return FALSE;
     }
 
@@ -74,7 +74,7 @@ int read_elements(Model *model, FILE *file) {
             case VERTEX:
                 success = read_vertex(&(model->vertices[model->n_vertices]), line);
                 if (success == FALSE) {
-                    printf("Unable to read vertex data!\n");
+                    printf("Unable to read vertex window!\n");
                     return FALSE;
                 }
                 ++model->n_vertices;
@@ -82,7 +82,7 @@ int read_elements(Model *model, FILE *file) {
             case TEXTURE_VERTEX:
                 success = read_texture_vertex(&(model->texture_vertices[model->n_texture_vertices]), line);
                 if (success == FALSE) {
-                    printf("Unable to read texture vertex data!\n");
+                    printf("Unable to read texture vertex window!\n");
                     return FALSE;
                 }
                 ++model->n_texture_vertices;
@@ -90,7 +90,7 @@ int read_elements(Model *model, FILE *file) {
             case NORMAL:
                 success = read_normal(&(model->normals[model->n_normals]), line);
                 if (success == FALSE) {
-                    printf("Unable to read normal vector data!\n");
+                    printf("Unable to read normal vector window!\n");
                     return FALSE;
                 }
                 ++model->n_normals;
@@ -98,7 +98,7 @@ int read_elements(Model *model, FILE *file) {
             case FACE:
                 success = read_quad(&(model->quads[model->n_quads]), line);
                 if (success == FALSE) {
-                    printf("Unable to read quad face data!\n");
+                    printf("Unable to read quad face window!\n");
                     return FALSE;
                 }
                 ++model->n_quads;

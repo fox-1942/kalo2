@@ -129,33 +129,32 @@ void rotation_of_objects(Action *action, Rotate *rotate) {
     rotate->satellite_rotation += 0.5;
 }
 
-
 void specialFunc(int key, int x, int y) {
     switch (key) {
         case GLUT_KEY_F1:
-            if (data.help_on) {
-                data.help_on = 0;
+            if (action.help_on) {
+                action.help_on = 0;
             } else {
-                data.help_on = 1;
+                action.help_on = 1;
             }
     }
 }
 
 void mouse_handler(int button, int state, int x, int y) {
-    data.mouse_x = x;
-    data.mouse_y = y;
+    window.mouse_x = x;
+    window.mouse_y = y;
 }
 
 void motion_handler(int x, int y) {
     double horizontal, vertical;
 
-    horizontal = data.mouse_x - x;
-    vertical = data.mouse_y - y;
+    horizontal = window.mouse_x - x;
+    vertical = window.mouse_y - y;
 
     rotate_camera(&camera, horizontal, vertical);
 
-    data.mouse_x = x;
-    data.mouse_y = y;
+    window.mouse_x = x;
+    window.mouse_y = y;
 
     glutPostRedisplay();
 }
@@ -163,22 +162,22 @@ void motion_handler(int x, int y) {
 void key_handler(unsigned char key, int x, int y) {
     switch (key) {
         case 'w':
-            action.move_forward = TRUE;
+            camera.move_forward = TRUE;
             break;
         case 's':
-            action.move_backward = TRUE;
+            camera.move_backward = TRUE;
             break;
         case 'a':
-            action.step_left = TRUE;
+            camera.step_left = TRUE;
             break;
         case 'd':
-            action.step_right = TRUE;
+            camera.step_right = TRUE;
             break;
         case 'c':
-            action.move_down = TRUE;
+            camera.move_down = TRUE;
             break;
         case 32:
-            action.move_up = TRUE;
+            camera.move_up = TRUE;
             break;
         case 'q':
             if (action.rotate_planets_in_galaxy == FALSE) {
@@ -219,22 +218,22 @@ void key_handler(unsigned char key, int x, int y) {
 void key_up_handler(unsigned char key, int x, int y) {
     switch (key) {
         case 'w':
-            action.move_forward = FALSE;
+            camera.move_forward = FALSE;
             break;
         case 's':
-            action.move_backward = FALSE;
+            camera.move_backward = FALSE;
             break;
         case 'a':
-            action.step_left = FALSE;
+            camera.step_left = FALSE;
             break;
         case 'd':
-            action.step_right = FALSE;
+            camera.step_right = FALSE;
             break;
         case 'c':
-            action.move_down = FALSE;
+            camera.move_down = FALSE;
             break;
         case 32:
-            action.move_up = FALSE;
+            camera.move_up = FALSE;
             break;
         case '+':
             action.increase_light = FALSE;

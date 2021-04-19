@@ -25,22 +25,22 @@ int read_elements(Model* model, FILE* file);
 ElementType calc_element_type(const char* text);
 
 /**
- * Read the data of the vertex.
+ * Read the window of the vertex.
  */
 int read_vertex(Vertex* vertex, const char* text);
 
 /**
- * Read texture vertex data.
+ * Read texture vertex window.
  */
 int read_texture_vertex(TextureVertex* texture_vertex, const char* text);
 
 /**
- * Read normal vector data.
+ * Read normal vector window.
  */
 int read_normal(Vertex* normal, const char* text);
 
 /**
- * Read triangle data.
+ * Read triangle window.
  */
 int read_quad(struct Quad* quad, const char* text);
 

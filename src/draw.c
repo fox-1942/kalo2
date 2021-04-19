@@ -3,7 +3,6 @@
 #include "draw.h"
 
 #define SKYBOX_SCALE 10000.0
-
 GLfloat light_ambient[] = {0.5, 0.5, 0.5, 0};
 
 void init_rotate(Rotate *rotate) {
@@ -151,14 +150,14 @@ bool is_point_inside_spheres(double x, double y, double z, double x2, double y2,
 }
 
 void reshape(GLsizei width, GLsizei height) {
-    data.WINDOW_WIDTH = width;
-    data.WINDOW_HEIGHT = height;
+    window.window_width = width;
+    window.window_height = height;
 
     glViewport(0, (height - 768) / 2, width, 768);
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
 
-    if (!data.help_on) {
+    if (!action.help_on) {
         gluPerspective(50.0, (GLdouble) width / (GLdouble) 768, 0.1, 20000.0);
     } else {
         gluOrtho2D(0, width, height, 0);
@@ -170,58 +169,58 @@ void draw_help() {
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
     glEnable(GL_TEXTURE_2D);
-    glBindTexture(GL_TEXTURE_2D, data.help);
+    glBindTexture(GL_TEXTURE_2D, action.help);
     glBegin(GL_QUADS);
     glTexCoord2f(0, 0);
     glVertex3f(0, 0, 0);
     glTexCoord2f(1, 0);
-    glVertex3f(data.WINDOW_WIDTH, 0, 0);
+    glVertex3f(window.window_width, 0, 0);
     glTexCoord2f(1, 1);
-    glVertex3f(data.WINDOW_WIDTH, data.WINDOW_HEIGHT, 0);
+    glVertex3f(window.window_width, window.window_height, 0);
     glTexCoord2f(0, 1);
-    glVertex3f(0, data.WINDOW_HEIGHT, 0);
+    glVertex3f(0, window.window_height, 0);
     glEnd();
     glDisable(GL_TEXTURE_2D);
 
-    reshape(data.WINDOW_WIDTH, data.WINDOW_HEIGHT);
+    reshape(window.window_width, window.window_height);
     glutSwapBuffers();
-}
-
-double calc_elapsed_time() {
-    int current_time;
-    double elapsed_time;
-    current_time = glutGet(GLUT_ELAPSED_TIME);
-    elapsed_time = (double) (current_time - data.previous_time) / 1000.0;
-    data.previous_time = current_time;
-    return elapsed_time;
 }
 
 // The delay of resetting e_time means the time of the led operation on the sat.
 // Texture change in the draw_environment() method.
 void set_satellite_led_working_time() {
-    data.e_time = (double) glutGet(GLUT_ELAPSED_TIME);
+    window.e_time = (double) glutGet(GLUT_ELAPSED_TIME);
     glutTimerFunc(3000, set_satellite_led_working_time, 0);
 }
 
 void display() {
-    if (!data.help_on) {
+    if (!action.help_on) {
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         glMatrixMode(GL_MODELVIEW);
         glLoadIdentity();
-        double elapsed_time = calc_elapsed_time();
-        update_camera_position(&camera, &action, &move, light_ambient, elapsed_time);
+        update_camera_position(&camera, &move);
         set_view_point(&camera);
 
         glLightfv(GL_LIGHT1, GL_AMBIENT, light_ambient);
         glEnable(GL_LIGHT1);
 
-        draw_environment(&world, &rotate, &move, data.e_time);
+        draw_environment(&world, &rotate, &move, window.e_time);
         movement_of_objects(&move, &action, &world);
         rotation_of_objects(&action, &rotate);
-        reshape(data.WINDOW_WIDTH, data.WINDOW_HEIGHT);
+        reshape(window.window_width, window.window_height);
         glutSwapBuffers();
     } else {
         draw_help();
+    }
+
+    if (action.increase_light == TRUE) {
+        if (light_ambient[0] < 1)
+            light_ambient[0] = light_ambient[1] = light_ambient[2] += 0.01;
+    }
+
+    if (action.decrease_light == TRUE) {
+        if (light_ambient[0] > -0.51)
+            light_ambient[0] = light_ambient[1] = light_ambient[2] -= 0.01;
     }
 }
 
