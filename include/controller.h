@@ -18,7 +18,9 @@ typedef struct Data {
     int previous_time;
 } Data;
 
-extern Data data;
+Data data;
+
+void init_move(Move *move);
 
 void movement_of_objects(Move *move, Action *action, World *world);
 

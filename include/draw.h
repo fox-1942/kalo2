@@ -14,29 +14,24 @@ typedef struct Rotate {
     double sun_rotation;
 } Rotate;
 
-typedef union Position {
-    struct {
-        double x;
-        double y;
-        double z;
-    };
-    double Position[3];
+typedef struct Position {
+    double x;
+    double y;
+    double z;
 } Position;
 
-typedef union Move {
-    struct {
-        Position jupiter;
-        Position jupiter_moon;
-        Position venus;
-        Position saturnus;
-        Position sun;
-        Position satellite;
-    };
-    Position Move[6];
+typedef struct Move {
+    Position jupiter;
+    Position jupiter_moon;
+    Position venus;
+    Position saturnus;
+    Position sun;
+    Position satellite;
+    Position *planets[5];
 } Move;
 
-extern Rotate rotate;
-extern Move move;
+Rotate rotate;
+Move move;
 
 //Draw the model.
 void draw_model(const struct Model *model);

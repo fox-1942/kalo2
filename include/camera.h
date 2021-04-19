@@ -28,13 +28,11 @@ typedef struct Action {
     int decrease_light;
 } Action;
 
-extern Camera camera;
-extern Action action;
-
+Camera camera;
+Action action;
 
 //Checks if the camera can move. If it can't, loads the starter position.
 void don_not_head_up_against_the_wall(Camera *camera, Move *move);
-
 
 //Initialize the camera position and direction.
 void init_camera(struct Camera *camera);

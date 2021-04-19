@@ -2,12 +2,6 @@
 #include "draw.h"
 #include "controller.h"
 
-World world;
-Rotate rotate;
-Move move;
-Camera camera;
-Action action;
-Data data;
 
 void set_callbacks() {
     glutDisplayFunc(display);
@@ -24,6 +18,7 @@ void set_callbacks() {
 
 void initialize() {
     camera.camera_speed = 70;
+    init_move(&move);
     set_callbacks();
     init_camera(&camera);
     glMatrixMode(GL_MODELVIEW);

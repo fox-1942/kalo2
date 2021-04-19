@@ -27,20 +27,18 @@ typedef struct Entity {
     float material_ambient[4];
 } Entity;
 
-typedef union World {
-    struct {
-        Entity jupiter;
-        Entity jupiter_moon;
-        Entity venus;
-        Entity saturnus;
-        Entity sun;
-        Entity satellite;
-        Entity skybox;
-    };
-    Entity World[7];
+typedef struct World {
+    Entity jupiter;
+    Entity jupiter_moon;
+    Entity venus;
+    Entity saturnus;
+    Entity sun;
+    Entity satellite;
+    Entity skybox;
+    Entity *planets[5];
 } World;
 
-extern World world;
+World world;
 
 /**
  * Types of the considered elements

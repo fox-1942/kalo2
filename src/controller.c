@@ -6,13 +6,20 @@
 #define DIST_VENUS 6000;
 #define DIST_SAT  2000;
 
-bool inside_gravity_field = false;
 int satellite;
 double degree1;
 double degree3;
 double degree4;
 
+void init_move(Move *move) {
+    Position *planetsToAdd[5] = {&move->jupiter, &move->jupiter_moon, &move->venus,
+                                 &move->saturnus, &move->sun};
+    memcpy(move->planets, planetsToAdd, sizeof(planetsToAdd));
+}
+
+
 void movement_of_objects(Move *move, Action *action, World *world) {
+    bool inside_gravity_field = false;
 
     // Jupiter + its moon
     if (action->move_jupiter_plus_moon_in_galaxy == TRUE) {
@@ -72,8 +79,8 @@ void movement_of_objects(Move *move, Action *action, World *world) {
         int i;
         for (i = 0; i <= 4; i++) {
             if (is_point_inside_spheres(move->satellite.x, move->satellite.y, move->satellite.z,
-                                        move->Move[i].x, move->Move[i].y, move->Move[i].z,
-                                        world->World[i].model.box.diagonal_length + 10)) {
+                                        move->planets[i]->x, move->planets[i]->y, move->planets[i]->z,
+                                        world->planets[i]->model.box.diagonal_length + 10)) {
                 inside_gravity_field = true;
                 break;
             }
@@ -82,7 +89,8 @@ void movement_of_objects(Move *move, Action *action, World *world) {
         // If sat is inside on of the gravitiy fields.
         if (inside_gravity_field) {
             Vertex distance_vector = vector_from_two_vertex(move->satellite.x, move->satellite.y, move->satellite.z,
-                                                            move->Move[i].x, move->Move[i].y, move->Move[i].z);
+                                                            move->planets[i]->x, move->planets[i]->y,
+                                                            move->planets[i]->z);
 
             // setting up the effects of gravity fields of the planets, taking the direction
             // where the satellite comes from also in consideration. Index of "i" indicates a specific planet.
