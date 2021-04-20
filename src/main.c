@@ -18,8 +18,8 @@ void set_callbacks() {
 void initialize() {
     action.rotate_planets_in_galaxy=true;
     camera.camera_speed = 70;
-    init_move(&move);
-    init_rotate(&rotate);
+    init_controller(&move);
+    init_draw(&rotate);
     set_callbacks();
     init_camera(&camera);
     glMatrixMode(GL_MODELVIEW);

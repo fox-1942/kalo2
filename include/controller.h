@@ -22,17 +22,19 @@ typedef struct Action {
     int move_venus_in_galaxy;
     int move_saturnus_in_galaxy;
     int call_satellite;
+    int satellite_is_moving;
     int increase_light;
     int decrease_light;
     int help;
     int help_on;
+    GLfloat light_ambient[4];
 } Action;
 
 Window window;
 Action action;
 
 
-void init_move(Move *move);
+void init_controller(Move *move);
 
 void movement_of_objects(Move *move, Action *action, World *world);
 

@@ -29,6 +29,9 @@ typedef struct Move {
     Position sun;
     Position satellite;
     Position *planets[6];
+    double degree1;
+    double degree3;
+    double degree4;
 } Move;
 
 Rotate rotate;
@@ -58,6 +61,6 @@ void set_satellite_led_working_time();
 
 void idle();
 
-void init_rotate(Rotate *rotate);
+void init_draw(Rotate *rotate);
 
 #endif

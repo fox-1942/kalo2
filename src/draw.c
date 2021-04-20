@@ -1,11 +1,10 @@
+#include "draw.h"
 #include <controller.h>
 #include <math.h>
-#include "draw.h"
 
 #define SKYBOX_SCALE 10000.0
-GLfloat light_ambient[] = {0.5, 0.5, 0.5, 0};
 
-void init_rotate(Rotate *rotate) {
+void init_draw(Rotate *rotate) {
     double *planetsToAdd[6] = {&rotate->jupiter_rotation, &rotate->jupiter_moon_rotation, &rotate->venus_rotation,
                                &rotate->saturnus_rotation, &rotate->sun_rotation, &rotate->satellite_rotation};
     memcpy(rotate->planets, planetsToAdd, sizeof(planetsToAdd));
@@ -143,8 +142,6 @@ void draw_environment(World *world, Rotate *rotate, Move *move, double timer) {
     draw_skybox(world->skybox, 1);
 }
 
-// Determines whether the satellite is inside the planet's field of gravity. The radius is coming from
-// the bounding box diagonal of the planet, calculated by the specific method in model.c
 bool is_point_inside_spheres(double x, double y, double z, double x2, double y2, double z2, double radius) {
     return vector_length(x, y, z, x2, y2, z2) < radius;
 }
@@ -210,7 +207,7 @@ void display() {
         update_camera_position(&camera, &move);
         set_view_point(&camera);
 
-        glLightfv(GL_LIGHT1, GL_AMBIENT, light_ambient);
+        glLightfv(GL_LIGHT1, GL_AMBIENT, action.light_ambient);
         glEnable(GL_LIGHT1);
 
         draw_environment(&world, &rotate, &move, window.e_time);
@@ -223,13 +220,13 @@ void display() {
     }
 
     if (action.increase_light == TRUE) {
-        if (light_ambient[0] < 1)
-            light_ambient[0] = light_ambient[1] = light_ambient[2] += 0.01;
+        if (action.light_ambient[0] < 1)
+            action.light_ambient[0] = action.light_ambient[1] = action.light_ambient[2] += 0.01;
     }
 
     if (action.decrease_light == TRUE) {
-        if (light_ambient[0] > -0.51)
-            light_ambient[0] = light_ambient[1] = light_ambient[2] -= 0.01;
+        if (action.light_ambient[0] > -0.51)
+            action.light_ambient[0] = action.light_ambient[1] = action.light_ambient[2] -= 0.01;
     }
 }
 

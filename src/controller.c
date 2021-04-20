@@ -6,15 +6,11 @@
 #define DIST_VENUS 6000;
 #define DIST_SAT  2000;
 
-int satellite;
-double degree1;
-double degree3;
-double degree4;
-
-void init_move(Move *move) {
+void init_controller(Move *move) {
     Position *planetsToAdd[6] = {&move->jupiter, &move->jupiter_moon, &move->venus,
                                  &move->saturnus, &move->sun, &move->satellite};
     memcpy(move->planets, planetsToAdd, sizeof(planetsToAdd));
+    for (int i = 0; i < 3; i++) {  action.light_ambient[i] = 0.5; }
 }
 
 void movement_of_objects(Move *move, Action *action, World *world) {
@@ -22,8 +18,8 @@ void movement_of_objects(Move *move, Action *action, World *world) {
 
     // Jupiter + its moon
     if (action->move_jupiter_plus_moon_in_galaxy == TRUE) {
-        degree1 += 0.4;
-        double angle = degree_to_radian(degree1);
+        move->degree1 += 0.4;
+        double angle = degree_to_radian(move->degree1);
         move->jupiter.x = cos(angle) * DIST_JUP;
         move->jupiter.y = sin(angle) * DIST_JUP;
         move->jupiter.z = 0;
@@ -41,8 +37,8 @@ void movement_of_objects(Move *move, Action *action, World *world) {
 
     // Venus
     if (action->move_venus_in_galaxy == TRUE) {
-        degree3 += 0.2;
-        double angle = degree_to_radian(degree3);
+        move->degree3 += 0.2;
+        double angle = degree_to_radian(move->degree3);
         move->venus.x = cos(angle) * DIST_VENUS;
         move->venus.y = sin(angle) * DIST_VENUS;
         move->venus.z = 0;
@@ -55,8 +51,8 @@ void movement_of_objects(Move *move, Action *action, World *world) {
 
     // Saturnus
     if (action->move_saturnus_in_galaxy == TRUE) {
-        degree4 += 0.3;
-        double angle = degree_to_radian(degree4);
+        move->degree4 += 0.3;
+        double angle = degree_to_radian(move->degree4);
         move->saturnus.x = cos(angle) * DIST_SAT;
         move->saturnus.y = sin(angle) * DIST_SAT;
         move->saturnus.z = 0;
@@ -68,7 +64,7 @@ void movement_of_objects(Move *move, Action *action, World *world) {
     }
 
     if (action->call_satellite == TRUE && move->satellite.x < 6000) {
-        if (satellite == 0) {
+        if (action->satellite_is_moving == 0) {
             move->satellite.x = -6000;
             move->satellite.y = 1500;
             move->satellite.z = 400;
@@ -90,11 +86,11 @@ void movement_of_objects(Move *move, Action *action, World *world) {
                                                             move->planets[i]->x, move->planets[i]->y,
                                                             move->planets[i]->z);
             if (i != 4) { // every planet except Sun
+                move->satellite.x += 1.0;
+
                 if (distance_vector.y <= 0) {
-                    move->satellite.x += 1.0;
                     move->satellite.y -= 1;
                 } else {
-                    move->satellite.x += 1.5;
                     move->satellite.y += 1;
                 }
             } else { // Sun
@@ -107,12 +103,12 @@ void movement_of_objects(Move *move, Action *action, World *world) {
             move->satellite.x += 7;
         }
 
-        satellite = 1;
+        action->satellite_is_moving = 1;
 
     } else if (action->call_satellite == TRUE && move->satellite.x >= 6000) {
         move->satellite.x = -20000;
         action->call_satellite = FALSE;
-        satellite = 0;
+        action->satellite_is_moving = 0;
     } else if (action->call_satellite == FALSE) {
         move->satellite.x = -20000;
     }
