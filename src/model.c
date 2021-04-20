@@ -1,42 +1,15 @@
 #include "model.h"
 #include "load.h"
-#include <stdlib.h>
 #include <math.h>
 
-void init_model(Model *model) {
-    model->n_vertices = 1;
-    model->n_texture_vertices = 1;
-    model->n_normals = 1;
-    model->n_triangles = 0;
-    model->n_quads = 0;
-}
+void scale_model(struct Model *model, double sx, double sy, double sz) {
+    int i;
 
-void allocate_model(Model *model) {
-    model->vertices = (struct Vertex *) malloc((model->n_vertices + 1) * sizeof(struct Vertex));
-    model->texture_vertices = (struct TextureVertex *) malloc(
-            (model->n_texture_vertices + 1) * sizeof(struct TextureVertex));
-    model->normals = (struct Vertex *) malloc((model->n_normals + 1) * sizeof(struct Vertex));
-    model->triangles = (struct Triangle *) malloc(model->n_triangles * sizeof(struct Triangle));
-    model->quads = (struct Quad *) malloc(model->n_quads * sizeof(struct Quad));
-}
-
-void free_model(Model *model) {
-    if (model->vertices != NULL) {
-        free(model->vertices);
+    for (i = 0; i < model->n_vertices; ++i) {
+        model->vertices[i].x *= sx;
+        model->vertices[i].y *= sy;
+        model->vertices[i].z *= sz;
     }
-    if (model->texture_vertices != NULL) {
-        free(model->texture_vertices);
-    }
-    if (model->normals != NULL) {
-        free(model->normals);
-    }
-    if (model->triangles != NULL) {
-        free(model->triangles);
-    }
-    if (model->quads != NULL) {
-        free(model->quads);
-    }
-
 }
 
 void calc_bounding_box(struct Model *model) {
@@ -90,15 +63,6 @@ void calc_bounding_box(struct Model *model) {
 
 }
 
-void scale_model(struct Model *model, double sx, double sy, double sz) {
-    int i;
-
-    for (i = 0; i < model->n_vertices; ++i) {
-        model->vertices[i].x *= sx;
-        model->vertices[i].y *= sy;
-        model->vertices[i].z *= sz;
-    }
-}
 
 void init_entities(World *world) {
     //Load the Jupiter object and texture.

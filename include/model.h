@@ -3,9 +3,6 @@
 
 #include "basic_primitives.h"
 
-#define TRUE 1
-#define FALSE 0
-
 typedef struct Model {
     int n_vertices;
     int n_texture_vertices;
@@ -41,32 +38,6 @@ typedef struct World {
 
 World world;
 
-/**
- * Types of the considered elements
- */
-typedef enum {
-    NONE,
-    VERTEX,
-    TEXTURE_VERTEX,
-    NORMAL,
-    FACE
-} ElementType;
-
-/**
- * Initialize the model structure.
- */
-void init_model(Model *model);
-
-/**
- * Allocate model.
- */
-void allocate_model(Model *model);
-
-/**
- * Release the allocated memory of the model.
- */
-void free_model(Model *model);
-
 double vector_length(double min_x, double min_y, double min_z, double max_x, double max_y, double max_z);
 
 Vertex vector_from_two_vertex(double a_x, double a_y, double a_z, double b_x, double b_y, double b_z);
@@ -74,5 +45,7 @@ Vertex vector_from_two_vertex(double a_x, double a_y, double a_z, double b_x, do
 void init_entities(World *world);
 
 void scale_model(struct Model *model, double sx, double sy, double sz);
+
+void calc_bounding_box(struct Model *model);
 
 #endif /* OBJ_MODEL_H */
