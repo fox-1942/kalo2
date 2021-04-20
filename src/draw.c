@@ -123,13 +123,13 @@ void draw_environment(World *world, Rotate *rotate, Move *move, double timer) {
 
         glScalef(1.0f, 1.0f, 1.0f);
 
-        if (i == 0 || i == 1) {
-            glRotatef(*rotate->planets[i], 0, 0, 1);  // Jupiter and its moon
-        } else if (i == 2 || i == 3) {
-            glRotatef(*rotate->planets[i], 0, 0, -1); // Venus, Saturnus
-        } else if (i == 4) {
-            glRotatef(*rotate->planets[i], 1, 1, 1);  //Sun
-        } else if (i == 5) {                                 // Satellite
+        if (i == 0 || i == 1) {                                 // Jupiter and its moon
+            glRotatef(*rotate->planets[i], 0, 0, 1);
+        } else if (i == 2 || i == 3) {                          // Venus, Saturnus
+            glRotatef(*rotate->planets[i], 0, 0, -1);
+        } else if (i == 4) {                                    //Sun
+            glRotatef(*rotate->planets[i], 1, 1, 1);
+        } else if (i == 5) {                                    // Satellite
             glRotatef(90, 1, 0, 0);
             glRotatef(270, 0, 1, 0);
             glRotatef(*rotate->planets[i], 0, 0, 1);
@@ -153,12 +153,21 @@ void reshape(GLsizei width, GLsizei height) {
     window.window_width = width;
     window.window_height = height;
 
-    glViewport(0, (height - 768) / 2, width, 768);
+    double ratio = (double) width / height;
+    int w_depend_on_h, h_depend_on_w;
+    if (ratio > 1.77) {
+        w_depend_on_h = (int) ((double) height * 1.77);
+        glViewport((width - w_depend_on_h) / 2, 0, w_depend_on_h, height);
+    } else {
+        h_depend_on_w = (int) ((double) width / 1.77);
+        glViewport(0, (height - h_depend_on_w) / 2, width, h_depend_on_w);
+    }
+
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
 
     if (!action.help_on) {
-        gluPerspective(50.0, (GLdouble) width / (GLdouble) 768, 0.1, 20000.0);
+        gluPerspective(50.0, (GLdouble) width / ((GLdouble) width / 1.77), 0.1, 20000.0);
     } else {
         gluOrtho2D(0, width, height, 0);
     }

@@ -29,7 +29,6 @@ double calc_elapsed_time() {
     return elapsed_time;
 }
 
-
 void update_camera_position(Camera *camera, Move *move) {
     double distance = calc_elapsed_time() * MOVE_SPEED * camera->camera_speed;
 
