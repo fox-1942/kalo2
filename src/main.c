@@ -1,6 +1,4 @@
-#include "load.h"
-#include "draw.h"
-#include "controller.h"
+#include "scene.h"
 
 void set_callbacks() {
     glutDisplayFunc(display);
@@ -16,19 +14,19 @@ void set_callbacks() {
 }
 
 void initialize() {
-    action.rotate_planets_in_galaxy = true;
-    camera.camera_speed = 70;
-    init_controller(&move);
-    init_draw(&rotate);
+    scene.action.rotate_planets_in_galaxy = true;
+    scene.camera.camera_speed = 70;
+    init_controller(&scene.move);
+    init_draw(&scene.rotate);
     set_callbacks();
-    init_camera(&camera);
+    init_camera(&scene.camera);
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
     glEnable(GL_DEPTH_TEST);
     glEnable(GL_COLOR_MATERIAL);
     glEnable(GL_LIGHTING);
-    action.help = load_texture("..//textures//help.png");
-    init_entities(&world);
+    scene.action.help = load_texture("..//textures//help.png");
+    init_entities(&scene.world);
     glEnable(GL_TEXTURE_2D);
 }
 

@@ -1,4 +1,4 @@
-#include "camera.h"
+#include "scene.h"
 #include <math.h>
 
 #define MOVE_SPEED 10.0  //BIGGER IS FASTER
@@ -24,8 +24,8 @@ double calc_elapsed_time() {
     int current_time;
     double elapsed_time;
     current_time = glutGet(GLUT_ELAPSED_TIME);
-    elapsed_time = (double) (current_time - window.previous_time) / 1000.0;
-    window.previous_time = current_time;
+    elapsed_time = (double) (current_time - scene.window.previous_time) / 1000.0;
+    scene.window.previous_time = current_time;
     return elapsed_time;
 }
 
@@ -61,19 +61,19 @@ void update_camera_position(Camera *camera, Move *move) {
 void don_not_head_up_against_the_wall(Camera *camera, Move *move) {
 
     for (int i = 0; i < 6; ++i) {
-        if (camera->position.x < move->planets[i]->x + world.planets[i]->size &&
-            camera->position.x > move->planets[i]->x - world.planets[i]->size &&
-            camera->position.y < move->planets[i]->y + world.planets[i]->size &&
-            camera->position.y > move->planets[i]->y - world.planets[i]->size &&
-            camera->position.z < move->planets[i]->z + world.planets[i]->size &&
-            camera->position.z > move->planets[i]->z - world.planets[i]->size)
+        if (camera->position.x < move->planets[i]->x + scene.world.planets[i]->size &&
+            camera->position.x > move->planets[i]->x - scene.world.planets[i]->size &&
+            camera->position.y < move->planets[i]->y + scene.world.planets[i]->size &&
+            camera->position.y > move->planets[i]->y - scene.world.planets[i]->size &&
+            camera->position.z < move->planets[i]->z + scene.world.planets[i]->size &&
+            camera->position.z > move->planets[i]->z - scene.world.planets[i]->size)
             init_camera(camera);
     }
 
     // Skybox
-    if (camera->position.x < -world.planets[6]->size || camera->position.x > world.planets[6]->size ||
-        camera->position.y < -world.planets[6]->size || camera->position.y > world.planets[6]->size ||
-        camera->position.z < -world.planets[6]->size || camera->position.z > world.planets[6]->size)
+    if (camera->position.x < -scene.world.planets[6]->size || camera->position.x > scene.world.planets[6]->size ||
+        camera->position.y < -scene.world.planets[6]->size || camera->position.y > scene.world.planets[6]->size ||
+        camera->position.z < -scene.world.planets[6]->size || camera->position.z > scene.world.planets[6]->size)
         init_camera(camera);
 }
 

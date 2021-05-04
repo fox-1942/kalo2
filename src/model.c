@@ -1,5 +1,4 @@
-#include "model.h"
-#include "load.h"
+#include "scene.h"
 #include <math.h>
 
 void scale_model(struct Model *model, double sx, double sy, double sz) {
@@ -99,7 +98,6 @@ void init_entities(World *world) {
         calc_bounding_box(&world->planets[i]->model);
     }
     world->sun.model.box.diagonal_length -= 10; // small optimalization for better demonstration.
-
 }
 
 double vector_length(double min_x, double min_y, double min_z, double max_x, double max_y, double max_z) {

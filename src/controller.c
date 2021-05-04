@@ -1,16 +1,16 @@
-#include "controller.h"
+#include "scene.h"
 #include <stdbool.h>
 #include <math.h>
 
 #define DIST_JUP 4000;
 #define DIST_VENUS 6000;
-#define DIST_SAT  2000;
+#define DIST_SAT 2000;
 
 void init_controller(Move *move) {
     Position *planetsToAdd[6] = {&move->jupiter, &move->jupiter_moon, &move->venus,
                                  &move->saturnus, &move->sun, &move->satellite};
     memcpy(move->planets, planetsToAdd, sizeof(planetsToAdd));
-    for (int i = 0; i < 3; i++) { action.light_ambient[i] = 0.5; }
+    for (int i = 0; i < 3; i++) { scene.action.light_ambient[i] = 0.5; }
 }
 
 void movement_of_objects(Move *move, Action *action, World *world) {
@@ -128,29 +128,29 @@ void rotation_of_objects(Action *action, Rotate *rotate) {
 void specialFunc(int key, int x, int y) {
     switch (key) {
         case GLUT_KEY_F1:
-            if (action.help_on) {
-                action.help_on = 0;
+            if (scene.action.help_on) {
+                scene.action.help_on = 0;
             } else {
-                action.help_on = 1;
+                scene.action.help_on = 1;
             }
     }
 }
 
 void mouse_handler(int button, int state, int x, int y) {
-    window.mouse_x = x;
-    window.mouse_y = y;
+    scene.window.mouse_x = x;
+    scene.window.mouse_y = y;
 }
 
 void motion_handler(int x, int y) {
     double horizontal, vertical;
 
-    horizontal = window.mouse_x - x;
-    vertical = window.mouse_y - y;
+    horizontal = scene.window.mouse_x - x;
+    vertical = scene.window.mouse_y - y;
 
-    rotate_camera(&camera, horizontal, vertical);
+    rotate_camera(&scene.camera, horizontal, vertical);
 
-    window.mouse_x = x;
-    window.mouse_y = y;
+    scene.window.mouse_x = x;
+    scene.window.mouse_y = y;
 
     glutPostRedisplay();
 }
@@ -158,57 +158,57 @@ void motion_handler(int x, int y) {
 void key_handler(unsigned char key, int x, int y) {
     switch (key) {
         case 'w':
-            camera.move_forward = TRUE;
+            scene.camera.move_forward = TRUE;
             break;
         case 's':
-            camera.move_backward = TRUE;
+            scene.camera.move_backward = TRUE;
             break;
         case 'a':
-            camera.step_left = TRUE;
+            scene.camera.step_left = TRUE;
             break;
         case 'd':
-            camera.step_right = TRUE;
+            scene.camera.step_right = TRUE;
             break;
         case 'c':
-            camera.move_down = TRUE;
+            scene.camera.move_down = TRUE;
             break;
         case 32:
-            camera.move_up = TRUE;
+            scene.camera.move_up = TRUE;
             break;
         case 'q':
-            if (action.rotate_planets_in_galaxy == FALSE) {
-                action.rotate_planets_in_galaxy = TRUE;
+            if (scene.action.rotate_planets_in_galaxy == FALSE) {
+                scene.action.rotate_planets_in_galaxy = TRUE;
             } else {
-                action.rotate_planets_in_galaxy = FALSE;
+                scene.action.rotate_planets_in_galaxy = FALSE;
             }
             break;
         case 'e':
-            if (action.move_jupiter_plus_moon_in_galaxy == FALSE) {
-                action.move_jupiter_plus_moon_in_galaxy = TRUE;
-                action.move_venus_in_galaxy = TRUE;
-                action.move_saturnus_in_galaxy = TRUE;
+            if (scene.action.move_jupiter_plus_moon_in_galaxy == FALSE) {
+                scene.action.move_jupiter_plus_moon_in_galaxy = TRUE;
+                scene.action.move_venus_in_galaxy = TRUE;
+                scene.action.move_saturnus_in_galaxy = TRUE;
             } else {
-                action.move_jupiter_plus_moon_in_galaxy = FALSE;
-                action.move_venus_in_galaxy = FALSE;
-                action.move_saturnus_in_galaxy = FALSE;
+                scene.action.move_jupiter_plus_moon_in_galaxy = FALSE;
+                scene.action.move_venus_in_galaxy = FALSE;
+                scene.action.move_saturnus_in_galaxy = FALSE;
             }
             break;
         case 'f':
-            if (action.call_satellite == FALSE) {
-                action.call_satellite = TRUE;
+            if (scene.action.call_satellite == FALSE) {
+                scene.action.call_satellite = TRUE;
             }
             break;
         case 't':
-            if (action.fog == FALSE) {
-                action.fog = TRUE;
+            if (scene.action.fog == FALSE) {
+                scene.action.fog = TRUE;
             } else {
-                action.fog = FALSE;
+                scene.action.fog = FALSE;
             }
         case '+':
-            action.increase_light = TRUE;
+            scene.action.increase_light = TRUE;
             break;
         case '-':
-            action.decrease_light = TRUE;
+            scene.action.decrease_light = TRUE;
             break;
         case 27:
             exit(0);
@@ -220,28 +220,28 @@ void key_handler(unsigned char key, int x, int y) {
 void key_up_handler(unsigned char key, int x, int y) {
     switch (key) {
         case 'w':
-            camera.move_forward = FALSE;
+            scene.camera.move_forward = FALSE;
             break;
         case 's':
-            camera.move_backward = FALSE;
+            scene.camera.move_backward = FALSE;
             break;
         case 'a':
-            camera.step_left = FALSE;
+            scene.camera.step_left = FALSE;
             break;
         case 'd':
-            camera.step_right = FALSE;
+            scene.camera.step_right = FALSE;
             break;
         case 'c':
-            camera.move_down = FALSE;
+            scene.camera.move_down = FALSE;
             break;
         case 32:
-            camera.move_up = FALSE;
+            scene.camera.move_up = FALSE;
             break;
         case '+':
-            action.increase_light = FALSE;
+            scene.action.increase_light = FALSE;
             break;
         case '-':
-            action.decrease_light = FALSE;
+            scene.action.decrease_light = FALSE;
             break;
         case 27:
             exit(0);

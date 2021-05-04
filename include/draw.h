@@ -34,9 +34,6 @@ typedef struct Move {
     double degree4;
 } Move;
 
-Rotate rotate;
-Move move;
-
 //Draw the model.
 void draw_model(const struct Model *model);
 

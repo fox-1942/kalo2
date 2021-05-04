@@ -31,10 +31,6 @@ typedef struct Action {
     GLfloat light_ambient[4];
 } Action;
 
-Window window;
-Action action;
-
-
 void init_controller(Move *move);
 
 void movement_of_objects(Move *move, Action *action, World *world);

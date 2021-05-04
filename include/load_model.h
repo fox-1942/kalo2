@@ -14,10 +14,8 @@ struct TokenArray {
 //Count the tokens in the text.
 int count_tokens(const char *text);
 
-
 //Calculate the length of the token.
 int calc_token_length(const char *text, int start_index);
-
 
 //Create the copy of the token from the given string.
 char *copy_token(const char *text, int offset, int length);
@@ -25,7 +23,6 @@ char *copy_token(const char *text, int offset, int length);
 
 //Insert token to the token structure.
 void insert_token(const char *token, struct TokenArray *token_array);
-
 
 //Extract tokens from text.
 void extract_tokens(const char *text, struct TokenArray *token_array);

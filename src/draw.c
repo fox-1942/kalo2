@@ -1,5 +1,4 @@
-#include "draw.h"
-#include <controller.h>
+#include "scene.h"
 #include <math.h>
 
 #define SKYBOX_SCALE 10000.0
@@ -153,8 +152,8 @@ bool is_point_inside_spheres(double x, double y, double z, double x2, double y2,
 }
 
 void reshape(GLsizei width, GLsizei height) {
-    window.window_width = width;
-    window.window_height = height;
+    scene.window.window_width = width;
+    scene.window.window_height = height;
 
     double ratio = (double) width / height;
     int w_depend_on_h, h_depend_on_w;
@@ -169,7 +168,7 @@ void reshape(GLsizei width, GLsizei height) {
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
 
-    if (!action.help_on) {
+    if (!scene.action.help_on) {
         gluPerspective(50.0, (GLdouble) width / ((GLdouble) width / 1.77), 0.1, 20000.0);
     } else {
         gluOrtho2D(0, width, height, 0);
@@ -182,66 +181,66 @@ void draw_help() {
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
     glEnable(GL_TEXTURE_2D);
-    glBindTexture(GL_TEXTURE_2D, action.help);
+    glBindTexture(GL_TEXTURE_2D, scene.action.help);
     glBegin(GL_QUADS);
     glTexCoord2f(0, 0);
     glVertex3f(0, 0, 0);
     glTexCoord2f(1, 0);
-    glVertex3f(window.window_width, 0, 0);
+    glVertex3f(scene.window.window_width, 0, 0);
     glTexCoord2f(1, 1);
-    glVertex3f(window.window_width, window.window_height, 0);
+    glVertex3f(scene.window.window_width, scene.window.window_height, 0);
     glTexCoord2f(0, 1);
-    glVertex3f(0, window.window_height, 0);
+    glVertex3f(0, scene.window.window_height, 0);
     glEnd();
     glDisable(GL_TEXTURE_2D);
 
-    reshape(window.window_width, window.window_height);
+    reshape(scene.window.window_width, scene.window.window_height);
     glutSwapBuffers();
 }
 
 // The delay of resetting e_time means the time of the led operation on the sat.
 // Texture change in the draw_environment() method.
 void set_satellite_led_working_time() {
-    window.e_time = (double) glutGet(GLUT_ELAPSED_TIME);
+    scene.window.e_time = (double) glutGet(GLUT_ELAPSED_TIME);
     glutTimerFunc(3000, set_satellite_led_working_time, 0);
 }
 
 void display() {
-    if (!action.help_on) {
+    if (!scene.action.help_on) {
         glClearColor(0.5, 0.5, 0.5, 1.0);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         glMatrixMode(GL_MODELVIEW);
         glLoadIdentity();
-        update_camera_position(&camera, &move);
-        set_view_point(&camera);
+        update_camera_position(&scene.camera, &scene.move);
+        set_view_point(&scene.camera);
 
-        glLightfv(GL_LIGHT1, GL_AMBIENT, action.light_ambient);
+        glLightfv(GL_LIGHT1, GL_AMBIENT, scene.action.light_ambient);
         glEnable(GL_LIGHT1);
 
-        draw_environment(&world, &rotate, &move, window.e_time);
-        movement_of_objects(&move, &action, &world);
-        rotation_of_objects(&action, &rotate);
-        reshape(window.window_width, window.window_height);
+        draw_environment(&scene.world, &scene.rotate, &scene.move, scene.window.e_time);
+        movement_of_objects(&scene.move, &scene.action, &scene.world);
+        rotation_of_objects(&scene.action, &scene.rotate);
+        reshape(scene.window.window_width, scene.window.window_height);
         glutSwapBuffers();
     } else {
         draw_help();
     }
 
-    if (action.increase_light == TRUE) {
-        if (action.light_ambient[0] < 1)
-            action.light_ambient[0] = action.light_ambient[1] = action.light_ambient[2] += 0.01;
+    if (scene.action.increase_light == TRUE) {
+        if (scene.action.light_ambient[0] < 1)
+            scene.action.light_ambient[0] =scene.action.light_ambient[1] = scene.action.light_ambient[2] += 0.01;
     }
 
-    if (action.decrease_light == TRUE) {
-        if (action.light_ambient[0] > -0.51)
-            action.light_ambient[0] = action.light_ambient[1] = action.light_ambient[2] -= 0.01;
+    if (scene.action.decrease_light == TRUE) {
+        if (scene.action.light_ambient[0] > -0.51)
+            scene.action.light_ambient[0] = scene.action.light_ambient[1] = scene.action.light_ambient[2] -= 0.01;
     }
 
-    if (action.fog) {
+    if (scene.action.fog) {
         glEnable(GL_FOG);
         glFogi(GL_FOG_MODE, GL_EXP);
         glHint(GL_FOG_HINT, GL_NICEST);
-        glFogf(GL_FOG_DENSITY, 0.00003);
+        glFogf(GL_FOG_DENSITY, 0.00004);
         float color[] = {0.54, 0.46, 0.88, 1.0};
         glFogfv(GL_FOG_COLOR, color);
     } else {

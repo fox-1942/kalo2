@@ -9,7 +9,7 @@ add_executable(${PROJECT_NAME}
         src/draw.c
         src/basic_primitives.c
         src/main.c
-        src/load.c
+        src/load_model.c
         src/model.c
         )
 

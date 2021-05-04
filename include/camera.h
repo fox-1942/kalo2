@@ -19,8 +19,6 @@ typedef struct Camera {
     int move_down;
 }Camera;
 
-Camera camera;
-
 //Checks if the camera can move. If it can't, loads the starter position.
 void don_not_head_up_against_the_wall(Camera *camera, Move *move);
 

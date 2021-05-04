@@ -1,6 +1,5 @@
-#include "load.h"
+#include "scene.h"
 #include <stdlib.h>
-#include <basic_primitives.h>
 #include <SOIL/SOIL.h>
 
 #define LINE_BUFFER_SIZE 1024
