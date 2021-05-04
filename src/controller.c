@@ -10,7 +10,7 @@ void init_controller(Move *move) {
     Position *planetsToAdd[6] = {&move->jupiter, &move->jupiter_moon, &move->venus,
                                  &move->saturnus, &move->sun, &move->satellite};
     memcpy(move->planets, planetsToAdd, sizeof(planetsToAdd));
-    for (int i = 0; i < 3; i++) {  action.light_ambient[i] = 0.5; }
+    for (int i = 0; i < 3; i++) { action.light_ambient[i] = 0.5; }
 }
 
 void movement_of_objects(Move *move, Action *action, World *world) {
@@ -198,6 +198,12 @@ void key_handler(unsigned char key, int x, int y) {
                 action.call_satellite = TRUE;
             }
             break;
+        case 't':
+            if (action.fog == FALSE) {
+                action.fog = TRUE;
+            } else {
+                action.fog = FALSE;
+            }
         case '+':
             action.increase_light = TRUE;
             break;

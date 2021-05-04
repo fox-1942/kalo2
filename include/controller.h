@@ -27,6 +27,7 @@ typedef struct Action {
     int decrease_light;
     int help;
     int help_on;
+    int fog;
     GLfloat light_ambient[4];
 } Action;
 

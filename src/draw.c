@@ -10,8 +10,7 @@ void init_draw(Rotate *rotate) {
     memcpy(rotate->planets, planetsToAdd, sizeof(planetsToAdd));
 }
 
-void draw_triangles(const Model* model)
-{
+void draw_triangles(const Model *model) {
     int i, k;
     int vertex_index, texture_index, normal_index;
     float x, y, z, u, v;
@@ -42,6 +41,7 @@ void draw_triangles(const Model* model)
 
     glEnd();
 }
+
 void draw_bounding_box(const Model *model) {
     glLineWidth(1);
     glBegin(GL_LINES);
@@ -177,6 +177,7 @@ void reshape(GLsizei width, GLsizei height) {
 }
 
 void draw_help() {
+
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
@@ -207,6 +208,7 @@ void set_satellite_led_working_time() {
 
 void display() {
     if (!action.help_on) {
+        glClearColor(0.5, 0.5, 0.5, 1.0);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         glMatrixMode(GL_MODELVIEW);
         glLoadIdentity();
@@ -233,6 +235,17 @@ void display() {
     if (action.decrease_light == TRUE) {
         if (action.light_ambient[0] > -0.51)
             action.light_ambient[0] = action.light_ambient[1] = action.light_ambient[2] -= 0.01;
+    }
+
+    if (action.fog) {
+        glEnable(GL_FOG);
+        glFogi(GL_FOG_MODE, GL_EXP);
+        glHint(GL_FOG_HINT, GL_NICEST);
+        glFogf(GL_FOG_DENSITY, 0.00003);
+        float color[] = {0.54, 0.46, 0.88, 1.0};
+        glFogfv(GL_FOG_COLOR, color);
+    } else {
+        glDisable(GL_FOG);
     }
 }
 
