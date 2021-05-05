@@ -69,6 +69,16 @@ void don_not_head_up_against_the_wall(Camera *camera, Move *move) {
             init_camera(camera);
     }
 
+    for (int j = 0; j < 3; ++j) {
+        if (camera->position.x < move->satellite[j].x + scene.world.satellite[j].size &&
+            camera->position.x > move->satellite[j].x - scene.world.satellite[j].size &&
+            camera->position.y < move->satellite[j].y + scene.world.satellite[j].size &&
+            camera->position.y > move->satellite[j].y - scene.world.satellite[j].size &&
+            camera->position.z < move->satellite[j].z + scene.world.satellite[j].size &&
+            camera->position.z > move->satellite[j].z - scene.world.satellite[j].size)
+            init_camera(camera);
+    }
+
     // Skybox
     if (camera->position.x < -scene.world.planets[6]->size || camera->position.x > scene.world.planets[6]->size ||
         camera->position.y < -scene.world.planets[6]->size || camera->position.y > scene.world.planets[6]->size ||

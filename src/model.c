@@ -78,7 +78,6 @@ void init_entities(World *world) {
         scale_model(&world->satellite[j].model, 12, 12, 12);
     }
 
-
     load_model("..\\objects\\saturn.obj", &world->saturnus.model);
     world->saturnus.texture = load_texture("..\\textures\\planet3.jpg");
 

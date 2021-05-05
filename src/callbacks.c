@@ -123,9 +123,6 @@ void movement_of_objects(Move *move, Action *action, World *world) {
         action->call_satellite = FALSE;
         action->satellite_is_moving = 0;
 
-
-
-
     } else if (action->call_satellite == FALSE) {
         move->satellite[0].x = -20000;
     }
