@@ -109,47 +109,43 @@ void draw_skybox(Entity skybox, int z_sign) {
 void draw_environment(World *world, Rotate *rotate, Move *move, double timer) {
     glEnable(GL_TEXTURE_2D);
 
-    for (int i = 0; i < 6; ++i) {
+    for (int i = 0; i < 5; ++i) {
         glPushMatrix();
         glScalef(1.0f, 1.0f, 1.0f);
+        glTranslatef(move->planets[i]->x, move->planets[i]->y, move->planets[i]->z);
+        glMaterialfv(GL_FRONT, GL_AMBIENT, world->planets[i]->material_ambient);
+        glBindTexture(GL_TEXTURE_2D, world->planets[i]->texture);
 
-        if (i == 5) {  // Switching textures in case of satellite.
-            for (int j = 0; j < 3; j++) {
-                glTranslatef(move->satellite[j].x, move->satellite[j].y, move->satellite[j].z);
-                glMaterialfv(GL_FRONT, GL_AMBIENT, world->satellite[j].material_ambient);
-
-                double actual_t = (double) glutGet(GLUT_ELAPSED_TIME);
-                if (actual_t - timer > 2000) {
-                    glBindTexture(GL_TEXTURE_2D, world->satellite[j].texture2);
-                } else {
-                    glBindTexture(GL_TEXTURE_2D, world->satellite[j].texture);
-                }
-
-                // glRotatef(90, 1, 0, 0);
-                // glRotatef(270, 0, 1, 0);
-                // glRotatef(*rotate->planets[i], 0, 0, 1);
-
-                draw_model(&(world->satellite[j]).model);
-                glPopMatrix();
-            }
-
-        } else {
-            glPushMatrix();
-            glScalef(1.0f, 1.0f, 1.0f);
-            glTranslatef(move->planets[i]->x, move->planets[i]->y, move->planets[i]->z);
-            glMaterialfv(GL_FRONT, GL_AMBIENT, world->planets[i]->material_ambient);
-            glBindTexture(GL_TEXTURE_2D, world->planets[i]->texture);
-
-            if (i == 0 || i == 1) {                                 // Jupiter and its moon
-                glRotatef(*rotate->planets[i], 0, 0, 1);
-            } else if (i == 2 || i == 3) {                          // Venus, Saturnus
-                glRotatef(*rotate->planets[i], 0, 0, -1);
-            } else if (i == 4) {                                    //Sun
-                glRotatef(*rotate->planets[i], 1, 1, 1);
-            }
-            draw_model(&world->planets[i]->model);
-            glPopMatrix();
+        if (i == 0 || i == 1) {                                 // Jupiter and its moon
+            glRotatef(*rotate->planets[i], 0, 0, 1);
+        } else if (i == 2 || i == 3) {                          // Venus, Saturnus
+            glRotatef(*rotate->planets[i], 0, 0, -1);
+        } else if (i == 4) {                                    //Sun
+            glRotatef(*rotate->planets[i], 1, 1, 1);
         }
+        draw_model(&world->planets[i]->model);
+        glPopMatrix();
+    }
+
+    // Drawing satellites.
+    for (int j = 0; j < 3; j++) {
+        glPushMatrix();
+        glTranslatef(move->satellite[j].x, move->satellite[j].y, move->satellite[j].z);
+        glMaterialfv(GL_FRONT, GL_AMBIENT, world->satellite[j].material_ambient);
+
+        double actual_t = (double) glutGet(GLUT_ELAPSED_TIME);
+        if (actual_t - timer > 2000) {
+            glBindTexture(GL_TEXTURE_2D, world->satellite[j].texture2);
+        } else {
+            glBindTexture(GL_TEXTURE_2D, world->satellite[j].texture);
+        }
+
+        glRotatef(90, 1, 0, 0);
+        glRotatef(270, 0, 1, 0);
+        glRotatef(rotate->satellite_rotation, 0, 0, 1);
+
+        draw_model(&(world->satellite[j]).model);
+        glPopMatrix();
     }
 
     draw_skybox(world->skybox, 0);
