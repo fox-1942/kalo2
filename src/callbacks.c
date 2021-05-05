@@ -63,22 +63,23 @@ void movement_of_objects(Move *move, Action *action, World *world) {
         move->saturnus.z = 0;
     }
 
-    for (int j = 0; j < 3; j++) {
-        if (action->call_satellite == TRUE && move->satellite[0].x < 6000) {
-            if (action->satellite_is_moving == 0) {
-                move->satellite[0].x = -6000;
-                move->satellite[0].y = 1500;
-                move->satellite[0].z = 400;
 
-                move->satellite[1].x = -6000;
-                move->satellite[1].y = 1500;
-                move->satellite[1].z = 420;
+    if (action->call_satellite == TRUE && move->satellite[0].x < 6000) {
+        if (action->satellite_is_moving == 0) {
+            move->satellite[0].x = -6000;
+            move->satellite[0].y = 1500;
+            move->satellite[0].z = 400;
 
-                move->satellite[2].x = -6000;
-                move->satellite[2].y = 1500;
-                move->satellite[2].z = 450;
-            }
+            move->satellite[1].x = -6000;
+            move->satellite[1].y = 1500;
+            move->satellite[1].z = 400;
 
+            move->satellite[2].x = -6000;
+            move->satellite[2].y = 1500;
+            move->satellite[2].z = 400;
+        }
+
+        for (int j = 0; j < 3; j++) {
             // Examining, whether the sat is inside one of the gravity fields or not.
             int i;
             for (i = 0; i <= 4; i++) {
@@ -91,7 +92,8 @@ void movement_of_objects(Move *move, Action *action, World *world) {
             }
 
             if (inside_gravity_field) {
-                Vertex distance_vector = vector_from_two_vertex(move->satellite[j].x, move->satellite[j].y, move->satellite[j].z,
+                Vertex distance_vector = vector_from_two_vertex(move->satellite[j].x, move->satellite[j].y,
+                                                                move->satellite[j].z,
                                                                 move->planets[i]->x, move->planets[i]->y,
                                                                 move->planets[i]->z);
                 if (i != 4) { // every planet except Sun
@@ -112,19 +114,18 @@ void movement_of_objects(Move *move, Action *action, World *world) {
                 move->satellite[j].x += 7;
             }
 
-            printf("%d---> %.0f %.0f %.0f\n",j,move->satellite[j].x, move->satellite[j].y, move->satellite[j].z);
-
-            action->satellite_is_moving = 1;
-
-        } else if (action->call_satellite == TRUE && move->satellite[j].x >= 6000) {
-            move->satellite[j].x = -20000;
-            action->call_satellite = FALSE;
-            action->satellite_is_moving = 0;
-        } else if (action->call_satellite == FALSE) {
-            move->satellite[j].x = -20000;
+            printf("%d---> %.0f %.0f %.0f\n", j, move->satellite[j].x, move->satellite[j].y, move->satellite[j].z);
         }
-    }
 
+        action->satellite_is_moving = 1;
+
+    } else if (action->call_satellite == TRUE && move->satellite[0].x >= 6000) {
+        move->satellite[0].x = -20000;
+        action->call_satellite = FALSE;
+        action->satellite_is_moving = 0;
+    } else if (action->call_satellite == FALSE) {
+        move->satellite[0].x = -20000;
+    }
 }
 
 void rotation_of_objects(Action *action, Rotate *rotate) {

@@ -61,24 +61,23 @@ void init_entities(World *world) {
                                &world->saturnus, &world->sun, &world->satellite[0], &world->skybox};
     memcpy(world->planets, planetsToAdd, sizeof(planetsToAdd));
 
-    for (int i = 0; i < 6; ++i) {
+    for (int i = 0; i < 5; ++i) {
         if (i >= 0 && i <= 2 || i == 4) {
             load_model("..\\objects\\geoid.obj", &world->planets[i]->model);
             char msgOut[50];
             snprintf(msgOut, sizeof(msgOut), "..\\textures\\planet%d.png", i);
             world->planets[i]->texture = load_texture(msgOut);
         }
-
-        if (i == 5) {
-            for (int j = 0; j < 3; j++) {
-                load_model("..\\objects\\satellite.obj", &(world->planets[i]+j)->model);
-                (world->planets[i]+j)->texture = load_texture("..\\textures\\satellite.jpg");
-                (world->planets[i]+j)->texture2 = load_texture("..\\textures\\satellite2.jpg");
-                (world->planets[i]+j)->size = 50;
-                scale_model(&(world->planets[i]+j)->model, 12, 12, 12);
-            }
-        }
     }
+
+    for (int j = 0; j < 3; j++) {
+        load_model("..\\objects\\satellite.obj", &(world->satellite[j]).model);
+        (world->satellite[j]).texture = load_texture("..\\textures\\satellite.jpg");
+        (world->satellite[j]).texture2 = load_texture("..\\textures\\satellite2.jpg");
+        (world->satellite[j]).size = 50;
+        scale_model(&world->satellite[j].model, 12, 12, 12);
+    }
+
 
     load_model("..\\objects\\saturn.obj", &world->saturnus.model);
     world->saturnus.texture = load_texture("..\\textures\\planet3.jpg");

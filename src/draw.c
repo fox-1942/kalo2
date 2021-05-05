@@ -110,25 +110,27 @@ void draw_environment(World *world, Rotate *rotate, Move *move, double timer) {
     glEnable(GL_TEXTURE_2D);
 
     for (int i = 0; i < 6; ++i) {
+
         glPushMatrix();
         glScalef(1.0f, 1.0f, 1.0f);
+
         if (i == 5) {  // Switching textures in case of satellite.
             for (int j = 0; j < 3; j++) {
-                glTranslatef(move->planets[i][j].x, move->planets[i][j].y, move->planets[i][j].z);
-                glMaterialfv(GL_FRONT, GL_AMBIENT, world->planets[i][j].material_ambient);
+                glTranslatef(move->satellite[j].x, move->satellite[j].y, move->satellite[j].z);
+                glMaterialfv(GL_FRONT, GL_AMBIENT, world->satellite[j].material_ambient);
 
                 double actual_t = (double) glutGet(GLUT_ELAPSED_TIME);
                 if (actual_t - timer > 2000) {
-                    glBindTexture(GL_TEXTURE_2D, world->planets[i][j].texture2);
+                    glBindTexture(GL_TEXTURE_2D, world->satellite[j].texture2);
                 } else {
-                    glBindTexture(GL_TEXTURE_2D, world->planets[i][j].texture);
+                    glBindTexture(GL_TEXTURE_2D, world->satellite[j].texture);
                 }
 
-                glRotatef(90, 1, 0, 0);
-                glRotatef(270, 0, 1, 0);
-                glRotatef(*rotate->planets[i], 0, 0, 1);
+                // glRotatef(90, 1, 0, 0);
+                // glRotatef(270, 0, 1, 0);
+                // glRotatef(*rotate->planets[i], 0, 0, 1);
 
-                draw_model(&(world->planets[i][j]).model);
+                draw_model(&(world->satellite[j]).model);
             }
 
         } else {
