@@ -71,11 +71,11 @@ void init_entities(World *world) {
 
         if (i == 5) {
             for (int j = 0; j < 3; j++) {
-                load_model("..\\objects\\satellite.obj", &world->satellite[j].model);
-                world->satellite[j].texture = load_texture("..\\textures\\satellite.jpg");
-                world->satellite[j].texture2 = load_texture("..\\textures\\satellite2.jpg");
-                world->satellite[j].size = 50;
-                scale_model(&world->satellite[j].model, 12, 12, 12);
+                load_model("..\\objects\\satellite.obj", &(world->planets[i]+j)->model);
+                (world->planets[i]+j)->texture = load_texture("..\\textures\\satellite.jpg");
+                (world->planets[i]+j)->texture2 = load_texture("..\\textures\\satellite2.jpg");
+                (world->planets[i]+j)->size = 50;
+                scale_model(&(world->planets[i]+j)->model, 12, 12, 12);
             }
         }
     }
@@ -88,7 +88,6 @@ void init_entities(World *world) {
     world->venus.size = 220;
     world->saturnus.size = 150;
     world->sun.size = 920;
-
 
     scale_model(&world->jupiter.model, 0.4, 0.4, 0.4);
     scale_model(&world->jupiter_moon.model, 0.2, 0.2, 0.2);
