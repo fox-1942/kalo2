@@ -110,7 +110,6 @@ void draw_environment(World *world, Rotate *rotate, Move *move, double timer) {
     glEnable(GL_TEXTURE_2D);
 
     for (int i = 0; i < 6; ++i) {
-
         glPushMatrix();
         glScalef(1.0f, 1.0f, 1.0f);
 
@@ -131,9 +130,12 @@ void draw_environment(World *world, Rotate *rotate, Move *move, double timer) {
                 // glRotatef(*rotate->planets[i], 0, 0, 1);
 
                 draw_model(&(world->satellite[j]).model);
+                glPopMatrix();
             }
 
         } else {
+            glPushMatrix();
+            glScalef(1.0f, 1.0f, 1.0f);
             glTranslatef(move->planets[i]->x, move->planets[i]->y, move->planets[i]->z);
             glMaterialfv(GL_FRONT, GL_AMBIENT, world->planets[i]->material_ambient);
             glBindTexture(GL_TEXTURE_2D, world->planets[i]->texture);
@@ -146,8 +148,8 @@ void draw_environment(World *world, Rotate *rotate, Move *move, double timer) {
                 glRotatef(*rotate->planets[i], 1, 1, 1);
             }
             draw_model(&world->planets[i]->model);
+            glPopMatrix();
         }
-        glPopMatrix();
     }
 
     draw_skybox(world->skybox, 0);

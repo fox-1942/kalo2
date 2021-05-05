@@ -63,23 +63,22 @@ void movement_of_objects(Move *move, Action *action, World *world) {
         move->saturnus.z = 0;
     }
 
-
     if (action->call_satellite == TRUE && move->satellite[0].x < 6000) {
         if (action->satellite_is_moving == 0) {
             move->satellite[0].x = -6000;
             move->satellite[0].y = 1500;
             move->satellite[0].z = 400;
 
-            move->satellite[1].x = -6000;
+            move->satellite[1].x = -5000;
             move->satellite[1].y = 1500;
             move->satellite[1].z = 400;
 
-            move->satellite[2].x = -6000;
-            move->satellite[2].y = 1500;
-            move->satellite[2].z = 400;
+            move->satellite[2].x = 0;
+            move->satellite[2].y = 0;
+            move->satellite[2].z = 0;
         }
 
-        for (int j = 0; j < 3; j++) {
+        for (int j = 0; j < 2; j++) {
             // Examining, whether the sat is inside one of the gravity fields or not.
             int i;
             for (i = 0; i <= 4; i++) {
@@ -114,7 +113,7 @@ void movement_of_objects(Move *move, Action *action, World *world) {
                 move->satellite[j].x += 7;
             }
 
-            printf("%d---> %.0f %.0f %.0f\n", j, move->satellite[j].x, move->satellite[j].y, move->satellite[j].z);
+            printf("%d---> %.0f %.0f %.0f\n", j, move->planets[5][j].x, move->planets[5][j].y, move->planets[5][j].z);
         }
 
         action->satellite_is_moving = 1;
@@ -123,6 +122,10 @@ void movement_of_objects(Move *move, Action *action, World *world) {
         move->satellite[0].x = -20000;
         action->call_satellite = FALSE;
         action->satellite_is_moving = 0;
+
+
+
+
     } else if (action->call_satellite == FALSE) {
         move->satellite[0].x = -20000;
     }
