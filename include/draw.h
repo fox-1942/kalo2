@@ -27,7 +27,7 @@ typedef struct Move {
     Position venus;
     Position saturnus;
     Position sun;
-    Position satellite;
+    Position satellite[3];
     Position *planets[6];
     double degree1;
     double degree3;

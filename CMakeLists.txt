@@ -4,7 +4,7 @@ project(kalo)
 add_compile_options(-std=gnu99)
 
 add_executable(${PROJECT_NAME}
-        src/controller.c
+        src/callbacks.c
         src/camera.c
         src/draw.c
         src/basic_primitives.c

@@ -1,5 +1,5 @@
-#ifndef KALO_CONTROLLER_H
-#define KALO_CONTROLLER_H
+#ifndef KALO_CALLBACKS_H
+#define KALO_CALLBACKS_H
 
 #include "camera.h"
 #include "draw.h"
@@ -10,8 +10,8 @@
 typedef struct Window {
     int mouse_x;
     int mouse_y;
-    int window_width;
-    int window_height;
+    int width;
+    int height;
     double e_time;
     int previous_time;
 } Window;
@@ -47,4 +47,4 @@ void key_up_handler(unsigned char key, int x, int y);
 
 void specialFunc(int key, int x, int y);
 
-#endif //KALO_CONTROLLER_H
+#endif //KALO_CALLBACKS_H

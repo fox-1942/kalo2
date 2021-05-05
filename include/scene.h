@@ -1,12 +1,12 @@
-//
-// Created by Fox-1942 on 04/05/2021.
-//
-
 #ifndef KALO_SCENE_H
 #define KALO_SCENE_H
 
+#include "basic_primitives.h"
 #include "load_model.h"
-#include "controller.h"
+#include "camera.h"
+#include "callbacks.h"
+#include "draw.h"
+#include "model.h"
 
 typedef struct Scene{
     Camera camera;

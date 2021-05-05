@@ -17,7 +17,6 @@ void init_camera(struct Camera *camera) {
     camera->move_backward = FALSE;
     camera->step_left = FALSE;
     camera->step_right = FALSE;
-
 }
 
 double calc_elapsed_time() {

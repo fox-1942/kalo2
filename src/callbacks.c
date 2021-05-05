@@ -8,7 +8,7 @@
 
 void init_controller(Move *move) {
     Position *planetsToAdd[6] = {&move->jupiter, &move->jupiter_moon, &move->venus,
-                                 &move->saturnus, &move->sun, &move->satellite};
+                                 &move->saturnus, &move->sun, &move->satellite[0]};
     memcpy(move->planets, planetsToAdd, sizeof(planetsToAdd));
     for (int i = 0; i < 3; i++) { scene.action.light_ambient[i] = 0.5; }
 }
@@ -63,55 +63,68 @@ void movement_of_objects(Move *move, Action *action, World *world) {
         move->saturnus.z = 0;
     }
 
-    if (action->call_satellite == TRUE && move->satellite.x < 6000) {
-        if (action->satellite_is_moving == 0) {
-            move->satellite.x = -6000;
-            move->satellite.y = 1500;
-            move->satellite.z = 400;
-        }
+    for (int j = 0; j < 3; j++) {
+        if (action->call_satellite == TRUE && move->satellite[0].x < 6000) {
+            if (action->satellite_is_moving == 0) {
+                move->satellite[0].x = -6000;
+                move->satellite[0].y = 1500;
+                move->satellite[0].z = 400;
 
-        // Examining, whether the sat is inside one of the gravity fields or not.
-        int i;
-        for (i = 0; i <= 4; i++) {
-            if (is_point_inside_spheres(move->satellite.x, move->satellite.y, move->satellite.z,
-                                        move->planets[i]->x, move->planets[i]->y, move->planets[i]->z,
-                                        world->planets[i]->model.box.diagonal_length + 10)) {
-                inside_gravity_field = true;
-                break;
+                move->satellite[1].x = -6000;
+                move->satellite[1].y = 1500;
+                move->satellite[1].z = 420;
+
+                move->satellite[2].x = -6000;
+                move->satellite[2].y = 1500;
+                move->satellite[2].z = 450;
             }
-        }
 
-        if (inside_gravity_field) {
-            Vertex distance_vector = vector_from_two_vertex(move->satellite.x, move->satellite.y, move->satellite.z,
-                                                            move->planets[i]->x, move->planets[i]->y,
-                                                            move->planets[i]->z);
-            if (i != 4) { // every planet except Sun
-                move->satellite.x += 1.0;
-
-                if (distance_vector.y <= 0) {
-                    move->satellite.y -= 1;
-                } else {
-                    move->satellite.y += 1;
+            // Examining, whether the sat is inside one of the gravity fields or not.
+            int i;
+            for (i = 0; i <= 4; i++) {
+                if (is_point_inside_spheres(move->satellite[j].x, move->satellite[j].y, move->satellite[j].z,
+                                            move->planets[i]->x, move->planets[i]->y, move->planets[i]->z,
+                                            world->planets[i]->model.box.diagonal_length + 10)) {
+                    inside_gravity_field = true;
+                    break;
                 }
-            } else { // Sun
-                move->satellite.x += 5;
-                move->satellite.y += 0.3;
             }
 
-            inside_gravity_field = false;
-        } else {
-            move->satellite.x += 7;
+            if (inside_gravity_field) {
+                Vertex distance_vector = vector_from_two_vertex(move->satellite[j].x, move->satellite[j].y, move->satellite[j].z,
+                                                                move->planets[i]->x, move->planets[i]->y,
+                                                                move->planets[i]->z);
+                if (i != 4) { // every planet except Sun
+                    move->satellite[j].x += 1.0;
+
+                    if (distance_vector.y <= 0) {
+                        move->satellite[j].y -= 1;
+                    } else {
+                        move->satellite[j].y += 1;
+                    }
+                } else { // Sun
+                    move->satellite[j].x += 5;
+                    move->satellite[j].y += 0.3;
+                }
+
+                inside_gravity_field = false;
+            } else {
+                move->satellite[j].x += 7;
+            }
+
+            printf("%d---> %.0f %.0f %.0f\n",j,move->satellite[j].x, move->satellite[j].y, move->satellite[j].z);
+
+            action->satellite_is_moving = 1;
+
+        } else if (action->call_satellite == TRUE && move->satellite[j].x >= 6000) {
+            move->satellite[j].x = -20000;
+            action->call_satellite = FALSE;
+            action->satellite_is_moving = 0;
+        } else if (action->call_satellite == FALSE) {
+            move->satellite[j].x = -20000;
         }
-
-        action->satellite_is_moving = 1;
-
-    } else if (action->call_satellite == TRUE && move->satellite.x >= 6000) {
-        move->satellite.x = -20000;
-        action->call_satellite = FALSE;
-        action->satellite_is_moving = 0;
-    } else if (action->call_satellite == FALSE) {
-        move->satellite.x = -20000;
     }
+
 }
 
 void rotation_of_objects(Action *action, Rotate *rotate) {

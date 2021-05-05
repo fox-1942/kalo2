@@ -4,7 +4,7 @@
 #include "draw.h"
 #include "model.h"
 #include "basic_primitives.h"
-#include "controller.h"
+#include "callbacks.h"
 
 typedef struct Camera {
     struct Vertex position;

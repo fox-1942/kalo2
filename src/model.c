@@ -58,38 +58,43 @@ void calc_bounding_box(struct Model *model) {
 
 void init_entities(World *world) {
     Entity *planetsToAdd[7] = {&world->jupiter, &world->jupiter_moon, &world->venus,
-                               &world->saturnus, &world->sun, &world->satellite, &world->skybox};
+                               &world->saturnus, &world->sun, &world->satellite[0], &world->skybox};
     memcpy(world->planets, planetsToAdd, sizeof(planetsToAdd));
 
-    for (int i = 0; i < 5; ++i) {
+    for (int i = 0; i < 6; ++i) {
         if (i >= 0 && i <= 2 || i == 4) {
             load_model("..\\objects\\geoid.obj", &world->planets[i]->model);
             char msgOut[50];
-            snprintf(msgOut,sizeof(msgOut), "..\\textures\\planet%d.png", i);
+            snprintf(msgOut, sizeof(msgOut), "..\\textures\\planet%d.png", i);
             world->planets[i]->texture = load_texture(msgOut);
+        }
+
+        if (i == 5) {
+            for (int j = 0; j < 3; j++) {
+                load_model("..\\objects\\satellite.obj", &world->satellite[j].model);
+                world->satellite[j].texture = load_texture("..\\textures\\satellite.jpg");
+                world->satellite[j].texture2 = load_texture("..\\textures\\satellite2.jpg");
+                world->satellite[j].size = 50;
+                scale_model(&world->satellite[j].model, 12, 12, 12);
+            }
         }
     }
 
     load_model("..\\objects\\saturn.obj", &world->saturnus.model);
     world->saturnus.texture = load_texture("..\\textures\\planet3.jpg");
 
-    load_model("..\\objects\\satellite.obj", &world->satellite.model);
-    world->satellite.texture = load_texture("..\\textures\\satellite.jpg");
-    world->satellite.texture2 = load_texture("..\\textures\\satellite2.jpg");
-
     world->jupiter.size = 200;
     world->jupiter_moon.size = 85;
     world->venus.size = 220;
     world->saturnus.size = 150;
     world->sun.size = 920;
-    world->satellite.size = 50;
+
 
     scale_model(&world->jupiter.model, 0.4, 0.4, 0.4);
     scale_model(&world->jupiter_moon.model, 0.2, 0.2, 0.2);
     scale_model(&world->venus.model, 0.5, 0.5, 0.5);
     scale_model(&world->saturnus.model, 0.2, 0.2, 0.2);
     scale_model(&world->sun.model, 2, 2, 2);
-    scale_model(&world->satellite.model, 12, 12, 12);
 
     world->skybox.texture = load_texture("..\\textures\\sky.png");
     world->skybox.size = 6000;

@@ -115,11 +115,13 @@ void draw_environment(World *world, Rotate *rotate, Move *move, double timer) {
         glMaterialfv(GL_FRONT, GL_AMBIENT, world->planets[i]->material_ambient);
 
         if (i == 5) {  // Switching textures in case of satellite.
-            double actual_t = (double) glutGet(GLUT_ELAPSED_TIME);
-            if (actual_t - timer > 2000) {
-                glBindTexture(GL_TEXTURE_2D, world->planets[i]->texture2);
-            } else {
-                glBindTexture(GL_TEXTURE_2D, world->planets[i]->texture);
+            for (int j = 0; j < 3; j++) {
+                double actual_t = (double) glutGet(GLUT_ELAPSED_TIME);
+                if (actual_t - timer > 2000) {
+                    glBindTexture(GL_TEXTURE_2D, (world->planets[i] + j)->texture2);
+                } else {
+                    glBindTexture(GL_TEXTURE_2D, (world->planets[i] + j)->texture);
+                }
             }
         } else {
             glBindTexture(GL_TEXTURE_2D, world->planets[i]->texture);
@@ -133,13 +135,22 @@ void draw_environment(World *world, Rotate *rotate, Move *move, double timer) {
             glRotatef(*rotate->planets[i], 0, 0, -1);
         } else if (i == 4) {                                    //Sun
             glRotatef(*rotate->planets[i], 1, 1, 1);
-        } else if (i == 5) {                                    // Satellite
-            glRotatef(90, 1, 0, 0);
-            glRotatef(270, 0, 1, 0);
-            glRotatef(*rotate->planets[i], 0, 0, 1);
+        } else if (i == 5) {
+            for (int j = 0; j < 3; j++) {                       // Satellite
+                glRotatef(90, 1, 0, 0);
+                glRotatef(270, 0, 1, 0);
+                glRotatef(*rotate->planets[i] + j, 0, 0, 1);
+            }
         }
 
         draw_model(&world->planets[i]->model);
+
+        if (i==5) {
+            for (int j = 1; j < 3; j++) {
+                draw_model(&(world->planets[i]+j)->model);
+            }
+        }
+
         glPopMatrix();
     }
 
@@ -152,8 +163,8 @@ bool is_point_inside_spheres(double x, double y, double z, double x2, double y2,
 }
 
 void reshape(GLsizei width, GLsizei height) {
-    scene.window.window_width = width;
-    scene.window.window_height = height;
+    scene.window.width = width;
+    scene.window.height = height;
 
     double ratio = (double) width / height;
     int w_depend_on_h, h_depend_on_w;
@@ -186,15 +197,15 @@ void draw_help() {
     glTexCoord2f(0, 0);
     glVertex3f(0, 0, 0);
     glTexCoord2f(1, 0);
-    glVertex3f(scene.window.window_width, 0, 0);
+    glVertex3f(scene.window.width, 0, 0);
     glTexCoord2f(1, 1);
-    glVertex3f(scene.window.window_width, scene.window.window_height, 0);
+    glVertex3f(scene.window.width, scene.window.height, 0);
     glTexCoord2f(0, 1);
-    glVertex3f(0, scene.window.window_height, 0);
+    glVertex3f(0, scene.window.height, 0);
     glEnd();
     glDisable(GL_TEXTURE_2D);
 
-    reshape(scene.window.window_width, scene.window.window_height);
+    reshape(scene.window.width, scene.window.height);
     glutSwapBuffers();
 }
 
@@ -220,7 +231,7 @@ void display() {
         draw_environment(&scene.world, &scene.rotate, &scene.move, scene.window.e_time);
         movement_of_objects(&scene.move, &scene.action, &scene.world);
         rotation_of_objects(&scene.action, &scene.rotate);
-        reshape(scene.window.window_width, scene.window.window_height);
+        reshape(scene.window.width, scene.window.height);
         glutSwapBuffers();
     } else {
         draw_help();
@@ -228,7 +239,7 @@ void display() {
 
     if (scene.action.increase_light == TRUE) {
         if (scene.action.light_ambient[0] < 1)
-            scene.action.light_ambient[0] =scene.action.light_ambient[1] = scene.action.light_ambient[2] += 0.01;
+            scene.action.light_ambient[0] = scene.action.light_ambient[1] = scene.action.light_ambient[2] += 0.01;
     }
 
     if (scene.action.decrease_light == TRUE) {
@@ -240,8 +251,8 @@ void display() {
         glEnable(GL_FOG);
         glFogi(GL_FOG_MODE, GL_EXP);
         glHint(GL_FOG_HINT, GL_NICEST);
-        glFogf(GL_FOG_DENSITY, 0.00004);
-        float color[] = {0.54, 0.46, 0.88, 1.0};
+        glFogf(GL_FOG_DENSITY, 0.00006);
+        float color[] = {0.34, 0.36, 0.88, 1.0};
         glFogfv(GL_FOG_COLOR, color);
     } else {
         glDisable(GL_FOG);
