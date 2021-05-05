@@ -69,7 +69,7 @@ void movement_of_objects(Move *move, Action *action, World *world) {
             move->satellite[0].y = 1500;
             move->satellite[0].z = 400;
 
-            move->satellite[1].x = -5000;
+            move->satellite[1].x = 0;
             move->satellite[1].y = 1500;
             move->satellite[1].z = 400;
 
@@ -96,7 +96,7 @@ void movement_of_objects(Move *move, Action *action, World *world) {
                                                                 move->planets[i]->x, move->planets[i]->y,
                                                                 move->planets[i]->z);
                 if (i != 4) { // every planet except Sun
-                    move->satellite[j].x += 1.0;
+                    move->satellite[j].x += 21.0;
 
                     if (distance_vector.y <= 0) {
                         move->satellite[j].y -= 1;
@@ -104,13 +104,13 @@ void movement_of_objects(Move *move, Action *action, World *world) {
                         move->satellite[j].y += 1;
                     }
                 } else { // Sun
-                    move->satellite[j].x += 5;
+                    move->satellite[j].x += 25;
                     move->satellite[j].y += 0.3;
                 }
 
                 inside_gravity_field = false;
             } else {
-                move->satellite[j].x += 7;
+                move->satellite[j].x += 27;
             }
 
             printf("%d---> %.0f %.0f %.0f\n", j, move->planets[5][j].x, move->planets[5][j].y, move->planets[5][j].z);
@@ -118,13 +118,23 @@ void movement_of_objects(Move *move, Action *action, World *world) {
 
         action->satellite_is_moving = 1;
 
-    } else if (action->call_satellite == TRUE && move->satellite[0].x >= 6000) {
+    } else if (action->call_satellite == TRUE && move->satellite[0].x >= 6000 && move->satellite[0].x >= 6000) {
+
+       /* printf("%.0f %.0f %.0f\n", move->planets[5][0].x, move->planets[5][0].y, move->planets[5][0].z);
+        printf("%.0f %.0f %.0f\n", move->planets[5][1].x, move->planets[5][1].y, move->planets[5][1].z);
+        printf("%.0f %.0f %.0f\n", move->planets[5][2].x, move->planets[5][2].y, move->planets[5][2].z);*/
+
         move->satellite[0].x = -20000;
+        move->satellite[1].x = -20000;
+        move->satellite[2].x = -20000;
+
         action->call_satellite = FALSE;
         action->satellite_is_moving = 0;
 
     } else if (action->call_satellite == FALSE) {
         move->satellite[0].x = -20000;
+        move->satellite[1].x = -20000;
+        move->satellite[2].x = -20000;
     }
 }
 
