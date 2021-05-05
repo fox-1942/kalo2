@@ -63,7 +63,7 @@ void movement_of_objects(Move *move, Action *action, World *world) {
         move->saturnus.z = 0;
     }
 
-    if (action->call_satellite == TRUE && move->satellite[0].x < 6000) {
+    if (action->call_satellite == TRUE && (move->satellite[0].x < 6000 ||move->satellite[1].x < 6000) ) {
         if (action->satellite_is_moving == 0) {
             move->satellite[0].x = -6000;
             move->satellite[0].y = 1500;
@@ -118,7 +118,9 @@ void movement_of_objects(Move *move, Action *action, World *world) {
 
         action->satellite_is_moving = 1;
 
-    } else if (action->call_satellite == TRUE && move->satellite[0].x >= 6000 && move->satellite[0].x >= 6000) {
+    }
+
+    else if (action->call_satellite == TRUE && move->satellite[0].x >= 6000 && move->satellite[0].x >= 6000) {
 
        /* printf("%.0f %.0f %.0f\n", move->planets[5][0].x, move->planets[5][0].y, move->planets[5][0].z);
         printf("%.0f %.0f %.0f\n", move->planets[5][1].x, move->planets[5][1].y, move->planets[5][1].z);
