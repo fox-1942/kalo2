@@ -22,7 +22,9 @@ typedef struct Action {
     int move_venus_in_galaxy;
     int move_saturnus_in_galaxy;
     int call_satellite;
-    int satellite_is_moving;
+    int satellite_is_moving0;
+    int satellite_is_moving1;
+    int satellite_is_moving2;
     int increase_light;
     int decrease_light;
     int help;

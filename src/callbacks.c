@@ -63,19 +63,17 @@ void movement_of_objects(Move *move, Action *action, World *world) {
         move->saturnus.z = 0;
     }
 
-    if (action->call_satellite == TRUE && (move->satellite[0].x < 6000 ||move->satellite[1].x < 6000) ) {
-        if (action->satellite_is_moving == 0) {
+    if (action->call_satellite == TRUE && (move->satellite[0].x < 10000 || move->satellite[1].x < 10000)) {
+        if (action->satellite_is_moving0 == 0) {
             move->satellite[0].x = -6000;
             move->satellite[0].y = 1500;
             move->satellite[0].z = 400;
+        }
 
+        if (action->satellite_is_moving1 == 0) {
             move->satellite[1].x = 0;
             move->satellite[1].y = 1500;
             move->satellite[1].z = 400;
-
-            move->satellite[2].x = 0;
-            move->satellite[2].y = 0;
-            move->satellite[2].z = 0;
         }
 
         for (int j = 0; j < 2; j++) {
@@ -113,31 +111,30 @@ void movement_of_objects(Move *move, Action *action, World *world) {
                 move->satellite[j].x += 27;
             }
 
-            printf("%d---> %.0f %.0f %.0f\n", j, move->planets[5][j].x, move->planets[5][j].y, move->planets[5][j].z);
+            printf("%d---> %.0f %.0f %.0f\n", j, move->planets[5][j].x, move->planets[5][j].y,
+                   move->planets[5][j].z);
+
+            action->satellite_is_moving0 = 1;
+            action->satellite_is_moving1 = 1;
+        }
+    }
+
+    else{
+        if (action->call_satellite == TRUE && move->satellite[0].x >= 10000) {
+            move->satellite[0].x = -20000;
+            action->satellite_is_moving0 = 0;
         }
 
-        action->satellite_is_moving = 1;
-
+        if (action->call_satellite == TRUE && move->satellite[1].x >= 10000) {
+            move->satellite[1].x = -20000;
+            action->satellite_is_moving1 = 0;
+        }
     }
 
-    else if (action->call_satellite == TRUE && move->satellite[0].x >= 6000 && move->satellite[0].x >= 6000) {
-
-       /* printf("%.0f %.0f %.0f\n", move->planets[5][0].x, move->planets[5][0].y, move->planets[5][0].z);
-        printf("%.0f %.0f %.0f\n", move->planets[5][1].x, move->planets[5][1].y, move->planets[5][1].z);
-        printf("%.0f %.0f %.0f\n", move->planets[5][2].x, move->planets[5][2].y, move->planets[5][2].z);*/
-
-        move->satellite[0].x = -20000;
-        move->satellite[1].x = -20000;
-        move->satellite[2].x = -20000;
-
+    if (action->satellite_is_moving1 == 0 && action->satellite_is_moving1 == 0) {
         action->call_satellite = FALSE;
-        action->satellite_is_moving = 0;
-
-    } else if (action->call_satellite == FALSE) {
-        move->satellite[0].x = -20000;
-        move->satellite[1].x = -20000;
-        move->satellite[2].x = -20000;
     }
+
 }
 
 void rotation_of_objects(Action *action, Rotate *rotate) {
